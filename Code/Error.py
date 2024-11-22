@@ -1,17 +1,13 @@
-class ErrorStatus:
-    """
-    A class to represent an error status with a custom message.
-
-    Attributes
-    ----------
-    message : str
-        The error message.
-
-    Methods
-    -------
-    __init__(self, message)
-        Initializes the ErrorStatus object with the given message.
-
-    """
-    def __init__(self, message):
-        self.message = message
+class ErrorStatus(Exception):
+    def __init__(self, *args):
+        if args:
+            self.message = args[0]
+        else:
+            self.message = None
+    
+    def __str__(self) -> str:
+        print("calling str")
+        if self.message:
+            return "Error status, message: {0}".format(self.message)
+        else:
+            return "Error status, raised"
