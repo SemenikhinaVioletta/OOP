@@ -14,18 +14,4 @@ class ErrorStatus:
 
     """
     def __init__(self, message):
-        """
-        Initializes the ErrorStatus object with the given message.
-
-        Parameters
-        ----------
-        message : str
-            The error message.
-
-        Returns
-        -------
-        None
-
-        """
         self.message = message
-
