@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<resultset statement=""
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<row>
+		<field name="idStatus_klient">1</field>
+		<field name="Name">Good</field>
+	</row>
+
+	<row>
+		<field name="idStatus_klient">2</field>
+		<field name="Name">Normal</field>
+	</row>
+
+	<row>
+		<field name="idStatus_klient">3</field>
+		<field name="Name">Bad</field>
+	</row>
+
+	<row>
+		<field name="idStatus_klient">4</field>
+		<field name="Name">Sad</field>
+	</row>
+</resultset>
