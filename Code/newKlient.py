@@ -11,7 +11,7 @@ def new_Klient_Start(window_new_klient):
     management application by configuring its title, size, and creating
     """
     print("File newKlient: Start")
-    window_new_klient.title("PC for management")
+    window_new_klient.title("New klient")
     window_new_klient.geometry("600x400")
     frame = W.Frame(master=window_new_klient, relief=W.SUNKEN)
     frame.pack(expand=True)

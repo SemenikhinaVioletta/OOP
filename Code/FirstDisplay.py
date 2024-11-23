@@ -8,7 +8,7 @@ def start():
     """
     The function `start` in a Python file opens a window using `window.mainloop()`.
     """
-    print("File Python. Method start: Open window")
+    print("File Python. Method start - open window")
     window.mainloop()
 
 
@@ -16,21 +16,21 @@ def end():
     """
     The function `end` in a Python file prints a message, calls two button-click methods, and then prints another message.
     """
-    print("File Python. Method end: End")
+    print("File Python. Method end - end all windows")
     window.button_clicked()
     window_new_klient.button_clicked()
-    print("Clouse window")
+    print("\tClouse window")
 
 
-def method_Pro_Klient(messeg):
+def method_New_Klient(messeg):
     """
-    The method_Pro_Klient function creates a new button with a specified message and command.
+    The method_New_Klient function creates a new button with a specified message and command.
 
-    @param messeg The `messeg` parameter in the `method_Pro_Klient` function seems to be a message or text that will be
+    @param messeg The `messeg` parameter in the `method_New_Klient` function seems to be a message or text that will be
     displayed on a button created in the function. When calling this function, you would pass the specific message or text
     that you want to be displayed on the button as the `mes
     """
-    print("File FirstDisplay: Method Pro Klients")
+    print("File FirstDisplay: Method Pro Klients - make button for open new window")
     new_window = W.Button(
         frame,
         text=messeg,
@@ -42,31 +42,30 @@ def method_Pro_Klient(messeg):
 def selected(event):
     """
     The `selected` function prints the selected item from a widget and calls different methods based on the selection.
-    
+
     @param event The `event` parameter in the `selected` function is typically an event object that provides information
     about the event that triggered the function. In this case, it seems like the function is handling an event related
     to selecting an item in a widget (possibly a combobox).
     """
-    print("File FirstDisplay: Selected item", event.widget.get())
+    print("File FirstDisplay: Method selected - selected item", event.widget.get())
     selection = combobox.get()
-    if selection == "Pro Klients":
+    if selection == "New Klients":
+        method_New_Klient(selection)
+        """elif selection == "Pro Klients":
         method_Pro_Klient(selection)
-    elif selection == "New Klients": # make later
-        method_Pro_Klient(selection)
-        # method_New_Klient(selection)
-    elif selection == "Kontrakts": # make later
-        method_Pro_Klient(selection)
-        # method_Kontrakt(selection)
-    elif selection == "Produkts": # make later
-        method_Pro_Klient(selection)
-        # method_Prodykt(selection)
+        elif selection == "Kontrakts":
+        method_Kontrakt(selection)
+        elif selection == "Produkts":
+        method_Prodykt(selection)"""
+    else:
+        print("\tFile FirstDisplay: Method selected - selected item", selection, "not found")
 
 
 def start_new_klient():
     """
     The function `start_new_klient` initializes a new client window and displays the table for new clients.
     """
-    print("File FirstDisplay: Start table New Klient")
+    print("File FirstDisplay: Method start_new_klient - start table New Klient")
     global window_new_klient
     window_new_klient = W.Window()
     new_Klient_Start(window_new_klient)
