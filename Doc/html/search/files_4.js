@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['statusklient_2epy_0',['statusKlient.py',['../status_klient_8py.html',1,'']]]
+  ['newklient_2epy_0',['newKlient.py',['../new_klient_8py.html',1,'']]]
 ];

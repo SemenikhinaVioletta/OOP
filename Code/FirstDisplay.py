@@ -26,7 +26,9 @@ def method_Pro_Klient(messeg):
     """
     The method_Pro_Klient function creates a new button with a specified message and command.
 
-    @param messeg The `messeg` parameter in the `method_Pro_Klient` function seems to be a message or text that will be displayed on a button created in the function. When calling this function, you would pass the specific message or text that you want to be displayed on the button as the `mes
+    @param messeg The `messeg` parameter in the `method_Pro_Klient` function seems to be a message or text that will be
+    displayed on a button created in the function. When calling this function, you would pass the specific message or text
+    that you want to be displayed on the button as the `mes
     """
     print("File FirstDisplay: Method Pro Klients")
     new_window = W.Button(
@@ -41,7 +43,9 @@ def selected(event):
     """
     The `selected` function prints the selected item from a widget and calls different methods based on the selection.
     
-    @param event The `event` parameter in the `selected` function is typically an event object that provides information about the event that triggered the function. In this case, it seems like the function is handling an event related to selecting an item in a widget (possibly a combobox).
+    @param event The `event` parameter in the `selected` function is typically an event object that provides information
+    about the event that triggered the function. In this case, it seems like the function is handling an event related
+    to selecting an item in a widget (possibly a combobox).
     """
     print("File FirstDisplay: Selected item", event.widget.get())
     selection = combobox.get()

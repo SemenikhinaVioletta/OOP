@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['read_0',['read',['../namespace_python.html#ae750d9e5bb11f9e4bcfa0700c98003ef',1,'Python']]],
-  ['row_1',['row',['../namespace_python.html#a28fb08676e774348ec5dea88f7d50030',1,'Python']]],
-  ['rows_2',['rows',['../namespaceadd_b_d.html#a6d4dff91e4eb8289746b4075a9ee75b4',1,'addBD']]]
+  ['pady_0',['pady',['../namespace_first_display.html#a93078c70c171d05923bb9cc984d50d8c',1,'FirstDisplay.pady'],['../namespace_python.html#aa7f528246ea0caaa90d13cc7a89a29a2',1,'Python.pady']]]
 ];

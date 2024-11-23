@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['message_0',['message',['../class_error_1_1_error_status.html#ae72f6c6aec5dd9c190e41f521b6f2af9',1,'Error::ErrorStatus']]]
+  ['frame_0',['frame',['../namespace_first_display.html#ade174b2ed1c2ff2965d469ed17f772f0',1,'FirstDisplay.frame'],['../namespace_python.html#ae6378e5c2f9cfb6fa52cbea351153673',1,'Python.frame']]]
 ];

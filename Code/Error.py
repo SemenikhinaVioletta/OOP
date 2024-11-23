@@ -37,5 +37,3 @@ class ErrorStatus(Exception):
             return "Error status, message: {0}".format(self.message)
         else:
             return "Error status, raised"
-        else:
-            return "Error status, raised"
