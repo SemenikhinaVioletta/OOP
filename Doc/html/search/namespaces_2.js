@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['doc_0',['doc',['../namespacedoc.html',1,'']]]
+  ['error_0',['Error',['../namespace_error.html',1,'']]]
 ];

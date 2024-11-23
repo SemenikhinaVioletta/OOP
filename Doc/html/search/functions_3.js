@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['divide_0',['divide',['../class_calculator_1_1_calculator.html#adfbff2c71c9b426deac083241990dc4d',1,'Calculator::Calculator']]],
-  ['do_5fdoc_1',['do_doc',['../namespacedoc.html#ad4cfb003caf58030f788ab0ecbc5e14c',1,'doc']]]
+  ['end_0',['end',['../namespace_first_display.html#aea452faf5bbe6988fa8633948178ffdf',1,'FirstDisplay.end()'],['../namespace_python.html#aa4ece48a5874fe6fcf14eb8701f79221',1,'Python.end()']]]
 ];

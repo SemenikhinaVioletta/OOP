@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firstdisplay_0',['FirstDisplay',['../namespace_first_display.html',1,'']]]
+  ['newklient_0',['newKlient',['../namespacenew_klient.html',1,'']]]
 ];

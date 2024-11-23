@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['calculator_0',['Calculator',['../namespace_calculator.html',1,'']]]
+  ['doc_0',['doc',['../namespacedoc.html',1,'']]]
 ];

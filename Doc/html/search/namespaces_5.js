@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['newklient_0',['newKlient',['../namespacenew_klient.html',1,'']]]
+  ['python_0',['Python',['../namespace_python.html',1,'']]]
 ];
