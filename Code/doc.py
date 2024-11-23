@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 def do_doc():
     tree = ET.parse("Status_klient.xml")
     root = tree.getroot()
+    print("File doc. Method do_doc: Make array")
     s = []
     s.append("# Status\n".split())
     for elem in root.iter():
@@ -16,6 +17,7 @@ def do_doc():
                 text = str(elem.text)
                 text  += " "
 
+    print("File doc. Method do_doc: Enter array to pdf")
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size = 15)
@@ -29,4 +31,6 @@ def do_doc():
                      txt=item, border=1)
         pdf.ln(row_height*spacing)
 
-    pdf.output("Otchet.pdf")   
+    pdf.output("Otchet.pdf")
+    print("File doc. Method do_doc: Stop make pdf")
+   
