@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['window_0',['Window',['../namespace_window.html',1,'']]]
+  ['python_0',['Python',['../namespace_python.html',1,'']]]
 ];

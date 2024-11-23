@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['new_5fklient_5fstart_0',['new_Klient_Start',['../namespacenew_klient.html#a81c0459a2ec713ca1a9902fe4cc81265',1,'newKlient']]]
+  ['method_5fpro_5fklient_0',['method_Pro_Klient',['../namespace_first_display.html#a25761cf9726fab716acda0734383b32a',1,'FirstDisplay']]],
+  ['multiply_1',['multiply',['../class_calculator_1_1_calculator.html#a1d9da676bfa527528a056c644dbeba5a',1,'Calculator::Calculator']]]
 ];

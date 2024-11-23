@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['firstdisplay_0',['FirstDisplay',['../namespace_first_display.html',1,'']]]
+  ['error_0',['Error',['../namespace_error.html',1,'']]]
 ];
