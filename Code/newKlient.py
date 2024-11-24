@@ -1,5 +1,6 @@
 import Window as Win
 import sqlite3 as bd
+import New_klient as New
 
 
 def new_Klient_Tabel(window_new_klient):
@@ -10,6 +11,10 @@ def new_Klient_Tabel(window_new_klient):
     window of a GUI application in Python. The function `new_Klient_Start` seems to be setting up a new window for a client
     management application by configuring its title, size, and creating
     """
+    
+    
+    klients = []
+    
     def make_Table():
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
@@ -20,11 +25,15 @@ def new_Klient_Tabel(window_new_klient):
         table_new_klient.heading("Phone", text="Phone", anchor=Win.W)
         table_new_klient.heading("Mail", text="Mail", anchor=Win.W)
         
+        
         table_new_klient.column("#1", stretch=Win.NO, width=50)
 
         for line in rows:
-            table_new_klient.insert("", Win.END, values=line)
+            klient = New.New_Klient(line[0], line[1], line[2], line[3])
+            table_new_klient.insert("", Win.END, values=klient)
+            klients.append(klient)
         
+        print(klients)
         scrollbar = Win.ttk.Scrollbar(frame, orient=Win.VERTICAL, command=table_new_klient.yview)
         
     print("File newKlient: Method new_Klient_Table - start")
