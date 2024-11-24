@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import Window as W
+import Window as Win
 import sqlite3 as bd
 
 
@@ -11,23 +11,37 @@ def new_Klient_Tabel(window_new_klient):
     window of a GUI application in Python. The function `new_Klient_Start` seems to be setting up a new window for a client
     management application by configuring its title, size, and creating
     """
+    def make_Table():
+        columns = ("ID", "Name", "Phone", "Mail")
+        table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
+        table_new_klient.grid(row=1, column=1, sticky="nsew")
+        table_new_klient.pack(fill=Win.BOTH, expand=1)
+        table_new_klient.heading("ID", text="ID", anchor=Win.W)
+        table_new_klient.heading("Name", text="Name", anchor=Win.W)
+        table_new_klient.heading("Phone", text="Phone", anchor=Win.W)
+        table_new_klient.heading("Mail", text="Mail", anchor=Win.W)
+        
+        table_new_klient.column("#1", stretch=Win.NO, width=50)
+
+        for line in rows:
+            table_new_klient.insert("", Win.END, values=line)
+        
+        scrollbar = Win.ttk.Scrollbar(frame, orient=Win.VERTICAL, command=table_new_klient.yview)
+        table_new_klient.configure(yscroll=scrollbar.set)
+        scrollbar.grid(row=1, column=2, sticky="ns")
+        
     print("File newKlient: Method new_Klient_Table - start")
     window_new_klient.title("New klient")
-    window_new_klient.geometry("600x400")
-    frame = W.Frame(master=window_new_klient, relief=W.SUNKEN)
+    window_new_klient.geometry("1000x300")
+    frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
     conn = bd.connect("Code\DateBase\Pc.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Klient_new")
     rows = cursor.fetchall()
-
-    y = 1
-    for line in rows:
-        ID = W.Label(frame, text=line[0],)
-        ID.grid(row = y, column=1)
-        Name = W.Label(frame, text=line[1],)
-        Name.grid(row = y, column=2)
-        y += 1
-        
+    
+    make_Table()
+    
+    
     window_new_klient.mainloop()
 

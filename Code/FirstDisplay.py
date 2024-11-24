@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import Window as W
+import Window as Win
 import newKlient
 from newKlient import new_Klient_Tabel
 
@@ -31,16 +31,16 @@ def method_New_Klient(messeg):
     that you want to be displayed on the button as the `mes
     """
     print("File FirstDisplay: Method Pro Klients - make button for open new window")
-    new_window = W.Button(
+    new_window = Win.Button(
         frame,
         text="Open table",
         command=start_new_klient,
     )
-    lable = W.Label(frame, text="For " + messeg + "you csn:")
+    lable = Win.Label(frame, text="For " + messeg + "you csn:")
     lable.grid(row=3, column=1, padx=10)
     new_window.grid(row=3, column=2, padx=10)
 
-    new_otchet = W.Button(
+    new_otchet = Win.Button(
         frame,
         text="Make Otchet",
         command=start_new_klient,
@@ -73,14 +73,13 @@ def selected(event):
             "not found",
         )
 
-
 def start_new_klient():
     """
     The function `start_new_klient` initializes a new client window and displays the table for new clients.
     """
     print("File FirstDisplay: Method start_new_klient - start table New Klient")
     global window_new_klient
-    window_new_klient = W.Window()
+    window_new_klient = Win.Window()
     new_Klient_Tabel(window_new_klient)
 
 
@@ -89,25 +88,25 @@ print("File FirstDisplay: Start")
 """The code snippet you provided is setting up the initial window and user interface
 elements for a program. Here's a breakdown of what each part of the code is doing:"""
 # Set first window
-window = W.Window()
+window = Win.Window()
 window.title("PC for management")
 window.geometry("600x400")
-frame = W.Frame(master=window, relief=W.SUNKEN)
+frame = Win.Frame(master=window, relief=Win.SUNKEN)
 frame.pack(expand=True)
 
 # Set tex
-method_lbl = W.Label(frame, text="Select the table you will work with")
+method_lbl = Win.Label(frame, text="Select the table you will work with")
 method_lbl.grid(row=1, column=1)
 
 # Add combobox and label
 method = ["Pro Klients", "New Klients", "Kontrakts", "Produkts"]
-combobox = W.Combobox(frame, values=method, width=30, state="readonly")
+combobox = Win.Combobox(frame, values=method, width=30, state="readonly")
 combobox.grid(row=2, column=1, pady=10)
 combobox.set("Nothing selected")
 combobox.bind("<<ComboboxSelected>>", selected)
 
 # Set button to end all
-button_to_end = W.Button(
+button_to_end = Win.Button(
     frame,
     text="End all",
     command=end,
