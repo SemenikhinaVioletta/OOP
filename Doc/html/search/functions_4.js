@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['method_5fpro_5fklient_0',['method_Pro_Klient',['../namespace_first_display.html#a25761cf9726fab716acda0734383b32a',1,'FirstDisplay']]]
+  ['method_5fnew_5fklient_0',['method_New_Klient',['../namespace_first_display.html#ae30d1fdf7de6d85a752f5d49a678ed70',1,'FirstDisplay']]]
 ];
