@@ -3,10 +3,10 @@ class New_Klient:
     
     def __init__(self, ID, name, phone, meil):
         print("File New_Klient: class New_Klient: method __init__ - make a newklient")
-        self.name = name
-        self.phone = phone
-        self.meil = meil
-        self.ID = ID
+        self.name = str(name)
+        self.phone = int(phone)
+        self.meil = str(meil)
+        self.ID = int(ID)
     
     def rename_newklient(self, name, phone, mail):
         print("File New_Klient: class New_Klient: method rename_newklient - rename element  ID: " + str(self.ID))
@@ -22,6 +22,10 @@ class New_Klient:
             print("\tFile New_Klient: class New_Klient: method rename_newklient - rename element, make mail: " + mail)
             self.meil = mail
             
+    def get(self):
+        return int(self.ID), str(self.name), int(self.phone), str(self.meil)
+        
     def __del__(self):
         print("File New_Klient: class New_Klient: method __del__ - delete element  ID: " + str(self.ID))
+    
         

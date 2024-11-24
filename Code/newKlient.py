@@ -29,11 +29,11 @@ def new_Klient_Tabel(window_new_klient):
         table_new_klient.column("#1", stretch=Win.NO, width=50)
 
         for line in rows:
-            klient = New.New_Klient(line[0], line[1], line[2], line[3])
-            table_new_klient.insert("", Win.END, values=klient)
+            klient = New.New_Klient(int(line[0]), str(line[1]), int(line[2]), str(line[3]))
+            table_new_klient.insert("", Win.END, values=klient.get())
             klients.append(klient)
         
-        print(klients)
+        print(*klients)
         scrollbar = Win.ttk.Scrollbar(frame, orient=Win.VERTICAL, command=table_new_klient.yview)
         
     print("File newKlient: Method new_Klient_Table - start")
@@ -46,8 +46,8 @@ def new_Klient_Tabel(window_new_klient):
     cursor.execute("SELECT * FROM Klient_new")
     rows = cursor.fetchall()
     
-    add_new_klient = Win.Button(frame, text="Add Klient")
-    add_new_klient.grid(row=2, column=1)
+    #add_new_klient = Win.Button(frame, text="Add Klient")
+    #add_new_klient.grid(row=2, column=1)
     
     make_Table()
     
