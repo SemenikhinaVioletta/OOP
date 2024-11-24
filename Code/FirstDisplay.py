@@ -1,5 +1,5 @@
 import Window as Win
-from newKlient import new_Klient_Tabel
+from newKlient import do_new_klient
 
 
 def start():
@@ -32,7 +32,7 @@ def method_New_Klient(messeg):
     new_window = Win.Button(
         frame,
         text="Open table",
-        command=start_new_klient,
+        command=lambda: start_new_klient(1),
     )
     lable = Win.Label(frame, text="For " + messeg + "you csn:")
     lable.grid(row=3, column=1, padx=10)
@@ -41,7 +41,7 @@ def method_New_Klient(messeg):
     new_otchet = Win.Button(
         frame,
         text="Make Otchet",
-        command=start_new_klient,
+        command=lambda: start_new_klient(2),
     )
     new_otchet.grid(row=4, column=2, padx=10, pady=10)
 
@@ -71,14 +71,14 @@ def selected(event):
             "not found",
         )
 
-def start_new_klient():
+def start_new_klient(flag):
     """
     The function `start_new_klient` initializes a new client window and displays the table for new clients.
     """
     print("File FirstDisplay: Method start_new_klient - start table New Klient")
     global window_new_klient
     window_new_klient = Win.Window()
-    new_Klient_Tabel(window_new_klient)
+    do_new_klient(flag, window_new_klient)
 
 
 print("File FirstDisplay: Start")
