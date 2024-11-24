@@ -1,6 +1,4 @@
-import xml.etree.ElementTree as ET
 import Window as Win
-import newKlient
 from newKlient import new_Klient_Tabel
 
 

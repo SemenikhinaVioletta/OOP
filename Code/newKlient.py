@@ -1,4 +1,3 @@
-import xml.etree.ElementTree as ET
 import Window as Win
 import sqlite3 as bd
 
@@ -27,8 +26,6 @@ def new_Klient_Tabel(window_new_klient):
             table_new_klient.insert("", Win.END, values=line)
         
         scrollbar = Win.ttk.Scrollbar(frame, orient=Win.VERTICAL, command=table_new_klient.yview)
-        table_new_klient.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=1, column=2, sticky="ns")
         
     print("File newKlient: Method new_Klient_Table - start")
     window_new_klient.title("New klient")
@@ -40,8 +37,10 @@ def new_Klient_Tabel(window_new_klient):
     cursor.execute("SELECT * FROM Klient_new")
     rows = cursor.fetchall()
     
-    make_Table()
+    add_new_klient = Win.Button(frame, text="Add Klient")
+    add_new_klient.grid(row=2, column=1)
     
+    make_Table()
     
     window_new_klient.mainloop()
 
