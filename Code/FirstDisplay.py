@@ -1,14 +1,14 @@
 import xml.etree.ElementTree as ET
 import Window as W
 import newKlient
-from newKlient import new_Klient_Start
+from newKlient import new_Klient_Tabel
 
 
 def start():
     """
     The function `start` in a Python file opens a window using `window.mainloop()`.
     """
-    print("File Python. Method start - open window")
+    print("File FirstDisplay: Method start - open window")
     window.mainloop()
 
 
@@ -16,7 +16,7 @@ def end():
     """
     The function `end` in a Python file prints a message, calls two button-click methods, and then prints another message.
     """
-    print("File Python. Method end - end all windows")
+    print("File FirstDisplay: Method end - end all windows")
     window.button_clicked()
     window_new_klient.button_clicked()
     print("\tClouse window")
@@ -33,10 +33,19 @@ def method_New_Klient(messeg):
     print("File FirstDisplay: Method Pro Klients - make button for open new window")
     new_window = W.Button(
         frame,
-        text=messeg,
+        text="Open table",
         command=start_new_klient,
     )
-    new_window.grid(row=2, column=2, padx=10)
+    lable = W.Label(frame, text="For " + messeg + "you csn:")
+    lable.grid(row=3, column=1, padx=10)
+    new_window.grid(row=3, column=2, padx=10)
+
+    new_otchet = W.Button(
+        frame,
+        text="Make Otchet",
+        command=start_new_klient,
+    )
+    new_otchet.grid(row=4, column=2, padx=10, pady=10)
 
 
 def selected(event):
@@ -58,7 +67,11 @@ def selected(event):
         elif selection == "Produkts":
         method_Prodykt(selection)"""
     else:
-        print("\tFile FirstDisplay: Method selected - selected item", selection, "not found")
+        print(
+            "\tFile FirstDisplay: Method selected - selected item",
+            selection,
+            "not found",
+        )
 
 
 def start_new_klient():
@@ -68,7 +81,7 @@ def start_new_klient():
     print("File FirstDisplay: Method start_new_klient - start table New Klient")
     global window_new_klient
     window_new_klient = W.Window()
-    new_Klient_Start(window_new_klient)
+    new_Klient_Tabel(window_new_klient)
 
 
 print("File FirstDisplay: Start")
@@ -99,7 +112,7 @@ button_to_end = W.Button(
     text="End all",
     command=end,
 )
-button_to_end.grid(row=3, column=1, pady=10)
+button_to_end.grid(row=5, column=1, pady=10)
 
 # Start program
 start()
