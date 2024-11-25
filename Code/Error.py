@@ -1,3 +1,5 @@
+from tkinter.messagebox import showerror, showwarning, showinfo
+
 class ErrorNewKlient(Exception):
     """
     Custom exception class to represent error statuses.
@@ -34,7 +36,7 @@ class ErrorNewKlient(Exception):
         """
         print("calling str")
         if self.message:
-            
+            showerror(title="ERROR IN INPUT", message=self.message)
             return "Error New klient, message: {0}".format(self.message)
         else:
             return "Error New klient, raised"

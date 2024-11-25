@@ -58,7 +58,7 @@ def new_Klient_Tabel(klients, window_new_klient):
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
-            frame_for, text="Delete", command=window_for_add.destroy
+            frame_for, text="Back", command=window_for_add.destroy
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
         window_for_add.mainloop()
