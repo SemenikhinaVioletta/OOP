@@ -30,7 +30,7 @@ class Window(Tk):
             None
         """
         super().__init__()
-        print("\tFile Window: Class Window: Method ___init__ - make window: ")
+        print("\tFile Window: Class Window: Method __init__ - make window: ")
 
     def button_clicked(self):
         """
