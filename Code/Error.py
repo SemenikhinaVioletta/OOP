@@ -15,12 +15,20 @@ class ErrorNewKlient(Exception):
     def __init__(self, *args):
         """
         Initialize the error status with an optional message.
-
+    
         Parameters:
-        *args (tuple): Variable length argument list. If provided, the first argument is considered as the error message.
-
-        Returns:
-        None
+        *args (tuple): Variable length argument list. The first argument is expected to be a string representing the error message.
+    
+        Attributes:
+        message (str): The error message associated with the error status. If no message is provided, it will be set to None.
+    
+        Raises:
+        TypeError: If the first argument is not a string.
+    
+        Examples:
+        >>> error = ErrorNewKlient("Invalid input")
+        >>> print(error.message)
+        Invalid input
         """
         if args:
             self.message = args[0]
@@ -29,10 +37,15 @@ class ErrorNewKlient(Exception):
 
     def __str__(self) -> str:
         """
-        Return a string representation of the error status.
+        String representation of the ErrorNewKlient instance.
+
+        If the error message is provided, it will display an error message box using tkinter's showerror function.
+        The error message will be formatted as "Error New klient, message: {0}".
+
+        If no error message is provided, it will simply return "Error New klient, raised".
 
         Returns:
-        str: A string representation of the error status, including the error message if provided.
+        str: The formatted error message or a default message indicating that the error was raised.
         """
         print("calling str")
         if self.message:
@@ -43,6 +56,20 @@ class ErrorNewKlient(Exception):
 
 
 def add_new_to_table(name_entry, phone_entry, email_entry):
+    """
+    This function validates and adds new client data to a table.
+
+    Parameters:
+    name_entry (tkinter.Entry): The entry widget for the client's name.
+    phone_entry (tkinter.Entry): The entry widget for the client's phone number.
+    email_entry (tkinter.Entry): The entry widget for the client's email address.
+
+    Returns:
+    None
+
+    Raises:
+    ErrorNewKlient: If any of the validation checks fail, an instance of ErrorNewKlient is raised with an appropriate error message.
+    """
     print("File Error: method add_new_to_table - start checing...")
     try:
         name = str(name_entry.get())
@@ -103,7 +130,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             for i in range(len(email)):
                 if email[i] == "@":
                     break
-            
+
             if email[i:].count(".") != 1 or email[i + 1] == "." or i >= len(email) - 3  or i == 0:
                 message = "Email must contain exactly one '.' symbol."
                 flag = 1

@@ -22,11 +22,13 @@ def end():
 
 def method_New_Klient(messeg):
     """
-    The method_New_Klient function creates a new button with a specified message and command.
+    This function creates and displays buttons for opening a new client window and making an otchet.
 
-    @param messeg The `messeg` parameter in the `method_New_Klient` function seems to be a message or text that will be
-    displayed on a button created in the function. When calling this function, you would pass the specific message or text
-    that you want to be displayed on the button as the `mes
+    Parameters:
+    messeg (str): A message string that is used to customize the label text.
+
+    Returns:
+    None. This function only creates and displays UI elements.
     """
     print("File FirstDisplay: Method Pro Klients - make button for open new window")
     new_window = Win.Button(
@@ -48,11 +50,15 @@ def method_New_Klient(messeg):
 
 def selected(event):
     """
-    The `selected` function prints the selected item from a widget and calls different methods based on the selection.
+    This function handles the selection event in the Combobox widget. It retrieves the selected item,
+    checks its value, and calls the corresponding function to display UI elements.
 
-    @param event The `event` parameter in the `selected` function is typically an event object that provides information
-    about the event that triggered the function. In this case, it seems like the function is handling an event related
-    to selecting an item in a widget (possibly a combobox).
+    Parameters:
+    event (tkinter.Event): The event object that triggered this function. It contains information about the event,
+                           such as the widget that triggered the event.
+
+    Returns:
+    None. This function only prints messages and calls other functions.
     """
     print("File FirstDisplay: Method selected - selected item", event.widget.get())
     selection = combobox.get()
@@ -73,7 +79,15 @@ def selected(event):
 
 def start_new_klient(flag):
     """
-    The function `start_new_klient` initializes a new client window and displays the table for new clients.
+    This function initializes a new client window based on the provided flag.
+
+    Parameters:
+    flag (int): An integer flag that determines the type of client window to be opened.
+                1 - Opens a new client table.
+                2 - Opens a new client report.
+
+    Returns:
+    None. This function only initializes the new client window and calls the `do_new_klient` function.
     """
     print("File FirstDisplay: Method start_new_klient - start table New Klient")
     global window_new_klient
