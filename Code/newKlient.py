@@ -1,6 +1,6 @@
 import Window as Win
 import sqlite3 as bd
-import New_klient as New
+import Class_New_klient as New
 import Error as Error
 from Error import add_new_to_table
 import Log
@@ -10,13 +10,6 @@ file_name = "File newKlient: "
 
 
 def new_Klient_Tabel(klients, window_new_klient):
-    """
-    The function `new_Klient_Start` sets up a new window for managing a PC.
-
-    @param window_new_klient The parameter `window_new_klient` is likely a Tkinter `Tk` object, which represents the main
-    window of a GUI application in Python. The function `new_Klient_Start` seems to be setting up a new window for a client
-    management application by configuring its title, size, and creating
-    """
 
     def add_new():
         Logger(
@@ -24,9 +17,7 @@ def new_Klient_Tabel(klients, window_new_klient):
             + "Method new_Klient_Table: Funktion add_new - try to add new klient",
             "",
         )
-        window_for_add = Win.Window()
-        window_for_add.title("New klient")
-        window_for_add.geometry("1000x300")
+        window_for_add = Win.Window("New klient", "1000x300")
         frame_for = Win.Frame(master=window_for_add, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
 
@@ -69,20 +60,8 @@ def new_Klient_Tabel(klients, window_new_klient):
             frame_for, text="Back", command=window_for_add.destroy
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
-        window_for_add.mainloop()
+        window_for_add.open()
 
-        """new_klient = New.New_Klient()
-        if new_klient.validate():
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO Klient_new (Name, Phone, Mail) VALUES (?,?,?)", (new_klient.get()))
-            conn.commit()
-            messagebox.showinfo("Success", "Klient was added successfully!")
-            new_klient.clear_fields()
-        else:
-            messagebox.showerror("Error", "Please, fill all required fields!")
-        cursor.close()
-        conn.close()
-        """
 
     def make_Table():
         Logger("" + "Making Table...", "")
@@ -103,8 +82,6 @@ def new_Klient_Tabel(klients, window_new_klient):
         Logger("" + "Table created", "")
 
     Logger(file_name + "Method new_Klient_Table - make a table", "")
-    window_new_klient.title("New klient")
-    window_new_klient.geometry("1000x300")
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
 
@@ -113,7 +90,7 @@ def new_Klient_Tabel(klients, window_new_klient):
 
     make_Table()
 
-    window_new_klient.mainloop()
+    open.mainloop()
 
 
 def do_new_klient(flag, window_new_klient):
@@ -134,7 +111,5 @@ def do_new_klient(flag, window_new_klient):
     else:
         # MAKE LATEST VERSION
         Logger(
-            file_name + "Invalid flag in do_new_klient",
-            "Error in create new klient",
-            "",
+            file_name + "Invalid flag in do_new_klient", "Error in create new klient"
         )
