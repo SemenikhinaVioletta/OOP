@@ -7,7 +7,6 @@ from Log import Logger
 
 file_name = "File Window"
 
-
 class Window(Tk):
 
     def __init__(self, name, geom):
@@ -17,10 +16,13 @@ class Window(Tk):
         self.name = name
         Logger(file_name, "", "Class Window - Method __init__ - make window: " + name)
 
+#--------------------------------------------------------------------------------------------------------------------------------
+# Дополнительные функции
     def open(self):
         self.mainloop()
         Logger(file_name, "", "Class Window - Method open - open window: " + self.name)
 
-    def close(self):
-        self.destroy()
-        Logger(file_name, "", "Class Window - Method close - close window: " + self.name)
+#--------------------------------------------------------------------------------------------------------------------------------
+
+    def __del__(self):
+        Logger(file_name, "", "Class Window - Method __del__ - delete window: " + self.name)

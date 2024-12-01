@@ -2,9 +2,9 @@ from tkinter.messagebox import showerror, showwarning, showinfo
 import Log
 from Log import Logger
 
+file_name = "File Error of New Klient"
 
 class ErrorNewKlient(Exception):
-    file_name = "File Error of New Klient"
 
     def __init__(self, *args):
         if args:
@@ -19,8 +19,11 @@ class ErrorNewKlient(Exception):
         else:
             return "Error New klient, raised"
 
+#--------------------------------------------------------------------------------------------------------------------------------
+# Метод для проверки вводимых значений
 
 def add_new_to_table(name_entry, phone_entry, email_entry):
+    Logger(file_name, "", "Method add_new_to_table - cheking information for new klient...")
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
@@ -49,7 +52,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("", "Goos name: " + name, "")
+            Logger("\t", "Goos name: " + name, "")
 
         if len(phone) != 11:
             message = "Phone must be 11 digits length."
@@ -67,7 +70,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("", "Goos phone:" + phone, "")
+            Logger("\t", "Goos phone:" + phone, "")
 
         if len(email) < 5:
             message = (
@@ -95,7 +98,8 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("", "Goos email:" + email, "")
+            Logger("\t", "Goos email:" + email, "")
 
     except ErrorNewKlient:
-        Logger(file_name, str(ErrorNewKlient(message)), "")
+        Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
+#--------------------------------------------------------------------------------------------------------------------------------

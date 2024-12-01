@@ -43,7 +43,7 @@ def method_New_Klient(messeg):
 def start_new_klient(flag):
     Logger(file_name, "", "Method start_new_klient - open new window...")
     windows.append(Win.Window("New klient", "1000x300"))
-    do_new_klient(flag, windows[len(windows) - 1])
+    do_new_klient(flag, windows[len(windows) - 1], windows)
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ def start():
 def end():
     Logger(file_name, "", "Method end - end main loop...")
     for window in windows:
-        window.close()
+        window.destroy()
     Logger(file_name, "", "Method end - close program...")
 
 # Делаем основное окно приложения
