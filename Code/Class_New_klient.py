@@ -7,16 +7,53 @@ file_name = "File Class_New_Klient"
 class New_Klient:
 
     def __init__(self, ID, name, phone, meil):
-        Logger(file_name, "", "Class New_Klient - Method __init__ - make New klient:" + str(ID) + " " + str(name))
+        """
+        Initialize a new New_Klient object.
+
+        Parameters:
+        ID (int): Unique identifier for the new client.
+        name (str): Name of the new client.
+        phone (int): Phone number of the new client.
+        meil (str): Email address of the new client.
+
+        Returns:
+        None
+        """
+        Logger(
+            file_name,
+            "",
+            "Class New_Klient - Method __init__ - make New klient: "
+            + str(ID)
+            + " "
+            + str(name),
+        )
         self.name = str(name)
         self.phone = int(phone)
         self.meil = str(meil)
         self.ID = int(ID)
 
-#--------------------------------------------------------------------------------------------------------------------------------
-# Дополнительные функции
+    # --------------------------------------------------------------------------------------------------------------------------------
+    # Дополнительные функции
     def rename_newklient(self, name, phone, mail):
-        Logger(file_name, "", "Class New_Klient - Method rename_newklient - rename New klient")
+        """
+        Renames the new client's details.
+
+        This method updates the name, phone number, and email address of the new client.
+        If the new details are different from the existing ones, the corresponding attributes are updated.
+
+        Parameters:
+        name (str): The new name of the client.
+        phone (int): The new phone number of the client.
+        mail (str): The new email address of the client.
+
+        Returns:
+        None
+        """
+        Logger(
+            file_name,
+            "",
+            "Class New_Klient - Method rename_newklient - rename New klient",
+        )
         if self.name != name:
             self.name = name
 
@@ -27,22 +64,87 @@ class New_Klient:
             self.meil = mail
 
     def get(self):
-        Logger(file_name, "", "Class New_Klient - Method get - get information about klient")
+        """
+        Retrieves the information about the new client.
+
+        This method returns the unique identifier, name, phone number, and email address of the new client.
+
+        Parameters:
+        None
+
+        Returns:
+        tuple: A tuple containing the following elements:
+            ID (int): The unique identifier of the new client.
+            name (str): The name of the new client.
+            phone (int): The phone number of the new client.
+            meil (str): The email address of the new client.
+        """
+        Logger(
+            file_name,
+            "",
+            "Class New_Klient - Method get - get information about klient",
+        )
         return int(self.ID), str(self.name), int(self.phone), str(self.meil)
 
     def get_name(self):
-        Logger(file_name, "", "Class New_Klient - Method get_name - get name of New klient")
+        """
+        Retrieves the name of the new client.
+
+        This method returns the name of the new client.
+
+        Parameters:
+        None
+
+        Returns:
+        str: The name of the new client.
+        """
+        Logger(
+            file_name, "", "Class New_Klient - Method get_name - get name of New klient"
+        )
         return str(self.name)
 
     def get_phone(self):
-        Logger(file_name, "", "Class New_Klient - Method get_phone - get phone of New klient")
+        """
+        Retrieves the phone number of the new client.
+
+        This method returns the phone number of the new client.
+
+        Parameters:
+        None
+
+        Returns:
+        int: The phone number of the new client.
+        """
+        Logger(
+            file_name,
+            "",
+            "Class New_Klient - Method get_phone - get phone of New klient",
+        )
         return int(self.phone)
 
     def get_mail(self):
-        Logger(file_name, "", "Class New_Klient - Method get_mail - get mail of New klient")
+        Logger(
+            file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
+        )
         return str(self.meil)
 
-#--------------------------------------------------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------------------------------------------------
 
     def __del__(self):
-        Logger(file_name, "", "Class New_Klient - Method __del__ - delete klient: " + str(self.ID),)
+        """
+        Destructor method for the New_Klient class.
+
+        This method is called when an instance of the New_Klient class is about to be destroyed.
+        It logs a message indicating the deletion of the new client with their unique identifier.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
+        Logger(
+            file_name,
+            "",
+            "Class New_Klient - Method __del__ - delete klient: " + str(self.ID),
+        )

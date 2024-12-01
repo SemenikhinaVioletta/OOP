@@ -7,14 +7,42 @@ file_name = "File Error of New Klient"
 
 
 class ErrorNewKlient(Exception):
+    """
+    Custom exception class for handling errors related to new client input.
+
+    Attributes:
+    message (str): The error message to be displayed.
+
+    Methods:
+    __init__(self, *args): Constructor to initialize the error message.
+    __str__(self) -> str: String representation of the error message.
+    """
 
     def __init__(self, *args):
+        """
+        Initialize the error message.
+
+        Parameters:
+        *args (tuple): Variable length argument list. If provided, the first argument is used as the error message.
+
+        Returns:
+        None
+        """
         if args:
             self.message = args[0]
         else:
             self.message = None
 
     def __str__(self) -> str:
+        """
+        Return the string representation of the error message.
+
+        Parameters:
+        None
+
+        Returns:
+        str: The error message with a prefix indicating the error type.
+        """
         if self.message:
             showerror(title="ERROR IN INPUT", message=self.message)
             return "Error New klient, message: {0}".format(self.message)
@@ -27,6 +55,21 @@ class ErrorNewKlient(Exception):
 
 
 def add_new_to_table(name_entry, phone_entry, email_entry, klients):
+    """
+    This function validates and adds new client information to the 'klients' list.
+
+    Parameters:
+    name_entry (tkinter.Entry): The entry widget for the client's name.
+    phone_entry (tkinter.Entry): The entry widget for the client's phone number.
+    email_entry (tkinter.Entry): The entry widget for the client's email address.
+    klients (list): The list of existing client objects.
+
+    Returns:
+    None
+
+    Raises:
+    ErrorNewKlient: If any of the input values fail validation, an ErrorNewKlient exception is raised.
+    """
     Logger(
         file_name, "", "Method add_new_to_table - cheking information for new klient..."
     )
@@ -103,9 +146,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         else:
             Logger("\t", "", "Goos email: " + email)
         if flag == 0:
-            klient = New.New_Klient(
-                len(klients), str(name), int(phone), str(email)
-            )
+            klient = New.New_Klient(len(klients), str(name), int(phone), str(email))
             klients.append(klient)
     except ErrorNewKlient:
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))

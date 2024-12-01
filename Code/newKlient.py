@@ -12,20 +12,34 @@ file_name = "File newKlient"
 # -----------------------------------------------------------------------------------------------------------------------
 # Работа со списком новых клиентов
 
-# Закрытие окна добавления нового клиента
-def close_window(window, windows):
-    Logger(
-        file_name,
-        "",
-        "Method new_Klient_Tabel - Method close_window - not add a new klient and go bak",
-    )
-    windows.remove(window)
-    window.destroy()
 
 def new_Klient_Tabel(klients, window_new_klient, windows):
+    """
+    This function creates a new client table and provides functionality to add new clients.
 
+    Parameters:
+    - klients (list): A list of New_Klient objects representing existing clients.
+    - window_new_klient (Window): The main window for displaying the new client table.
+    - windows (list): A list of all open windows.
+
+    Returns:
+    None
+    """
+    
     # Кнопка добавления нового клиента
     def add_new():
+        """Creates a new client entry interface.
+
+        This function initializes a graphical user interface for adding a new client, 
+        including fields for the client's name, phone number, and email. It also sets 
+        up buttons for saving the new client information or closing the window.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         Logger(
             file_name,
             "",
@@ -74,12 +88,26 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: close_window(windows[len(windows) - 1], windows)
+            frame_for,
+            text="Back",
+            command=lambda: windows[len(windows) - 1].close_window(windows),
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
 
     # Создание таблицы клиентов
     def make_Table():
+        """Creates and displays a table of new clients.
+
+        This function initializes a treeview widget to display client information, 
+        including their ID, name, phone number, and email. It also sets up the 
+        necessary columns and headings for the table.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         Logger(
             file_name,
             "",
@@ -105,7 +133,11 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
 
     add_new_klient = Win.Button(frame, text="Add Klient", command=add_new)
     add_new_klient.grid(row=1, column=2, padx=10, pady=10)
-    close_table = Win.Button(frame, text="Close Table", command=lambda: (close_window(window_new_klient, windows)))
+    close_table = Win.Button(
+        frame,
+        text="Close Table",
+        command=lambda: window_new_klient.close_window(windows),
+    )
     close_table.grid(row=2, column=2, padx=10, pady=10)
 
     make_Table()
@@ -116,7 +148,20 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
 
 # Начальный метод работы с новым клиентом
 def do_new_klient(flag, window_new_klient, windows):
-    Logger(file_name, "", "MeMethod o_new_klient - making list of new klient...")
+    """
+    This function manages the process of creating new clients. It retrieves existing clients from the database,
+    and based on the provided flag, it either creates a new client table or performs another operation.
+
+    Parameters:
+    - flag (int): A flag indicating the desired operation. If flag is 1, a new client table is created.
+                  Otherwise, an error is logged.
+    - window_new_klient (Window): The main window for displaying the new client table.
+    - windows (list): A list of all open windows.
+
+    Returns:
+    None
+    """
+    Logger(file_name, "", "Method o_new_klient - making list of new klient...")
     klients = []
     conn = bd.connect("Code\DateBase\Pc.db")
     cursor = conn.cursor()
