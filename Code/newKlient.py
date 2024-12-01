@@ -63,8 +63,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
             frame_for,
             text="Save",
             command=(
-                lambda: Error.add_new_to_table(name_entry, phone_entry, email_entry),
-                window_new_klient.open,
+                lambda: Error.add_new_to_table(name_entry, phone_entry, email_entry)
             ),
         )
         save_button.grid(row=4, column=1, pady=5)

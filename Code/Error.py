@@ -52,7 +52,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("\t", "Goos name: " + name, "")
+            Logger("\t", "", "Goos name: " + name)
 
         if len(phone) != 11:
             message = "Phone must be 11 digits length."
@@ -70,7 +70,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("\t", "Goos phone:" + phone, "")
+            Logger("\t", "", "Goos phone: " + phone)
 
         if len(email) < 5:
             message = (
@@ -98,7 +98,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("\t", "Goos email:" + email, "")
+            Logger("\t", "", "Goos email: " + email)
 
     except ErrorNewKlient:
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
