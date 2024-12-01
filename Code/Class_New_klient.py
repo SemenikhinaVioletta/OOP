@@ -122,25 +122,23 @@ class New_Klient:
         )
         return int(self.phone)
 
-<<<<<<< Tabnine <<<<<<<
     def get_mail(self):
-        """#+
-        Retrieves the email address of the new client.#+
-#+
-        This method returns the email address of the new client.#+
-        It also logs a message indicating the retrieval of the email address.#+
-#+
-        Parameters:#+
-        None#+
-#+
-        Returns:#+
-        str: The email address of the new client.#+
-        """#+
+        """
+        Retrieves the email address of the new client.
+
+        This method returns the email address of the new client.
+        It also logs a message indicating the retrieval of the email address.
+
+        Parameters:
+        None
+
+        Returns:
+        str: The email address of the new client.
+        """
         Logger(
             file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
         )
         return str(self.meil)
->>>>>>> Tabnine >>>>>>># {"conversationId":"dfb3845c-1038-417f-a8ef-a4180784563d","source":"instruct"}
 
     # --------------------------------------------------------------------------------------------------------------------------------
 
