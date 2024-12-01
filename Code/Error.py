@@ -1,8 +1,10 @@
 from tkinter.messagebox import showerror, showwarning, showinfo
 import Log
 from Log import Logger
+import Class_New_klient as New
 
 file_name = "File Error of New Klient"
+
 
 class ErrorNewKlient(Exception):
 
@@ -19,11 +21,15 @@ class ErrorNewKlient(Exception):
         else:
             return "Error New klient, raised"
 
-#--------------------------------------------------------------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------------------------------------------------------------
 # Метод для проверки вводимых значений
 
-def add_new_to_table(name_entry, phone_entry, email_entry):
-    Logger(file_name, "", "Method add_new_to_table - cheking information for new klient...")
+
+def add_new_to_table(name_entry, phone_entry, email_entry, klients):
+    Logger(
+        file_name, "", "Method add_new_to_table - cheking information for new klient..."
+    )
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
@@ -50,7 +56,6 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
                     break
         if flag == 1:
             raise ErrorNewKlient(message)
-            flag = 0
         else:
             Logger("\t", "", "Goos name: " + name)
 
@@ -68,7 +73,6 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
                     break
         if flag == 1:
             raise ErrorNewKlient(message)
-            flag = 0
         else:
             Logger("\t", "", "Goos phone: " + phone)
 
@@ -96,10 +100,15 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
                 flag = 1
         if flag == 1:
             raise ErrorNewKlient(message)
-            flag = 0
         else:
             Logger("\t", "", "Goos email: " + email)
-
+        if flag == 0:
+            klient = New.New_Klient(
+                len(klients), str(name), int(phone), str(email)
+            )
+            klients.append(klient)
     except ErrorNewKlient:
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
-#--------------------------------------------------------------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------------------------------------------------------------

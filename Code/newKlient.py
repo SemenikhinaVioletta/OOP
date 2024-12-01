@@ -12,21 +12,25 @@ file_name = "File newKlient"
 # -----------------------------------------------------------------------------------------------------------------------
 # Работа со списком новых клиентов
 
-def new_Klient_Tabel(klients, window_new_klient, windows):
+# Закрытие окна добавления нового клиента
+def close_window(window, windows):
+    Logger(
+        file_name,
+        "",
+        "Method new_Klient_Tabel - Method close_window - not add a new klient and go bak",
+    )
+    windows.remove(window)
+    window.destroy()
 
-    # Закрытие окна добавления нового клиента
-    def del_new(window):
-        Logger(
-            file_name,
-            "",
-            "Method new_Klient_Tabel - Method del_new - not add a new klient and go bak",
-        )
-        windows.remove(window)
-        window.destroy()
+def new_Klient_Tabel(klients, window_new_klient, windows):
 
     # Кнопка добавления нового клиента
     def add_new():
-        Logger(file_name, "", "Method new_Klient_Tabel - Method add_new - try to add a new klient...")
+        Logger(
+            file_name,
+            "",
+            "Method new_Klient_Tabel - Method add_new - try to add a new klient...",
+        )
         windows.append(Win.Window("New klient", "1000x300"))
         frame_for = Win.Frame(master=windows[len(windows) - 1], relief=Win.SUNKEN)
         frame_for.pack(expand=True)
@@ -58,23 +62,29 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         )
         email_text.grid(row=3, column=1, pady=5)
         email_entry.grid(row=3, column=2, pady=5, padx=5)
-        
+
         save_button = Win.Button(
             frame_for,
             text="Save",
             command=(
-                lambda: Error.add_new_to_table(name_entry, phone_entry, email_entry)
+                lambda: Error.add_new_to_table(
+                    name_entry, phone_entry, email_entry, klients
+                )
             ),
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: del_new(windows[len(windows) - 1])
+            frame_for, text="Back", command=lambda: close_window(windows[len(windows) - 1], windows)
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
 
     # Создание таблицы клиентов
     def make_Table():
-        Logger(file_name, "", "Method new_Klient_Tabel - Method make_Table - making table of new klient...")
+        Logger(
+            file_name,
+            "",
+            "Method new_Klient_Tabel - Method make_Table - making table of new klient...",
+        )
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_new_klient.grid(row=1, column=1, sticky="nsew")
@@ -95,8 +105,11 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
 
     add_new_klient = Win.Button(frame, text="Add Klient", command=add_new)
     add_new_klient.grid(row=1, column=2, padx=10, pady=10)
+    close_table = Win.Button(frame, text="Close Table", command=lambda: (close_window(window_new_klient, windows)))
+    close_table.grid(row=2, column=2, padx=10, pady=10)
 
     make_Table()
+
 
 # ------------------------------------------------------------------------------------------------------------------------
 
