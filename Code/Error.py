@@ -1,4 +1,9 @@
 from tkinter.messagebox import showerror, showwarning, showinfo
+import Log
+from Log import Logger
+
+file_name = "File Error: "
+
 
 class ErrorNewKlient(Exception):
     """
@@ -15,16 +20,16 @@ class ErrorNewKlient(Exception):
     def __init__(self, *args):
         """
         Initialize the error status with an optional message.
-    
+
         Parameters:
         *args (tuple): Variable length argument list. The first argument is expected to be a string representing the error message.
-    
+
         Attributes:
         message (str): The error message associated with the error status. If no message is provided, it will be set to None.
-    
+
         Raises:
         TypeError: If the first argument is not a string.
-    
+
         Examples:
         >>> error = ErrorNewKlient("Invalid input")
         >>> print(error.message)
@@ -47,7 +52,7 @@ class ErrorNewKlient(Exception):
         Returns:
         str: The formatted error message or a default message indicating that the error was raised.
         """
-        print("calling str")
+        Logger("" + "calling str", "")
         if self.message:
             showerror(title="ERROR IN INPUT", message=self.message)
             return "Error New klient, message: {0}".format(self.message)
@@ -70,7 +75,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
     Raises:
     ErrorNewKlient: If any of the validation checks fail, an instance of ErrorNewKlient is raised with an appropriate error message.
     """
-    print("File Error: method add_new_to_table - start checing...")
+    Logger(file_name + "method add_new_to_table - start checing...", "")
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
@@ -99,7 +104,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            print("\t Goos name:", name)
+            Logger("" + "Goos name: " + name, "")
 
         if len(phone) != 11:
             message = "Phone must be 11 digits length."
@@ -117,10 +122,12 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            print("\t Goos phone:", phone)
+            Logger("" + "Goos phone:" + phone, "")
 
         if len(email) < 5:
-            message ="Email must contain at least 5 characters or more, example: \"a@a.a.\""
+            message = (
+                'Email must contain at least 5 characters or more, example: "a@a.a."'
+            )
             flag = 1
         elif email.count("@") != 1:
             message = "Email must contain exactly one '@' symbol."
@@ -131,14 +138,19 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
                 if email[i] == "@":
                     break
 
-            if email[i:].count(".") != 1 or email[i + 1] == "." or i >= len(email) - 3  or i == 0:
+            if (
+                email[i:].count(".") != 1
+                or email[i + 1] == "."
+                or i >= len(email) - 3
+                or i == 0
+            ):
                 message = "Email must contain exactly one '.' symbol."
                 flag = 1
         if flag == 1:
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            print("\t Goos email:", email)
+            Logger("" + "Goos email:" + email, "")
 
     except ErrorNewKlient:
-        print("\tError:", ErrorNewKlient(message))
+        Logger(file_name + str(ErrorNewKlient(message)), "")

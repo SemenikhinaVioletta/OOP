@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['end_0',['end',['../namespace_first_display.html#aea452faf5bbe6988fa8633948178ffdf',1,'FirstDisplay.end()'],['../namespace_python.html#aa4ece48a5874fe6fcf14eb8701f79221',1,'Python.end()']]]
+  ['do_5fdoc_0',['do_doc',['../namespacedoc.html#ad4cfb003caf58030f788ab0ecbc5e14c',1,'doc']]],
+  ['do_5fnew_5fklient_1',['do_new_klient',['../namespacenew_klient.html#ae8e78f897d2f2c2a0ff1a1da4bbe8eb2',1,'newKlient']]]
 ];

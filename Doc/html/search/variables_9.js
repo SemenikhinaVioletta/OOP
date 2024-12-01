@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['window_0',['window',['../namespace_first_display.html#abe67ebc86e0179d36a2d2cd9ca9929d2',1,'FirstDisplay.window'],['../namespace_python.html#a8b71b21556031776f349e7cd5e33556b',1,'Python.window']]]
+  ['save_5fstat_0',['save_stat',['../namespace_python.html#a0cb5374b08172e4863d43f7cdb3e9835',1,'Python']]]
 ];

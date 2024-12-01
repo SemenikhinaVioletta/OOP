@@ -3,6 +3,10 @@ import sqlite3 as bd
 import New_klient as New
 import Error as Error
 from Error import add_new_to_table
+import Log
+from Log import Logger
+
+file_name = "File newKlient: "
 
 
 def new_Klient_Tabel(klients, window_new_klient):
@@ -15,8 +19,10 @@ def new_Klient_Tabel(klients, window_new_klient):
     """
 
     def add_new():
-        print(
-            "\tFile newKlient: Method new_Klient_Table: Funktion add_new - try to add new klient"
+        Logger(
+            file_name
+            + "Method new_Klient_Table: Funktion add_new - try to add new klient",
+            "",
         )
         window_for_add = Win.Window()
         window_for_add.title("New klient")
@@ -54,7 +60,9 @@ def new_Klient_Tabel(klients, window_new_klient):
         save_button = Win.Button(
             frame_for,
             text="Save",
-            command=lambda: Error.add_new_to_table(name_entry, phone_entry, email_entry),
+            command=lambda: Error.add_new_to_table(
+                name_entry, phone_entry, email_entry
+            ),
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
@@ -77,7 +85,7 @@ def new_Klient_Tabel(klients, window_new_klient):
         """
 
     def make_Table():
-        print("\tMaking Table...")
+        Logger("" + "Making Table...", "")
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_new_klient.grid(row=1, column=1, sticky="nsew")
@@ -92,9 +100,9 @@ def new_Klient_Tabel(klients, window_new_klient):
         scrollbar = Win.ttk.Scrollbar(
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
-        print("\tTable created")
+        Logger("" + "Table created", "")
 
-    print("File newKlient: Method new_Klient_Table - make a table")
+    Logger(file_name + "Method new_Klient_Table - make a table", "")
     window_new_klient.title("New klient")
     window_new_klient.geometry("1000x300")
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
@@ -109,7 +117,7 @@ def new_Klient_Tabel(klients, window_new_klient):
 
 
 def do_new_klient(flag, window_new_klient):
-    print("File newKlient: method do_new_klient - start working...")
+    Logger(file_name + "Method do_new_klient - start working...", "")
     klients = []
 
     conn = bd.connect("Code\DateBase\Pc.db")
@@ -125,4 +133,8 @@ def do_new_klient(flag, window_new_klient):
         new_Klient_Tabel(klients, window_new_klient)
     else:
         # MAKE LATEST VERSION
-        print("Error: Invalid flag in do_new_klient")
+        Logger(
+            file_name + "Invalid flag in do_new_klient",
+            "Error in create new klient",
+            "",
+        )

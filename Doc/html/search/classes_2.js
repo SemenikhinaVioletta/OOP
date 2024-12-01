@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['testcalculator_0',['TestCalculator',['../class_calculator_1_1_test_calculator.html',1,'Calculator']]]
+  ['new_5fklient_0',['New_Klient',['../class_new__klient_1_1_new___klient.html',1,'New_klient']]]
 ];

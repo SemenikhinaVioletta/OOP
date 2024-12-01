@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['newklient_0',['newKlient',['../namespacenew_klient.html',1,'']]]
+  ['log_0',['Log',['../namespace_log.html',1,'']]]
 ];

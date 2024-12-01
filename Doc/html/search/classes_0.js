@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['errorstatus_0',['ErrorStatus',['../class_error_1_1_error_status.html',1,'Error']]]
+  ['errornewklient_0',['ErrorNewKlient',['../class_error_1_1_error_new_klient.html',1,'Error']]]
 ];

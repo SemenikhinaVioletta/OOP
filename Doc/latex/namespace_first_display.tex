@@ -11,10 +11,12 @@
 \item 
 \mbox{\hyperlink{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583}{selected}} (event)
 \item 
-\mbox{\hyperlink{namespace_first_display_af7b4935341da317a4be2d8490aed8768}{start\+\_\+new\+\_\+klient}} ()
+\mbox{\hyperlink{namespace_first_display_a556cbbeed8c3bf415c0b8319205b8c61}{start\+\_\+new\+\_\+klient}} (flag)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespace_first_display_a525d15a1f88cc2042d530e74f0b9abbc}{file\+\_\+name}} = "{}File First\+Display\+: "{}
 \item 
 \mbox{\hyperlink{namespace_first_display_abe67ebc86e0179d36a2d2cd9ca9929d2}{window}} = Win.\+Window()
 \item 
@@ -53,11 +55,13 @@ First\+Display.\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 {\footnotesize\ttfamily \label{namespace_first_display_ae30d1fdf7de6d85a752f5d49a678ed70} 
 First\+Display.\+method\+\_\+\+New\+\_\+\+Klient (\begin{DoxyParamCaption}\item[{}]{messeg}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}The method_New_Klient function creates a new button with a specified message and command.
+\begin{DoxyVerb}This function creates and displays buttons for opening a new client window and making an otchet.
 
-@param messeg The `messeg` parameter in the `method_New_Klient` function seems to be a message or text that will be
-displayed on a button created in the function. When calling this function, you would pass the specific message or text
-that you want to be displayed on the button as the `mes
+Parameters:
+messeg (str): A message string that is used to customize the label text.
+
+Returns:
+None. This function only creates and displays UI elements.
 \end{DoxyVerb}
  \Hypertarget{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583}\index{FirstDisplay@{FirstDisplay}!selected@{selected}}
 \index{selected@{selected}!FirstDisplay@{FirstDisplay}}
@@ -65,11 +69,15 @@ that you want to be displayed on the button as the `mes
 {\footnotesize\ttfamily \label{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583} 
 First\+Display.\+selected (\begin{DoxyParamCaption}\item[{}]{event}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}The `selected` function prints the selected item from a widget and calls different methods based on the selection.
+\begin{DoxyVerb}This function handles the selection event in the Combobox widget. It retrieves the selected item,
+checks its value, and calls the corresponding function to display UI elements.
 
-@param event The `event` parameter in the `selected` function is typically an event object that provides information
-about the event that triggered the function. In this case, it seems like the function is handling an event related
-to selecting an item in a widget (possibly a combobox).
+Parameters:
+event (tkinter.Event): The event object that triggered this function. It contains information about the event,
+                       such as the widget that triggered the event.
+
+Returns:
+None. This function only prints messages and calls other functions.
 \end{DoxyVerb}
  \Hypertarget{namespace_first_display_aeb5236d2e0e07581ef0fa98f3f3f03a7}\index{FirstDisplay@{FirstDisplay}!start@{start}}
 \index{start@{start}!FirstDisplay@{FirstDisplay}}
@@ -79,13 +87,21 @@ First\+Display.\+start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}The function `start` in a Python file opens a window using `window.mainloop()`.
 \end{DoxyVerb}
- \Hypertarget{namespace_first_display_af7b4935341da317a4be2d8490aed8768}\index{FirstDisplay@{FirstDisplay}!start\_new\_klient@{start\_new\_klient}}
+ \Hypertarget{namespace_first_display_a556cbbeed8c3bf415c0b8319205b8c61}\index{FirstDisplay@{FirstDisplay}!start\_new\_klient@{start\_new\_klient}}
 \index{start\_new\_klient@{start\_new\_klient}!FirstDisplay@{FirstDisplay}}
 \doxysubsubsection{\texorpdfstring{start\_new\_klient()}{start\_new\_klient()}}
-{\footnotesize\ttfamily \label{namespace_first_display_af7b4935341da317a4be2d8490aed8768} 
-First\+Display.\+start\+\_\+new\+\_\+klient (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{namespace_first_display_a556cbbeed8c3bf415c0b8319205b8c61} 
+First\+Display.\+start\+\_\+new\+\_\+klient (\begin{DoxyParamCaption}\item[{}]{flag}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}The function `start_new_klient` initializes a new client window and displays the table for new clients.
+\begin{DoxyVerb}This function initializes a new client window based on the provided flag.
+
+Parameters:
+flag (int): An integer flag that determines the type of client window to be opened.
+            1 - Opens a new client table.
+            2 - Opens a new client report.
+
+Returns:
+None. This function only initializes the new client window and calls the `do_new_klient` function.
 \end{DoxyVerb}
  
 
@@ -122,6 +138,12 @@ First\+Display.\+combobox = Win.\+Combobox(\mbox{\hyperlink{namespace_first_disp
 \doxysubsubsection{\texorpdfstring{expand}{expand}}
 {\footnotesize\ttfamily \label{namespace_first_display_afb03280d34de9e4fea84c1c403afa1f2} 
 First\+Display.\+expand}
+
+\Hypertarget{namespace_first_display_a525d15a1f88cc2042d530e74f0b9abbc}\index{FirstDisplay@{FirstDisplay}!file\_name@{file\_name}}
+\index{file\_name@{file\_name}!FirstDisplay@{FirstDisplay}}
+\doxysubsubsection{\texorpdfstring{file\_name}{file\_name}}
+{\footnotesize\ttfamily \label{namespace_first_display_a525d15a1f88cc2042d530e74f0b9abbc} 
+str First\+Display.\+file\+\_\+name = "{}File First\+Display\+: "{}}
 
 \Hypertarget{namespace_first_display_ade174b2ed1c2ff2965d469ed17f772f0}\index{FirstDisplay@{FirstDisplay}!frame@{frame}}
 \index{frame@{frame}!FirstDisplay@{FirstDisplay}}

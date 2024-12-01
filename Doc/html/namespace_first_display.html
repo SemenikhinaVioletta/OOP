@@ -101,11 +101,13 @@ Functions</h2></td></tr>
 <tr class="separator:ae30d1fdf7de6d85a752f5d49a678ed70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5767c8596f4cfed0bb651eb6704e1583" id="r_a5767c8596f4cfed0bb651eb6704e1583"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5767c8596f4cfed0bb651eb6704e1583">selected</a> (event)</td></tr>
 <tr class="separator:a5767c8596f4cfed0bb651eb6704e1583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7b4935341da317a4be2d8490aed8768" id="r_af7b4935341da317a4be2d8490aed8768"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7b4935341da317a4be2d8490aed8768">start_new_klient</a> ()</td></tr>
-<tr class="separator:af7b4935341da317a4be2d8490aed8768"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a556cbbeed8c3bf415c0b8319205b8c61" id="r_a556cbbeed8c3bf415c0b8319205b8c61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a556cbbeed8c3bf415c0b8319205b8c61">start_new_klient</a> (flag)</td></tr>
+<tr class="separator:a556cbbeed8c3bf415c0b8319205b8c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a525d15a1f88cc2042d530e74f0b9abbc" id="r_a525d15a1f88cc2042d530e74f0b9abbc"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a525d15a1f88cc2042d530e74f0b9abbc">file_name</a> = &quot;File FirstDisplay: &quot;</td></tr>
+<tr class="separator:a525d15a1f88cc2042d530e74f0b9abbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe67ebc86e0179d36a2d2cd9ca9929d2" id="r_abe67ebc86e0179d36a2d2cd9ca9929d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe67ebc86e0179d36a2d2cd9ca9929d2">window</a> = Win.Window()</td></tr>
 <tr class="separator:abe67ebc86e0179d36a2d2cd9ca9929d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade174b2ed1c2ff2965d469ed17f772f0" id="r_ade174b2ed1c2ff2965d469ed17f772f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade174b2ed1c2ff2965d469ed17f772f0">frame</a> = Win.Frame(master=<a class="el" href="#abe67ebc86e0179d36a2d2cd9ca9929d2">window</a>, relief=Win.SUNKEN)</td></tr>
@@ -160,11 +162,13 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">The method_New_Klient function creates a new button with a specified message and command.
+<pre class="fragment">This function creates and displays buttons for opening a new client window and making an otchet.
 
-@param messeg The `messeg` parameter in the `method_New_Klient` function seems to be a message or text that will be
-displayed on a button created in the function. When calling this function, you would pass the specific message or text
-that you want to be displayed on the button as the `mes
+Parameters:
+messeg (str): A message string that is used to customize the label text.
+
+Returns:
+None. This function only creates and displays UI elements.
 </pre> 
 </div>
 </div>
@@ -182,11 +186,15 @@ that you want to be displayed on the button as the `mes
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">The `selected` function prints the selected item from a widget and calls different methods based on the selection.
+<pre class="fragment">This function handles the selection event in the Combobox widget. It retrieves the selected item,
+checks its value, and calls the corresponding function to display UI elements.
 
-@param event The `event` parameter in the `selected` function is typically an event object that provides information
-about the event that triggered the function. In this case, it seems like the function is handling an event related
-to selecting an item in a widget (possibly a combobox).
+Parameters:
+event (tkinter.Event): The event object that triggered this function. It contains information about the event,
+                       such as the widget that triggered the event.
+
+Returns:
+None. This function only prints messages and calls other functions.
 </pre> 
 </div>
 </div>
@@ -208,8 +216,8 @@ to selecting an item in a widget (possibly a combobox).
 </pre> 
 </div>
 </div>
-<a id="af7b4935341da317a4be2d8490aed8768" name="af7b4935341da317a4be2d8490aed8768"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7b4935341da317a4be2d8490aed8768">&#9670;&#160;</a></span>start_new_klient()</h2>
+<a id="a556cbbeed8c3bf415c0b8319205b8c61" name="a556cbbeed8c3bf415c0b8319205b8c61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a556cbbeed8c3bf415c0b8319205b8c61">&#9670;&#160;</a></span>start_new_klient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,12 +225,20 @@ to selecting an item in a widget (possibly a combobox).
         <tr>
           <td class="memname">FirstDisplay.start_new_klient </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>flag</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">The function `start_new_klient` initializes a new client window and displays the table for new clients.
+<pre class="fragment">This function initializes a new client window based on the provided flag.
+
+Parameters:
+flag (int): An integer flag that determines the type of client window to be opened.
+            1 - Opens a new client table.
+            2 - Opens a new client report.
+
+Returns:
+None. This function only initializes the new client window and calls the `do_new_klient` function.
 </pre> 
 </div>
 </div>
@@ -282,6 +298,20 @@ to selecting an item in a widget (possibly a combobox).
       <table class="memname">
         <tr>
           <td class="memname">FirstDisplay.expand</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a525d15a1f88cc2042d530e74f0b9abbc" name="a525d15a1f88cc2042d530e74f0b9abbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a525d15a1f88cc2042d530e74f0b9abbc">&#9670;&#160;</a></span>file_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">str FirstDisplay.file_name = &quot;File FirstDisplay: &quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">

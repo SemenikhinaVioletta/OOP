@@ -1,12 +1,16 @@
 import Window as Win
 from newKlient import do_new_klient
+import Log
+from Log import Logger
+
+file_name = "File FirstDisplay: "
 
 
 def start():
     """
     The function `start` in a Python file opens a window using `window.mainloop()`.
     """
-    print("File FirstDisplay: Method start - open window")
+    Logger(file_name + "Method start - open window", "")
     window.mainloop()
 
 
@@ -14,10 +18,10 @@ def end():
     """
     The function `end` in a Python file prints a message, calls two button-click methods, and then prints another message.
     """
-    print("File FirstDisplay: Method end - end all windows")
     window.button_clicked()
     window_new_klient.button_clicked()
-    print("\tClouse window")
+    Logger(file_name + "Method end - end all windows", "")
+    Logger("" + "\tClouse window", "")
 
 
 def method_New_Klient(messeg):
@@ -30,7 +34,7 @@ def method_New_Klient(messeg):
     Returns:
     None. This function only creates and displays UI elements.
     """
-    print("File FirstDisplay: Method Pro Klients - make button for open new window")
+    Logger(file_name + "Method Pro Klients - make button for open new window", "")
     new_window = Win.Button(
         frame,
         text="Open table",
@@ -60,7 +64,7 @@ def selected(event):
     Returns:
     None. This function only prints messages and calls other functions.
     """
-    print("File FirstDisplay: Method selected - selected item", event.widget.get())
+    Logger(file_name + "Method selected - selected item " + event.widget.get(), "")
     selection = combobox.get()
     if selection == "New Klients":
         method_New_Klient(selection)
@@ -71,11 +75,11 @@ def selected(event):
         elif selection == "Produkts":
         method_Prodykt(selection)"""
     else:
-        print(
-            "\tFile FirstDisplay: Method selected - selected item",
-            selection,
-            "not found",
+        Logger(
+            file_name + "Method selected - selected item " + selection + " not found",
+            "",
         )
+
 
 def start_new_klient(flag):
     """
@@ -89,13 +93,13 @@ def start_new_klient(flag):
     Returns:
     None. This function only initializes the new client window and calls the `do_new_klient` function.
     """
-    print("File FirstDisplay: Method start_new_klient - start table New Klient")
+    Logger(file_name + "Method start_new_klient - start table New Klient", "")
     global window_new_klient
     window_new_klient = Win.Window()
     do_new_klient(flag, window_new_klient)
 
 
-print("File FirstDisplay: Start")
+Logger(file_name + "Start", "")
 
 """The code snippet you provided is setting up the initial window and user interface
 elements for a program. Here's a breakdown of what each part of the code is doing:"""
@@ -127,4 +131,3 @@ button_to_end.grid(row=5, column=1, pady=10)
 
 # Start program
 start()
-

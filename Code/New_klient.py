@@ -1,6 +1,11 @@
+import Log
+from Log import Logger
+
+file_name = "File New_Klient: "
+
+
 class New_Klient:
-    
-    
+
     def __init__(self, ID, name, phone, meil):
         """
         Initialize a new New_Klient object with given ID, name, phone, and meil.
@@ -14,12 +19,12 @@ class New_Klient:
         Returns:
         None
         """
-        print("File New_Klient: class New_Klient: method __init__ - make a newklient")
+        Logger(file_name + "class New_Klient: method __init__ - make a newklient", "")
         self.name = str(name)
         self.phone = int(phone)
         self.meil = str(meil)
         self.ID = int(ID)
-    
+
     def rename_newklient(self, name, phone, mail):
         """
         Renames the client's name, phone number, and email address.
@@ -35,19 +40,39 @@ class New_Klient:
         Returns:
         None
         """
-        print("File New_Klient: class New_Klient: method rename_newklient - rename element  ID: " + str(self.ID))
-        if(self.name != name):
-            print("\tFile New_Klient: class New_Klient: method rename_newklient - rename element, make name: " + name)
+        Logger(
+            file_name
+            + "class New_Klient: method rename_newklient - rename element  ID: "
+            + str(self.ID),
+            "",
+        )
+        if self.name != name:
+            Logger(
+                file_name
+                + "class New_Klient: method rename_newklient - rename element, make name: "
+                + name,
+                "",
+            )
             self.name = name
 
-        if(self.phone != phone):
-            print("\tFile New_Klient: class New_Klient: method rename_newklient - rename element, make phone: " + phone)
+        if self.phone != phone:
+            Logger(
+                file_name
+                + "class New_Klient: method rename_newklient - rename element, make phone: "
+                + phone,
+                "",
+            )
             self.phone = phone
 
-        if(self.meil != mail):
-            print("\tFile New_Klient: class New_Klient: method rename_newklient - rename element, make mail: " + mail)
+        if self.meil != mail:
+            Logger(
+                file_name
+                + "class New_Klient: method rename_newklient - rename element, make mail: "
+                + mail,
+                "",
+            )
             self.meil = mail
-            
+
     def get(self):
         """
         Retrieves the client's ID, name, phone number, and email address.
@@ -61,7 +86,7 @@ class New_Klient:
         tuple: A tuple containing the client's ID (int), name (str), phone number (int), and email address (str).
         """
         return int(self.ID), str(self.name), int(self.phone), str(self.meil)
-    
+
     def get_name(self):
         """
         Retrieves the client's name.
@@ -75,7 +100,7 @@ class New_Klient:
         str: The client's name.
         """
         return str(self.name)
-    
+
     def get_phone(self):
         """
         Retrieves the client's phone number.
@@ -103,7 +128,7 @@ class New_Klient:
         str: The client's email address.
         """
         return str(self.meil)
-        
+
     def __del__(self):
         """
         Destructor method for the New_Klient class.
@@ -117,6 +142,9 @@ class New_Klient:
         Returns:
         None
         """
-        print("File New_Klient: class New_Klient: method __del__ - delete element  ID: " + str(self.ID))
-    
-        
+        Logger(
+            file_name
+            + "class New_Klient: method __del__ - delete element  ID: "
+            + str(self.ID),
+            "",
+        )

@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['pady_0',['pady',['../namespace_first_display.html#a93078c70c171d05923bb9cc984d50d8c',1,'FirstDisplay.pady'],['../namespace_python.html#aa7f528246ea0caaa90d13cc7a89a29a2',1,'Python.pady']]]
+  ['meil_0',['meil',['../class_new__klient_1_1_new___klient.html#a5a343f79d24720129922e8485ccf5d58',1,'New_klient::New_Klient']]],
+  ['message_1',['message',['../class_error_1_1_error_new_klient.html#a55d8cd3afc4646f29bc8369de8331d8f',1,'Error.ErrorNewKlient.message'],['../class_error_1_1_error_new_klient.html#ade7c337ea3059e56675c6f0ede2bb463',1,'Error.ErrorNewKlient.message']]],
+  ['method_2',['method',['../namespace_first_display.html#afa97e423be2810b21f56863f5d6ad606',1,'FirstDisplay']]],
+  ['method_5flbl_3',['method_lbl',['../namespace_first_display.html#aa79fd347551e2b29b448f03362c1ccce',1,'FirstDisplay']]]
 ];

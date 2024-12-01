@@ -2,6 +2,10 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
+import Log
+from Log import Logger
+
+file_name = "File Window: "
 
 
 class Window(Tk):
@@ -30,7 +34,7 @@ class Window(Tk):
             None
         """
         super().__init__()
-        print("\tFile Window: Class Window: Method __init__ - make window: ")
+        Logger(file_name + "Class Window: Method __init__ - make window: ", "")
 
     def button_clicked(self):
         """
@@ -42,5 +46,5 @@ class Window(Tk):
         Returns:
             None
         """
-        print("\tFile Window: Class Window: Method button_clicked - destroy window: ")
+        Logger(file_name + "Class Window: Method button_clicked - destroy window: ", "")
         self.destroy()
