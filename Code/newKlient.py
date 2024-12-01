@@ -6,17 +6,12 @@ from Error import add_new_to_table
 import Log
 from Log import Logger
 
-file_name = "File newKlient: "
+file_name = "File newKlient"
 
 
 def new_Klient_Tabel(klients, window_new_klient):
 
     def add_new():
-        Logger(
-            file_name
-            + "Method new_Klient_Table: Funktion add_new - try to add new klient",
-            "",
-        )
         window_for_add = Win.Window("New klient", "1000x300")
         frame_for = Win.Frame(master=window_for_add, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
@@ -64,7 +59,6 @@ def new_Klient_Tabel(klients, window_new_klient):
 
 
     def make_Table():
-        Logger("" + "Making Table...", "")
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_new_klient.grid(row=1, column=1, sticky="nsew")
@@ -79,9 +73,7 @@ def new_Klient_Tabel(klients, window_new_klient):
         scrollbar = Win.ttk.Scrollbar(
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
-        Logger("" + "Table created", "")
 
-    Logger(file_name + "Method new_Klient_Table - make a table", "")
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
 
@@ -94,7 +86,6 @@ def new_Klient_Tabel(klients, window_new_klient):
 
 
 def do_new_klient(flag, window_new_klient):
-    Logger(file_name + "Method do_new_klient - start working...", "")
     klients = []
 
     conn = bd.connect("Code\DateBase\Pc.db")
@@ -110,6 +101,4 @@ def do_new_klient(flag, window_new_klient):
         new_Klient_Tabel(klients, window_new_klient)
     else:
         # MAKE LATEST VERSION
-        Logger(
-            file_name + "Invalid flag in do_new_klient", "Error in create new klient"
-        )
+        Logger(file_name, "Error in create new klient", "Invalid flag in do_new_klient")

@@ -3,22 +3,24 @@ from newKlient import do_new_klient
 import Log
 from Log import Logger
 
-file_name = "File FirstDisplay: "
+file_name = "File FirstDisplay"
 
+# Переход к функциям открывающим возможность работы с данными 
+def selected(event):
+    Logger(file_name, "", "Method selected - making element to do work...")
+    selection = combobox.get()
+    if selection == "New Klients":
+        method_New_Klient(selection)
+        Logger(file_name, "", "Method selected - we tern it! we hawe element to do work with " + selection)
+    else:
+        Logger(file_name, "Error in add new element", "Method selected - selected item " + selection + " not found")
 
-# Старт приложение
-def start():
-    windows[0].open()
-
-
-# Конец приложения
-def end():
-    for window in windows:
-        window.close()
-
+#--------------------------------------------------------------------------------------------------------------------------------
+# Работа с новым клиентом
 
 # Добавление элементов для перехода на элементы таблиц
 def method_New_Klient(messeg):
+    Logger("", "", "Method ethod_New_Klient - making element...")
     new_window = Win.Button(
         frame,
         text="Open table",
@@ -37,26 +39,38 @@ def method_New_Klient(messeg):
     new_otchet.grid(row=4, column=2, padx=10, pady=10)
 
 
-# ПВызовереход к функциям определяющим след действия
-def selected(event):
-    selection = combobox.get()
-    if selection == "New Klients":
-        method_New_Klient(selection)
-    else:
-        Logger(file_name + "Method selected - selected item " + selection + " not found", "Error in add new element")
-
-
-# Открыть окно пового клиента
+# Открыть окно нового клиента
 def start_new_klient(flag):
+    Logger(file_name, "", "Method start_new_klient - open new window...")
     windows.append(Win.Window("New klient", "1000x300"))
     do_new_klient(flag, windows[len(windows) - 1])
 
+#--------------------------------------------------------------------------------------------------------------------------------
+
+
+# Старт приложение
+def start():
+    Logger(file_name, "", "Method start - start main loop...")
+    windows[0].open()
+
+
+# Конец приложения
+def end():
+    Logger(file_name, "", "Method end - end main loop...")
+    for window in windows:
+        window.close()
+    Logger(file_name, "", "Method end - close program...")
+
 # Делаем основное окно приложения
+Logger(file_name, "", "start program...")
 windows = []
 windows.append(Win.Window("PC for management", "600x400"))
+
+Logger(file_name, "", "make frame...")
 frame = Win.Frame(master=windows[0], relief=Win.SUNKEN)
 frame.pack(expand=True)
 
+Logger(file_name, "", "make box...")
 method_lbl = Win.Label(frame, text="Select the table you will work with")
 method_lbl.grid(row=1, column=1)
 
@@ -66,6 +80,7 @@ combobox.grid(row=2, column=1, pady=10)
 combobox.set("Nothing selected")
 combobox.bind("<<ComboboxSelected>>", selected)
 
+Logger(file_name, "", "make button to end")
 button_to_end = Win.Button(
     frame,
     text="End all",

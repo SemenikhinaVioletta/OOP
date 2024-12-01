@@ -2,57 +2,17 @@ from tkinter.messagebox import showerror, showwarning, showinfo
 import Log
 from Log import Logger
 
-file_name = "File Error: "
-
 
 class ErrorNewKlient(Exception):
-    """
-    Custom exception class to represent error statuses.
-
-    Attributes:
-    message (str): The error message associated with the error status.
-
-    Methods:
-    __init__(self, *args): Constructor to initialize the error status with an optional message.
-    __str__(self) -> str: String representation of the error status.
-    """
+    file_name = "File Error of New Klient"
 
     def __init__(self, *args):
-        """
-        Initialize the error status with an optional message.
-
-        Parameters:
-        *args (tuple): Variable length argument list. The first argument is expected to be a string representing the error message.
-
-        Attributes:
-        message (str): The error message associated with the error status. If no message is provided, it will be set to None.
-
-        Raises:
-        TypeError: If the first argument is not a string.
-
-        Examples:
-        >>> error = ErrorNewKlient("Invalid input")
-        >>> print(error.message)
-        Invalid input
-        """
         if args:
             self.message = args[0]
         else:
             self.message = None
 
     def __str__(self) -> str:
-        """
-        String representation of the ErrorNewKlient instance.
-
-        If the error message is provided, it will display an error message box using tkinter's showerror function.
-        The error message will be formatted as "Error New klient, message: {0}".
-
-        If no error message is provided, it will simply return "Error New klient, raised".
-
-        Returns:
-        str: The formatted error message or a default message indicating that the error was raised.
-        """
-        Logger("" + "calling str", "")
         if self.message:
             showerror(title="ERROR IN INPUT", message=self.message)
             return "Error New klient, message: {0}".format(self.message)
@@ -61,21 +21,6 @@ class ErrorNewKlient(Exception):
 
 
 def add_new_to_table(name_entry, phone_entry, email_entry):
-    """
-    This function validates and adds new client data to a table.
-
-    Parameters:
-    name_entry (tkinter.Entry): The entry widget for the client's name.
-    phone_entry (tkinter.Entry): The entry widget for the client's phone number.
-    email_entry (tkinter.Entry): The entry widget for the client's email address.
-
-    Returns:
-    None
-
-    Raises:
-    ErrorNewKlient: If any of the validation checks fail, an instance of ErrorNewKlient is raised with an appropriate error message.
-    """
-    Logger(file_name + "method add_new_to_table - start checing...", "")
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
@@ -104,7 +49,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("" + "Goos name: " + name, "")
+            Logger("", "Goos name: " + name, "")
 
         if len(phone) != 11:
             message = "Phone must be 11 digits length."
@@ -122,7 +67,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("" + "Goos phone:" + phone, "")
+            Logger("", "Goos phone:" + phone, "")
 
         if len(email) < 5:
             message = (
@@ -150,7 +95,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(message)
             flag = 0
         else:
-            Logger("" + "Goos email:" + email, "")
+            Logger("", "Goos email:" + email, "")
 
     except ErrorNewKlient:
-        Logger(file_name + str(ErrorNewKlient(message)), "")
+        Logger(file_name, str(ErrorNewKlient(message)), "")
