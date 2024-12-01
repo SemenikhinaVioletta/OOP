@@ -23,14 +23,14 @@ str \mbox{\hyperlink{class_error_1_1_error_new_klient_ade7c337ea3059e56675c6f0ed
 
 
 \doxysubsection{Detailed Description}
-\begin{DoxyVerb}Custom exception class to represent error statuses.
+\begin{DoxyVerb}Custom exception class for handling errors related to new client input.
 
 Attributes:
-message (str): The error message associated with the error status.
+message (str): The error message to be displayed.
 
 Methods:
-__init__(self, *args): Constructor to initialize the error status with an optional message.
-__str__(self) -> str: String representation of the error status.
+__init__(self, *args): Constructor to initialize the error message.
+__str__(self) -> str: String representation of the error message.
 \end{DoxyVerb}
  
 
@@ -41,21 +41,13 @@ __str__(self) -> str: String representation of the error status.
 {\footnotesize\ttfamily \label{class_error_1_1_error_new_klient_a81f6e8c1e3ac6cc2d48cf5b3491d5d92} 
 Error.\+Error\+New\+Klient.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\texorpdfstring{$\ast$}{*}}]{args}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Initialize the error status with an optional message.
+\begin{DoxyVerb}Initialize the error message.
 
 Parameters:
-*args (tuple): Variable length argument list. The first argument is expected to be a string representing the error message.
+*args (tuple): Variable length argument list. If provided, the first argument is used as the error message.
 
-Attributes:
-message (str): The error message associated with the error status. If no message is provided, it will be set to None.
-
-Raises:
-TypeError: If the first argument is not a string.
-
-Examples:
->>> error = ErrorNewKlient("Invalid input")
->>> print(error.message)
-Invalid input
+Returns:
+None
 \end{DoxyVerb}
  
 
@@ -66,15 +58,13 @@ Invalid input
 {\footnotesize\ttfamily \label{class_error_1_1_error_new_klient_a7d7c3dbf082838120bf059668cdd8489} 
  str Error.\+Error\+New\+Klient.\+\_\+\+\_\+str\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}String representation of the ErrorNewKlient instance.
+\begin{DoxyVerb}Return the string representation of the error message.
 
-If the error message is provided, it will display an error message box using tkinter's showerror function.
-The error message will be formatted as "Error New klient, message: {0}".
-
-If no error message is provided, it will simply return "Error New klient, raised".
+Parameters:
+None
 
 Returns:
-str: The formatted error message or a default message indicating that the error was raised.
+str: The error message with a prefix indicating the error type.
 \end{DoxyVerb}
  
 

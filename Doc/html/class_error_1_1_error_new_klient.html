@@ -117,14 +117,14 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ade7c337ea3059e56675c6f0ede2bb463"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">Custom exception class to represent error statuses.
+<div class="textblock"><pre class="fragment">Custom exception class for handling errors related to new client input.
 
 Attributes:
-message (str): The error message associated with the error status.
+message (str): The error message to be displayed.
 
 Methods:
-__init__(self, *args): Constructor to initialize the error status with an optional message.
-__str__(self) -&gt; str: String representation of the error status.
+__init__(self, *args): Constructor to initialize the error message.
+__str__(self) -&gt; str: String representation of the error message.
 </pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a81f6e8c1e3ac6cc2d48cf5b3491d5d92" name="a81f6e8c1e3ac6cc2d48cf5b3491d5d92"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a81f6e8c1e3ac6cc2d48cf5b3491d5d92">&#9670;&#160;</a></span>__init__()</h2>
@@ -144,21 +144,13 @@ __str__(self) -&gt; str: String representation of the error status.
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Initialize the error status with an optional message.
+<pre class="fragment">Initialize the error message.
 
 Parameters:
-*args (tuple): Variable length argument list. The first argument is expected to be a string representing the error message.
+*args (tuple): Variable length argument list. If provided, the first argument is used as the error message.
 
-Attributes:
-message (str): The error message associated with the error status. If no message is provided, it will be set to None.
-
-Raises:
-TypeError: If the first argument is not a string.
-
-Examples:
-&gt;&gt;&gt; error = ErrorNewKlient("Invalid input")
-&gt;&gt;&gt; print(error.message)
-Invalid input
+Returns:
+None
 </pre> 
 </div>
 </div>
@@ -177,15 +169,13 @@ Invalid input
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">String representation of the ErrorNewKlient instance.
+<pre class="fragment">Return the string representation of the error message.
 
-If the error message is provided, it will display an error message box using tkinter's showerror function.
-The error message will be formatted as "Error New klient, message: {0}".
-
-If no error message is provided, it will simply return "Error New klient, raised".
+Parameters:
+None
 
 Returns:
-str: The formatted error message or a default message indicating that the error was raised.
+str: The error message with a prefix indicating the error type.
 </pre> 
 </div>
 </div>

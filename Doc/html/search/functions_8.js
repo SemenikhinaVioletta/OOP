@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rename_5fnewklient_0',['rename_newklient',['../class_new__klient_1_1_new___klient.html#a8697c405a1af09358a206ef4f7b26719',1,'New_klient::New_Klient']]]
+  ['open_0',['open',['../class_window_1_1_window.html#aaf40f375b2ede24e5e0c608ae89fdcb5',1,'Window::Window']]]
 ];

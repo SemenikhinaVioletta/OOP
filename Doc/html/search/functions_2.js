@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['button_5fclicked_0',['button_clicked',['../class_window_1_1_window.html#ad5e77e3b782ac42357bd2aa83df5bcee',1,'Window::Window']]]
+  ['close_5fwindow_0',['close_window',['../class_window_1_1_window.html#a3dd81723ce84f14a123f95bf7350991d',1,'Window::Window']]]
 ];

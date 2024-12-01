@@ -97,12 +97,28 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa366d3235e7e6480c85b1eaa588568b2" id="r_aa366d3235e7e6480c85b1eaa588568b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa366d3235e7e6480c85b1eaa588568b2">__init__</a> (self, message, errors)</td></tr>
-<tr class="separator:aa366d3235e7e6480c85b1eaa588568b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad709939f58cbd5720807e32230e61c17" id="r_ad709939f58cbd5720807e32230e61c17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad709939f58cbd5720807e32230e61c17">__init__</a> (self, name, errors, message)</td></tr>
+<tr class="separator:ad709939f58cbd5720807e32230e61c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa366d3235e7e6480c85b1eaa588568b2" name="aa366d3235e7e6480c85b1eaa588568b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa366d3235e7e6480c85b1eaa588568b2">&#9670;&#160;</a></span>__init__()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">A class to handle logging messages with different levels.
+
+Attributes
+----------
+name : str
+    The name of the logger.
+errors : str
+    The error message to be logged.
+message : str
+    The main message to be logged.
+
+Methods
+-------
+__init__(self, name, errors, message)
+    Initializes the Logger object and logs the messages based on the presence of errors.
+</pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad709939f58cbd5720807e32230e61c17" name="ad709939f58cbd5720807e32230e61c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad709939f58cbd5720807e32230e61c17">&#9670;&#160;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -115,16 +131,35 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>errors</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>errors</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>message</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<pre class="fragment">Initializes the Logger object and logs the messages based on the presence of errors.
 
+Parameters
+----------
+name : str
+    The name of the logger.
+errors : str
+    The error message to be logged.
+message : str
+    The main message to be logged.
+
+Returns
+-------
+None
+</pre> 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

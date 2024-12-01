@@ -3,35 +3,51 @@
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{namespacenew_klient_aa0a97a096e7ff9683709e8d867e411fa}{new\+\_\+\+Klient\+\_\+\+Tabel}} (klients, window\+\_\+new\+\_\+klient)
+\mbox{\hyperlink{namespacenew_klient_a1541d568dfab9b3e24d93afcbf6ca74e}{new\+\_\+\+Klient\+\_\+\+Tabel}} (klients, window\+\_\+new\+\_\+klient, windows)
 \item 
-\mbox{\hyperlink{namespacenew_klient_ae8e78f897d2f2c2a0ff1a1da4bbe8eb2}{do\+\_\+new\+\_\+klient}} (flag, window\+\_\+new\+\_\+klient)
+\mbox{\hyperlink{namespacenew_klient_a0b65abf3b765654b2f52fc136a55c88b}{do\+\_\+new\+\_\+klient}} (flag, window\+\_\+new\+\_\+klient, windows)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-str \mbox{\hyperlink{namespacenew_klient_a4f40d9b1f76f4f76ef4a237c66e06cc4}{file\+\_\+name}} = "{}File new\+Klient\+: "{}
+str \mbox{\hyperlink{namespacenew_klient_a4f40d9b1f76f4f76ef4a237c66e06cc4}{file\+\_\+name}} = "{}File new\+Klient"{}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{namespacenew_klient_ae8e78f897d2f2c2a0ff1a1da4bbe8eb2}\index{newKlient@{newKlient}!do\_new\_klient@{do\_new\_klient}}
+\Hypertarget{namespacenew_klient_a0b65abf3b765654b2f52fc136a55c88b}\index{newKlient@{newKlient}!do\_new\_klient@{do\_new\_klient}}
 \index{do\_new\_klient@{do\_new\_klient}!newKlient@{newKlient}}
 \doxysubsubsection{\texorpdfstring{do\_new\_klient()}{do\_new\_klient()}}
-{\footnotesize\ttfamily \label{namespacenew_klient_ae8e78f897d2f2c2a0ff1a1da4bbe8eb2} 
-new\+Klient.\+do\+\_\+new\+\_\+klient (\begin{DoxyParamCaption}\item[{}]{flag}{, }\item[{}]{window\+\_\+new\+\_\+klient}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{namespacenew_klient_a0b65abf3b765654b2f52fc136a55c88b} 
+new\+Klient.\+do\+\_\+new\+\_\+klient (\begin{DoxyParamCaption}\item[{}]{flag}{, }\item[{}]{window\+\_\+new\+\_\+klient}{, }\item[{}]{windows}{}\end{DoxyParamCaption})}
 
-\Hypertarget{namespacenew_klient_aa0a97a096e7ff9683709e8d867e411fa}\index{newKlient@{newKlient}!new\_Klient\_Tabel@{new\_Klient\_Tabel}}
+\begin{DoxyVerb}This function manages the process of creating new clients. It retrieves existing clients from the database,
+and based on the provided flag, it either creates a new client table or performs another operation.
+
+Parameters:
+- flag (int): A flag indicating the desired operation. If flag is 1, a new client table is created.
+              Otherwise, an error is logged.
+- window_new_klient (Window): The main window for displaying the new client table.
+- windows (list): A list of all open windows.
+
+Returns:
+None
+\end{DoxyVerb}
+ \Hypertarget{namespacenew_klient_a1541d568dfab9b3e24d93afcbf6ca74e}\index{newKlient@{newKlient}!new\_Klient\_Tabel@{new\_Klient\_Tabel}}
 \index{new\_Klient\_Tabel@{new\_Klient\_Tabel}!newKlient@{newKlient}}
 \doxysubsubsection{\texorpdfstring{new\_Klient\_Tabel()}{new\_Klient\_Tabel()}}
-{\footnotesize\ttfamily \label{namespacenew_klient_aa0a97a096e7ff9683709e8d867e411fa} 
-new\+Klient.\+new\+\_\+\+Klient\+\_\+\+Tabel (\begin{DoxyParamCaption}\item[{}]{klients}{, }\item[{}]{window\+\_\+new\+\_\+klient}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{namespacenew_klient_a1541d568dfab9b3e24d93afcbf6ca74e} 
+new\+Klient.\+new\+\_\+\+Klient\+\_\+\+Tabel (\begin{DoxyParamCaption}\item[{}]{klients}{, }\item[{}]{window\+\_\+new\+\_\+klient}{, }\item[{}]{windows}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}The function `new_Klient_Start` sets up a new window for managing a PC.
+\begin{DoxyVerb}This function creates a new client table and provides functionality to add new clients.
 
-@param window_new_klient The parameter `window_new_klient` is likely a Tkinter `Tk` object, which represents the main
-window of a GUI application in Python. The function `new_Klient_Start` seems to be setting up a new window for a client
-management application by configuring its title, size, and creating
+Parameters:
+- klients (list): A list of New_Klient objects representing existing clients.
+- window_new_klient (Window): The main window for displaying the new client table.
+- windows (list): A list of all open windows.
+
+Returns:
+None
 \end{DoxyVerb}
  
 
@@ -40,5 +56,5 @@ management application by configuring its title, size, and creating
 \index{file\_name@{file\_name}!newKlient@{newKlient}}
 \doxysubsubsection{\texorpdfstring{file\_name}{file\_name}}
 {\footnotesize\ttfamily \label{namespacenew_klient_a4f40d9b1f76f4f76ef4a237c66e06cc4} 
-str new\+Klient.\+file\+\_\+name = "{}File new\+Klient\+: "{}}
+str new\+Klient.\+file\+\_\+name = "{}File new\+Klient"{}}
 

@@ -3,24 +3,24 @@
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{namespace_first_display_aeb5236d2e0e07581ef0fa98f3f3f03a7}{start}} ()
-\item 
-\mbox{\hyperlink{namespace_first_display_aea452faf5bbe6988fa8633948178ffdf}{end}} ()
+\mbox{\hyperlink{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583}{selected}} (event)
 \item 
 \mbox{\hyperlink{namespace_first_display_ae30d1fdf7de6d85a752f5d49a678ed70}{method\+\_\+\+New\+\_\+\+Klient}} (messeg)
 \item 
-\mbox{\hyperlink{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583}{selected}} (event)
-\item 
 \mbox{\hyperlink{namespace_first_display_a556cbbeed8c3bf415c0b8319205b8c61}{start\+\_\+new\+\_\+klient}} (flag)
+\item 
+\mbox{\hyperlink{namespace_first_display_aeb5236d2e0e07581ef0fa98f3f3f03a7}{start}} ()
+\item 
+\mbox{\hyperlink{namespace_first_display_aea452faf5bbe6988fa8633948178ffdf}{end}} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-str \mbox{\hyperlink{namespace_first_display_a525d15a1f88cc2042d530e74f0b9abbc}{file\+\_\+name}} = "{}File First\+Display\+: "{}
+str \mbox{\hyperlink{namespace_first_display_a525d15a1f88cc2042d530e74f0b9abbc}{file\+\_\+name}} = "{}File First\+Display"{}
 \item 
-\mbox{\hyperlink{namespace_first_display_abe67ebc86e0179d36a2d2cd9ca9929d2}{window}} = Win.\+Window()
+list \mbox{\hyperlink{namespace_first_display_ab99675b2b1325ba60575d7bfafa0db7b}{windows}} = \mbox{[}$\,$\mbox{]}
 \item 
-\mbox{\hyperlink{namespace_first_display_ade174b2ed1c2ff2965d469ed17f772f0}{frame}} = Win.\+Frame(master=\mbox{\hyperlink{namespace_first_display_abe67ebc86e0179d36a2d2cd9ca9929d2}{window}}, relief=Win.\+SUNKEN)
+\mbox{\hyperlink{namespace_first_display_ade174b2ed1c2ff2965d469ed17f772f0}{frame}} = Win.\+Frame(master=\mbox{\hyperlink{namespace_first_display_ab99675b2b1325ba60575d7bfafa0db7b}{windows}}\mbox{[}0\mbox{]}, relief=Win.\+SUNKEN)
 \item 
 \mbox{\hyperlink{namespace_first_display_afb03280d34de9e4fea84c1c403afa1f2}{expand}}
 \item 
@@ -47,7 +47,16 @@ list \mbox{\hyperlink{namespace_first_display_afa97e423be2810b21f56863f5d6ad606}
 {\footnotesize\ttfamily \label{namespace_first_display_aea452faf5bbe6988fa8633948178ffdf} 
 First\+Display.\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}The function `end` in a Python file prints a message, calls two button-click methods, and then prints another message.
+\begin{DoxyVerb}This function closes all the windows in the application and logs the end event.
+
+Parameters:
+None
+
+Returns:
+None
+
+The function iterates through the list of windows, destroys each window using the `destroy` method,
+and logs the end event using the `Logger` function.
 \end{DoxyVerb}
  \Hypertarget{namespace_first_display_ae30d1fdf7de6d85a752f5d49a678ed70}\index{FirstDisplay@{FirstDisplay}!method\_New\_Klient@{method\_New\_Klient}}
 \index{method\_New\_Klient@{method\_New\_Klient}!FirstDisplay@{FirstDisplay}}
@@ -55,13 +64,14 @@ First\+Display.\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 {\footnotesize\ttfamily \label{namespace_first_display_ae30d1fdf7de6d85a752f5d49a678ed70} 
 First\+Display.\+method\+\_\+\+New\+\_\+\+Klient (\begin{DoxyParamCaption}\item[{}]{messeg}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}This function creates and displays buttons for opening a new client window and making an otchet.
+\begin{DoxyVerb}This function creates and configures buttons and labels for the New Klients functionality.
+It opens a new window and displays buttons to navigate to the New Klients table or make an Otchet.
 
 Parameters:
 messeg (str): A message string that is used to customize the label text.
 
 Returns:
-None. This function only creates and displays UI elements.
+None
 \end{DoxyVerb}
  \Hypertarget{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583}\index{FirstDisplay@{FirstDisplay}!selected@{selected}}
 \index{selected@{selected}!FirstDisplay@{FirstDisplay}}
@@ -69,15 +79,14 @@ None. This function only creates and displays UI elements.
 {\footnotesize\ttfamily \label{namespace_first_display_a5767c8596f4cfed0bb651eb6704e1583} 
 First\+Display.\+selected (\begin{DoxyParamCaption}\item[{}]{event}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}This function handles the selection event in the Combobox widget. It retrieves the selected item,
-checks its value, and calls the corresponding function to display UI elements.
+\begin{DoxyVerb}This function handles the event when a selection is made in the Combobox.
+It logs the selection and calls the appropriate function based on the selection.
 
 Parameters:
-event (tkinter.Event): The event object that triggered this function. It contains information about the event,
-                       such as the widget that triggered the event.
+event (tkinter.Event): The event object that triggered this function.
 
 Returns:
-None. This function only prints messages and calls other functions.
+None
 \end{DoxyVerb}
  \Hypertarget{namespace_first_display_aeb5236d2e0e07581ef0fa98f3f3f03a7}\index{FirstDisplay@{FirstDisplay}!start@{start}}
 \index{start@{start}!FirstDisplay@{FirstDisplay}}
@@ -85,7 +94,14 @@ None. This function only prints messages and calls other functions.
 {\footnotesize\ttfamily \label{namespace_first_display_aeb5236d2e0e07581ef0fa98f3f3f03a7} 
 First\+Display.\+start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}The function `start` in a Python file opens a window using `window.mainloop()`.
+\begin{DoxyVerb}This function starts the main loop of the application.
+It opens the first window in the list of windows and logs the start event.
+
+Parameters:
+None
+
+Returns:
+None
 \end{DoxyVerb}
  \Hypertarget{namespace_first_display_a556cbbeed8c3bf415c0b8319205b8c61}\index{FirstDisplay@{FirstDisplay}!start\_new\_klient@{start\_new\_klient}}
 \index{start\_new\_klient@{start\_new\_klient}!FirstDisplay@{FirstDisplay}}
@@ -93,15 +109,17 @@ First\+Display.\+start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
 {\footnotesize\ttfamily \label{namespace_first_display_a556cbbeed8c3bf415c0b8319205b8c61} 
 First\+Display.\+start\+\_\+new\+\_\+klient (\begin{DoxyParamCaption}\item[{}]{flag}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}This function initializes a new client window based on the provided flag.
+\begin{DoxyVerb}Opens a new window for the New Klients functionality.
+
+This function appends a new window to the list of windows, configures its title and size,
+and calls the `do_new_klient` function to start the New Klients functionality.
 
 Parameters:
-flag (int): An integer flag that determines the type of client window to be opened.
-            1 - Opens a new client table.
-            2 - Opens a new client report.
+flag (int): A flag indicating the type of operation to be performed.
+             It is passed to the `do_new_klient` function.
 
 Returns:
-None. This function only initializes the new client window and calls the `do_new_klient` function.
+None
 \end{DoxyVerb}
  
 
@@ -143,13 +161,13 @@ First\+Display.\+expand}
 \index{file\_name@{file\_name}!FirstDisplay@{FirstDisplay}}
 \doxysubsubsection{\texorpdfstring{file\_name}{file\_name}}
 {\footnotesize\ttfamily \label{namespace_first_display_a525d15a1f88cc2042d530e74f0b9abbc} 
-str First\+Display.\+file\+\_\+name = "{}File First\+Display\+: "{}}
+str First\+Display.\+file\+\_\+name = "{}File First\+Display"{}}
 
 \Hypertarget{namespace_first_display_ade174b2ed1c2ff2965d469ed17f772f0}\index{FirstDisplay@{FirstDisplay}!frame@{frame}}
 \index{frame@{frame}!FirstDisplay@{FirstDisplay}}
 \doxysubsubsection{\texorpdfstring{frame}{frame}}
 {\footnotesize\ttfamily \label{namespace_first_display_ade174b2ed1c2ff2965d469ed17f772f0} 
-First\+Display.\+frame = Win.\+Frame(master=\mbox{\hyperlink{namespace_first_display_abe67ebc86e0179d36a2d2cd9ca9929d2}{window}}, relief=Win.\+SUNKEN)}
+First\+Display.\+frame = Win.\+Frame(master=\mbox{\hyperlink{namespace_first_display_ab99675b2b1325ba60575d7bfafa0db7b}{windows}}\mbox{[}0\mbox{]}, relief=Win.\+SUNKEN)}
 
 \Hypertarget{namespace_first_display_afa97e423be2810b21f56863f5d6ad606}\index{FirstDisplay@{FirstDisplay}!method@{method}}
 \index{method@{method}!FirstDisplay@{FirstDisplay}}
@@ -175,9 +193,9 @@ First\+Display.\+pady}
 {\footnotesize\ttfamily \label{namespace_first_display_afcd5faa1c0c9c4911f5ca86969e57ef7} 
 First\+Display.\+row}
 
-\Hypertarget{namespace_first_display_abe67ebc86e0179d36a2d2cd9ca9929d2}\index{FirstDisplay@{FirstDisplay}!window@{window}}
-\index{window@{window}!FirstDisplay@{FirstDisplay}}
-\doxysubsubsection{\texorpdfstring{window}{window}}
-{\footnotesize\ttfamily \label{namespace_first_display_abe67ebc86e0179d36a2d2cd9ca9929d2} 
-First\+Display.\+window = Win.\+Window()}
+\Hypertarget{namespace_first_display_ab99675b2b1325ba60575d7bfafa0db7b}\index{FirstDisplay@{FirstDisplay}!windows@{windows}}
+\index{windows@{windows}!FirstDisplay@{FirstDisplay}}
+\doxysubsubsection{\texorpdfstring{windows}{windows}}
+{\footnotesize\ttfamily \label{namespace_first_display_ab99675b2b1325ba60575d7bfafa0db7b} 
+list First\+Display.\+windows = \mbox{[}$\,$\mbox{]}}
 
