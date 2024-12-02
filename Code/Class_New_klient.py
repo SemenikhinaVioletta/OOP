@@ -1,5 +1,6 @@
 import Log
 from Log import Logger
+import sqlite3 as bd
 
 file_name = "File Class_New_Klient"
 
@@ -140,6 +141,30 @@ class New_Klient:
         )
         return str(self.meil)
 
+    def enter_klient_to_bd(self):
+        """
+        Inserts the new client's details into the database.
+
+        This method establishes a connection to the SQLite database located at "Code\DateBase\Pc.db".
+        It retrieves the status of all clients from the "Status_klient" table.
+        Then, it inserts the new client's name, phone number, and email address into the "Klient_new" table.
+        Finally, it commits the changes to the database.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
+        conn = bd.connect("Code\DateBase\Pc.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Status_klient")
+        rows = cursor.fetchall()
+
+        cursor.execute('''
+                    INSERT INTO Klient_new (Name, Phone, Mail) VALUES(?, ?, ?)
+                    ''', (str(self.name), int(self.phone), str(self.meil)))
+        conn.commit()
     # --------------------------------------------------------------------------------------------------------------------------------
 
     def __del__(self):

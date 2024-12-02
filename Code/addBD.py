@@ -1,7 +1,7 @@
 # This Python code snippet is connecting to a SQLite database named "Pc.db" located in the "BaseDate" directory. It then performs the following operations:
 import sqlite3 as bd
 
-conn = bd.connect("BaseDate\Pc.db")
+conn = bd.connect("Code\DateBase\Pc.db")
 cursor = conn.cursor()
 cursor.execute("SELECT * FROM Status_klient")
 rows = cursor.fetchall()

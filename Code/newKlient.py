@@ -25,13 +25,19 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
     Returns:
     None
     """
-    
+
+    # Обновление и запись новых данных
+    def take_this(name_entry, phone_entry, email_entry):
+        Error.add_new_to_table(name_entry, phone_entry, email_entry, klients)
+        windows[len(windows) - 1].close_window(windows)
+        window_new_klient.update()
+
     # Кнопка добавления нового клиента
     def add_new():
         """Creates a new client entry interface.
 
-        This function initializes a graphical user interface for adding a new client, 
-        including fields for the client's name, phone number, and email. It also sets 
+        This function initializes a graphical user interface for adding a new client,
+        including fields for the client's name, phone number, and email. It also sets
         up buttons for saving the new client information or closing the window.
 
         Args:
@@ -80,11 +86,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         save_button = Win.Button(
             frame_for,
             text="Save",
-            command=(
-                lambda: Error.add_new_to_table(
-                    name_entry, phone_entry, email_entry, klients
-                )
-            ),
+            command=lambda: take_this(name_entry, phone_entry, email_entry),
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
@@ -98,8 +100,8 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
     def make_Table():
         """Creates and displays a table of new clients.
 
-        This function initializes a treeview widget to display client information, 
-        including their ID, name, phone number, and email. It also sets up the 
+        This function initializes a treeview widget to display client information,
+        including their ID, name, phone number, and email. It also sets up the
         necessary columns and headings for the table.
 
         Args:

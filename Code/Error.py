@@ -146,8 +146,9 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         else:
             Logger("\t", "", "Goos email: " + email)
         if flag == 0:
-            klient = New.New_Klient(len(klients), str(name), int(phone), str(email))
+            klient = New.New_Klient(len(klients) + 1, str(name), int(phone), str(email))
             klients.append(klient)
+            klient.enter_klient_to_bd()
     except ErrorNewKlient:
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
 
