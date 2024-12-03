@@ -61,7 +61,7 @@ class Window(Tk):
         Logger(
             file_name,
             "",
-            "Class Window - Method close_window - not add a new klient and go bak",
+            "Class Window - Method close_window - go bak",
         )
         windows.remove(self)
         self.destroy()

@@ -1,4 +1,17 @@
 {
     "docwriter.style": "Doxygen",
-    "wolf.disableHotModeWarning": true
+    "wolf.disableHotModeWarning": true,
+    "files.associations": {
+        "ostream": "cpp",
+        "stdexcept": "cpp",
+        "iostream": "cpp",
+        "optional": "cpp",
+        "istream": "cpp",
+        "system_error": "cpp",
+        "array": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp"
+    }
 }

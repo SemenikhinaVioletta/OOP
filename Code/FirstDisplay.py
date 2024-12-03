@@ -1,4 +1,5 @@
 import Window as Win
+import newKlient
 from newKlient import do_new_klient
 import Log
 from Log import Logger
