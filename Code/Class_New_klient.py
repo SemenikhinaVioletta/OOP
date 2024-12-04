@@ -140,6 +140,12 @@ class New_Klient:
             file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
         )
         return str(self.meil)
+    
+    def get_ID(self):
+        Logger(
+            file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
+        )
+        return int(self.ID)
 
     def enter_klient_to_bd(self):
         """

@@ -29,7 +29,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
     # Обновление и запись новых данных
     def take_this(name_entry, phone_entry, email_entry):
         Error.add_new_to_table(name_entry, phone_entry, email_entry, klients)
-        windows[len(windows) - 1].close_window(windows)
+        make_Table()
 
     # Кнопка добавления нового клиента
     def add_new():
