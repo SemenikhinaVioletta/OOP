@@ -85,7 +85,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         save_button = Win.Button(
             frame_for,
             text="Save",
-            command=lambda: take_this(name_entry, phone_entry, email_entry),
+            command=(lambda: take_this(name_entry, phone_entry, email_entry)),
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
