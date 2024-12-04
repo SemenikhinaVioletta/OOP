@@ -51,9 +51,8 @@ class ErrorNewKlient(Exception):
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
-# Метод для проверки вводимых значений
 
-
+# Методы для проверки вводимых значений (для удаления и добавления элементов)
 def add_new_to_table(name_entry, phone_entry, email_entry, klients):
     """
     This function validates and adds new client information to the 'klients' list.
@@ -100,7 +99,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         if flag == 1:
             raise ErrorNewKlient(message)
         else:
-            Logger("\t", "", "Goos name: " + name)
+            Logger("\t", "", "Good name: " + name)
 
         if len(phone) != 11:
             message = "Phone must be 11 digits length."
@@ -117,7 +116,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         if flag == 1:
             raise ErrorNewKlient(message)
         else:
-            Logger("\t", "", "Goos phone: " + phone)
+            Logger("\t", "", "Good phone: " + phone)
 
         if len(email) < 5:
             message = (
@@ -144,7 +143,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         if flag == 1:
             raise ErrorNewKlient(message)
         else:
-            Logger("\t", "", "Goos email: " + email)
+            Logger("\t", "", "Good email: " + email)
         if flag == 0:
             klient = New.New_Klient(
                 klients[-1].get_ID() + 1, str(name), int(phone), str(email)
@@ -156,4 +155,53 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
 
 
+def delete_from_table(id):
+    """
+    This function validates and deletes a client from the database based on the provided ID.
+
+    Parameters:
+    id (tkinter.StringVar): The StringVar object containing the ID of the client to be deleted.
+
+    Returns:
+    int: A flag indicating the success of the operation.
+         - 0: The operation was successful.
+         - 1: The operation failed due to invalid input.
+
+    Raises:
+    ErrorNewKlient: If the input ID is invalid, an ErrorNewKlient exception is raised.
+    """
+    flag = 0
+    try:
+        id = id.get()  # Extract the ID value from the StringVar object
+        flag = 0
+        message = "In this all god."
+
+        # Validate the ID: it should contain only digits
+        
+        if (len(id) != 0):
+            for j in id:
+                if not j.isdigit():
+                    message = "ID must contain only digits."
+                    flag = 1
+                    break
+
+            # Validate the ID: it should be greater than or equal to 0
+            if flag == 0:
+                if int(id) < 0:
+                    message = "ID must be greater than or equal to 0."
+                    flag = 1
+        else:
+            message = "ID can't be empty."
+            flag = 1
+
+        # Raise an exception if the ID is invalid
+        if flag == 1:
+            raise ErrorNewKlient(message)
+        else:
+            Logger("\t", "", "Good phone: " + id)
+
+    except ErrorNewKlient:
+        Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
+    finally:
+        return flag
 # --------------------------------------------------------------------------------------------------------------------------------

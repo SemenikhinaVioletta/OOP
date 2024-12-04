@@ -8,6 +8,8 @@ from Log import Logger
 
 file_name = "File newKlient"
 
+basadate = "Code\DateBase\Pc.db"
+
 
 # -----------------------------------------------------------------------------------------------------------------------
 # Работа со списком новых клиентов
@@ -28,15 +30,69 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
 
     # Обновление и запись новых данных
     def take_this(name_entry, phone_entry, email_entry):
+        """
+        The function `take_this` adds a new entry to a table and then creates a new table.
+        
+        @param name_entry The `name_entry` parameter likely refers to the name of a client or individual being entered into a table or database.
+        @param phone_entry The `phone_entry` parameter in the `take_this` function is likely intended to store the phone number information provided by the user. This parameter is expected to be passed to the `Error.add_new_to_table` function along with the `name_entry` and `email_entry` parameters. The purpose
+        @param email_entry The `email_entry` parameter in the `take_this` function is used to store the email address of a client. This information is then passed to the `Error.add_new_to_table` function along with the `name_entry` (client's name) and `phone_entry` (client's phone
+        """
         Error.add_new_to_table(name_entry, phone_entry, email_entry, klients)
         make_Table()
+
+    def id_for_delite(id, window):
+        """
+        The function `id_for_delite` attempts to delete a client from a list based on their ID.
+        
+        @param id The `id` parameter in the `id_for_delite` function seems to represent the identifier of a client or record that is being processed for deletion. It is used to identify the specific client within a list of clients (`klients`) and perform operations such as deleting the client from a database and
+        @param window The `window` parameter in the `id_for_delite` function seems to be missing from the code snippet you provided. It is likely used as a reference to the window or GUI element where the deletion operation is taking place. Typically, in GUI applications, the `window` parameter would refer to
+        """
+        Logger(
+            file_name,
+            "",
+            "Method new_Klient_Tabel - id_for_delite - try to delete from list of new klient...",
+        )
+        if Error.delete_from_table(id) == 0:
+            id = int(id.get())
+            for klient in klients:
+                if klient.get_ID() == id:
+                    klient.delete_klient_from_bd()
+                    klients.remove(klient)
+                    make_Table()
+        window.close_window(windows)
+
+    # Создание окна для удаления элемента таблици
+    def delete_element():
+        """
+        This function creates a window with a form to enter an ID for deleting a client.
+        """
+        wind = Win.Window("Delete New klient", "1000x300")
+        windows.append(wind)
+        frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+        frame_for.pack(expand=True)
+        Id_for_delite = Win.Label(
+            frame_for,
+            text="Enter id for new klient, witch you wont delete",
+        )
+        Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
+        text_for_delite = Win.Entry(
+            frame_for,
+        )
+        text_for_delite.grid(row=1, column=2, padx=5)
+        button_for_delite = Win.Button(
+            frame_for,
+            text="Delete",
+            command=lambda: id_for_delite(text_for_delite, wind),
+        )
+        button_for_delite.grid(row=2, column=2, padx=5)
+        Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
 
     # Кнопка добавления нового клиента
     def add_new():
         """Creates a new client entry interface.
 
         This function initializes a graphical user interface for adding a new client,
-        including fields for the client's name, phone number, and email. It also sets
+        including fields for the client"s name, phone number, and email. It also sets
         up buttons for saving the new client information or closing the window.
 
         Args:
@@ -50,8 +106,9 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
             "",
             "Method new_Klient_Tabel - Method add_new - try to add a new klient...",
         )
-        windows.append(Win.Window("New klient", "1000x300"))
-        frame_for = Win.Frame(master=windows[len(windows) - 1], relief=Win.SUNKEN)
+        wind = Win.Window("Add New klient", "1000x300")
+        windows.append(wind)
+        frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
 
         name_text = Win.Label(
@@ -91,7 +148,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         delete_button = Win.Button(
             frame_for,
             text="Back",
-            command=lambda: windows[len(windows) - 1].close_window(windows),
+            command=lambda: wind.close_window(windows),
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
 
@@ -116,7 +173,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         )
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
-        table_new_klient.grid(row=1, column=1, sticky="nsew")
+        table_new_klient.grid(row=1, column=1, sticky="nsew", rowspan=3)
         table_new_klient.heading("ID", text="ID", anchor=Win.W)
         table_new_klient.heading("Name", text="Name", anchor=Win.W)
         table_new_klient.heading("Phone", text="Phone", anchor=Win.W)
@@ -128,6 +185,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         scrollbar = Win.ttk.Scrollbar(
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
+        
 
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
@@ -140,6 +198,13 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         command=lambda: window_new_klient.close_window(windows),
     )
     close_table.grid(row=2, column=2, padx=10, pady=10)
+
+    Delete_element = Win.Button(
+        frame,
+        text="Delete",
+        command=delete_element,
+    )
+    Delete_element.grid(row=3, column=2, padx=10, pady=10)
 
     make_Table()
 
@@ -162,9 +227,9 @@ def do_new_klient(flag, window_new_klient, windows):
     Returns:
     None
     """
-    Logger(file_name, "", "Method o_new_klient - making list of new klient...")
+    Logger(file_name, "", "Method do_new_klient - making list of new klient...")
     klients = []
-    conn = bd.connect("Code\DateBase\Pc.db")
+    conn = bd.connect(basadate)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Klient_new")
     rows = cursor.fetchall()
@@ -181,3 +246,5 @@ def do_new_klient(flag, window_new_klient, windows):
     else:
         # MAKE LATEST VERSION
         Logger(file_name, "Error in create new klient", "Invalid flag in do_new_klient")
+
+    cursor.close()

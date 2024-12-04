@@ -3,6 +3,7 @@ from Log import Logger
 import sqlite3 as bd
 
 file_name = "File Class_New_Klient"
+basadate = "Code\DateBase\Pc.db"
 
 
 class New_Klient:
@@ -37,7 +38,7 @@ class New_Klient:
     # Дополнительные функции
     def rename_newklient(self, name, phone, mail):
         """
-        Renames the new client's details.
+        Renames the new client"s details.
 
         This method updates the name, phone number, and email address of the new client.
         If the new details are different from the existing ones, the corresponding attributes are updated.
@@ -140,20 +141,30 @@ class New_Klient:
             file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
         )
         return str(self.meil)
-    
+
     def get_ID(self):
-        Logger(
-            file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
-        )
+        """
+        Retrieves the unique identifier of the new client.
+
+        This method returns the unique identifier of the new client, which is used to uniquely identify the client within the system.
+        It also logs a message indicating the retrieval of the client"s ID.
+
+        Parameters:
+        None
+
+        Returns:
+        int: The unique identifier of the new client.
+        """
+        Logger(file_name, "", "Class New_Klient - Method get_ID - get id of New klient")
         return int(self.ID)
 
     def enter_klient_to_bd(self):
         """
-        Inserts the new client's details into the database.
+        Inserts the new client"s details into the database.
 
         This method establishes a connection to the SQLite database located at "Code\DateBase\Pc.db".
         It retrieves the status of all clients from the "Status_klient" table.
-        Then, it inserts the new client's name, phone number, and email address into the "Klient_new" table.
+        Then, it inserts the new client"s name, phone number, and email address into the "Klient_new" table.
         Finally, it commits the changes to the database.
 
         Parameters:
@@ -162,15 +173,55 @@ class New_Klient:
         Returns:
         None
         """
-        conn = bd.connect("Code\DateBase\Pc.db")
+        conn = bd.connect(basadate)
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Status_klient")
         rows = cursor.fetchall()
 
-        cursor.execute('''
-                    INSERT INTO Klient_new (Name, Phone, Mail) VALUES(?, ?, ?)
-                    ''', (str(self.name), int(self.phone), str(self.meil)))
+        cursor.execute(
+            """INSERT INTO Klient_new (Name, Phone, Mail) VALUES(?, ?, ?)""",
+            (self.get_name(), self.get_phone(), self.get_mail()),
+        )
         conn.commit()
+        cursor.close()
+
+    def delete_klient_from_bd(self):
+        """
+        Deletes the new client from the SQLite database.
+
+        This method establishes a connection to the SQLite database located at "Code\DateBase\Pc.db".
+        It then attempts to delete the new client from the "Klient_new" table using their unique identifier.
+        If the deletion is successful, it logs a message indicating the successful deletion.
+        If any error occurs during the process, it logs the error message.
+        Finally, it closes the database connection.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+        """
+        Logger(file_name, "", "Method delete_klient_from_bd - delete from list of new klient...")
+        try:
+            sqlite_connection = bd.connect(basadate)
+            cursor = sqlite_connection.cursor()
+            Logger("\t", "", "connected to SQLite")
+
+            cursor.execute(
+                """DELETE FROM Klient_new where Id_klient = ?""",
+                (self.get_ID(), ),
+            )
+            sqlite_connection.commit()
+            Logger("\t", "", "the entry was successfully deleted")
+            cursor.close()
+
+        except bd.Error as error:
+            Logger("\t", "Error while working with SQLite", error)
+        finally:
+            if sqlite_connection:
+                sqlite_connection.close()
+                Logger("\t", "", "connection to SQLite closed")
+
     # --------------------------------------------------------------------------------------------------------------------------------
 
     def __del__(self):

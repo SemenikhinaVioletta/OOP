@@ -54,14 +54,14 @@ def method_New_Klient(messeg):
     None
     """
     Logger("\t", "", "Method method_New_Klient - making element...")
+    lable = Win.Label(frame, text="For " + messeg + "you can:")
+    lable.grid(row=3, column=1, padx=10)
+
     new_window = Win.Button(
         frame,
         text="Open table",
         command=lambda: start_new_klient(1),
     )
-
-    lable = Win.Label(frame, text="For " + messeg + "you can:")
-    lable.grid(row=3, column=1, padx=10)
     new_window.grid(row=3, column=2, padx=10)
 
     new_otchet = Win.Button(
