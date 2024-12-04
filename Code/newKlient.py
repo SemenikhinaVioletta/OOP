@@ -13,8 +13,6 @@ basadate = "Code\DateBase\Pc.db"
 
 # -----------------------------------------------------------------------------------------------------------------------
 # Работа со списком новых клиентов
-
-
 def new_Klient_Tabel(klients, window_new_klient, windows):
     """
     This function creates a new client table and provides functionality to add new clients.
