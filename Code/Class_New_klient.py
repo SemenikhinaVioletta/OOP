@@ -176,7 +176,6 @@ class New_Klient:
         conn = bd.connect(basadate)
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Status_klient")
-        rows = cursor.fetchall()
 
         cursor.execute(
             """INSERT INTO Klient_new (Name, Phone, Mail) VALUES(?, ?, ?)""",

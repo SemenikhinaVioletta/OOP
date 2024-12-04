@@ -32,18 +32,21 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
     def take_this(name_entry, phone_entry, email_entry):
         """
         The function `take_this` adds a new entry to a table and then creates a new table.
-        
+
         @param name_entry The `name_entry` parameter likely refers to the name of a client or individual being entered into a table or database.
         @param phone_entry The `phone_entry` parameter in the `take_this` function is likely intended to store the phone number information provided by the user. This parameter is expected to be passed to the `Error.add_new_to_table` function along with the `name_entry` and `email_entry` parameters. The purpose
         @param email_entry The `email_entry` parameter in the `take_this` function is used to store the email address of a client. This information is then passed to the `Error.add_new_to_table` function along with the `name_entry` (client's name) and `phone_entry` (client's phone
         """
         Error.add_new_to_table(name_entry, phone_entry, email_entry, klients)
+        klients.clear()
+        make_array(klients)
         make_Table()
 
+    # Удаление клиента по ID
     def id_for_delite(id, window):
         """
         The function `id_for_delite` attempts to delete a client from a list based on their ID.
-        
+
         @param id The `id` parameter in the `id_for_delite` function seems to represent the identifier of a client or record that is being processed for deletion. It is used to identify the specific client within a list of clients (`klients`) and perform operations such as deleting the client from a database and
         @param window The `window` parameter in the `id_for_delite` function seems to be missing from the code snippet you provided. It is likely used as a reference to the window or GUI element where the deletion operation is taking place. Typically, in GUI applications, the `window` parameter would refer to
         """
@@ -185,7 +188,6 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         scrollbar = Win.ttk.Scrollbar(
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
-        
 
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
@@ -212,6 +214,31 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
 # ------------------------------------------------------------------------------------------------------------------------
 
 
+def make_array(klients):
+    """
+    This function retrieves new client data from the database and populates a list of New_Klient objects.
+
+    Parameters:
+    - klients (list): A list of New_Klient objects representing existing clients. This list is initially empty and will be filled with new clients.
+
+    Returns:
+    None
+
+    The function connects to the SQLite database specified by the 'basadate' variable, executes a SQL query to select all records from the 'Klient_new' table, and then iterates through the result set. For each record, it creates a new New_Klient object using the data from the record and appends it to the 'klients' list. Finally, it closes the database connection.
+    """
+    conn = bd.connect(basadate)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Klient_new")
+    rows = cursor.fetchall()
+
+    # Загрузка клиентов из базы данных в список клиентов
+    for line in rows:
+        klient = New.New_Klient(int(line[0]), str(line[1]), int(line[2]), str(line[3]))
+        klients.append(klient)
+
+    cursor.close()
+
+
 # Начальный метод работы с новым клиентом
 def do_new_klient(flag, window_new_klient, windows):
     """
@@ -229,15 +256,7 @@ def do_new_klient(flag, window_new_klient, windows):
     """
     Logger(file_name, "", "Method do_new_klient - making list of new klient...")
     klients = []
-    conn = bd.connect(basadate)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Klient_new")
-    rows = cursor.fetchall()
-
-    # Загрузка клиентов из базы данных в список клиентов
-    for line in rows:
-        klient = New.New_Klient(int(line[0]), str(line[1]), int(line[2]), str(line[3]))
-        klients.append(klient)
+    make_array(klients)
 
     # Выбор способа работы
     if flag == 1:
@@ -246,5 +265,3 @@ def do_new_klient(flag, window_new_klient, windows):
     else:
         # MAKE LATEST VERSION
         Logger(file_name, "Error in create new klient", "Invalid flag in do_new_klient")
-
-    cursor.close()
