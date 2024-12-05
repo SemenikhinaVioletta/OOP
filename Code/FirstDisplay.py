@@ -37,7 +37,6 @@ def selected(event):
             "Method selected - selected item " + selection + " not found",
         )
 
-
 # --------------------------------------------------------------------------------------------------------------------------------
 # Работа с новым клиентом
 
@@ -94,7 +93,6 @@ def start_new_klient(flag):
     windows.append(wind)
     do_new_klient(flag, wind)
 
-
 # --------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -113,31 +111,10 @@ def start():
     Logger(file_name, "", "Method start - start main loop...")
     window.open()
 
-
-# Конец приложения
-def end():
-    """
-    This function closes all the windows in the application and logs the end event.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-
-    The function iterates through the list of windows, destroys each window using the `destroy` method,
-    and logs the end event using the `Logger` function.
-    """
-    Logger(file_name, "", "Method end - end main loop...")
-    for window in windows:
-        window.destroy()
-    Logger(file_name, "", "Method end - close program...")
-
-
 # Делаем основное окно приложения
 Logger(file_name, "", "start program...")
 window = Win.Window("PC for management", "600x400")
-window.make_protokol(end)
+window.make_protokol(Win.end)
 windows.append(window)
 
 Logger(file_name, "", "make frame...")
@@ -158,7 +135,7 @@ Logger(file_name, "", "make button to end")
 button_to_end = Win.Button(
     frame,
     text="End all",
-    command=end,
+    command=Win.end,
 )
 button_to_end.grid(row=5, column=1, pady=10)
 

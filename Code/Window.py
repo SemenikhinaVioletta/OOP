@@ -8,6 +8,7 @@ from Global_per import windows
 
 file_name = "File Window"
 
+
 class Window(Tk):
 
     def __init__(self, name, geom):
@@ -27,8 +28,8 @@ class Window(Tk):
         self.name = name
         Logger(file_name, "", "Class Window - Method __init__ - make window: " + name)
 
-#--------------------------------------------------------------------------------------------------------------------------------
-# Дополнительные функции
+    # --------------------------------------------------------------------------------------------------------------------------------
+    # Дополнительные функции
     def open(self):
         """
         Open the window and start the Tkinter event loop.
@@ -46,6 +47,11 @@ class Window(Tk):
         Logger(file_name, "", "Class Window - Method open - open window: " + self.name)
 
     def make_protokol(self, fun):
+        """
+        The function `make_protokol` sets a protocol for the WM_DELETE_WINDOW event in Python.
+
+        @param fun The `fun` parameter in the `make_protokol` method is expected to be a function that will be called when the window manager event `WM_DELETE_WINDOW` is triggered. This function will be associated with handling the event when the user tries to close the window.
+        """
         self.protocol("WM_DELETE_WINDOW", fun)
 
     def close_window(self):
@@ -68,8 +74,10 @@ class Window(Tk):
         )
         windows.remove(self)
         self.destroy()
-#--------------------------------------------------------------------------------------------------------------------------------
 
+    # --------------------------------------------------------------------------------------------------------------------------------
+
+    # Деструктор
     def __del__(self):
         """
         Destructor method for the Window class.
@@ -83,4 +91,30 @@ class Window(Tk):
         Returns:
         None
         """
-        Logger(file_name, "", "Class Window - Method __del__ - delete window: " + self.name)
+        Logger(
+            file_name, "", "Class Window - Method __del__ - delete window: " + self.name
+        )
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+# Конец приложения
+def end():
+    """
+    This function closes all the windows in the application and logs the end event.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    The function iterates through the list of windows, destroys each window using the `destroy` method,
+    and logs the end event using the `Logger` function. The `Logger` function is expected to be defined elsewhere
+    and takes three parameters: `file_name` (the name of the file where the log is being written),
+    `client_name` (the name of the client associated with the log), and `message` (the actual log message).
+    The `windows` list is expected to be a global variable containing a list of open windows.
+    """
+    Logger(file_name, "", "Method end - end main loop...")
+    for window in windows:
+        window.destroy()
+    Logger(file_name, "", "Method end - close program...")

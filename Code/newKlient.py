@@ -213,7 +213,7 @@ def new_Klient_Tabel(klients, window_new_klient):
 
 # ------------------------------------------------------------------------------------------------------------------------
 
-
+# Создание массива
 def make_array(klients):
     """
     This function retrieves new client data from the database and populates a list of New_Klient objects.
