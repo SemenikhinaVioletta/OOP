@@ -89,8 +89,10 @@ def start_new_klient(flag):
     None
     """
     Logger(file_name, "", "Method start_new_klient - open new window...")
-    windows.append(Win.Window("New klient", "1000x300"))
-    do_new_klient(flag, windows[len(windows) - 1])
+    wind = Win.Window("New klient", "1000x300")
+    wind.make_protokol(wind.close_window)
+    windows.append(wind)
+    do_new_klient(flag, wind)
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -109,7 +111,7 @@ def start():
     None
     """
     Logger(file_name, "", "Method start - start main loop...")
-    windows[0].open()
+    window.open()
 
 
 # Конец приложения
@@ -134,7 +136,9 @@ def end():
 
 # Делаем основное окно приложения
 Logger(file_name, "", "start program...")
-windows.append(Win.Window("PC for management", "600x400"))
+window = Win.Window("PC for management", "600x400")
+window.make_protokol(end)
+windows.append(window)
 
 Logger(file_name, "", "make frame...")
 frame = Win.Frame(master=windows[0], relief=Win.SUNKEN)

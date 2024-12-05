@@ -45,6 +45,8 @@ class Window(Tk):
         self.mainloop()
         Logger(file_name, "", "Class Window - Method open - open window: " + self.name)
 
+    def make_protokol(self, fun):
+        self.protocol("WM_DELETE_WINDOW", fun)
 
     def close_window(self):
         """
@@ -82,4 +84,3 @@ class Window(Tk):
         None
         """
         Logger(file_name, "", "Class Window - Method __del__ - delete window: " + self.name)
-        windows.remove(self)

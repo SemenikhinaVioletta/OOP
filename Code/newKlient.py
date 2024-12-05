@@ -68,6 +68,7 @@ def new_Klient_Tabel(klients, window_new_klient):
         This function creates a window with a form to enter an ID for deleting a client.
         """
         wind = Win.Window("Delete New klient", "1000x300")
+        wind.make_protokol(wind.close_window)
         windows.append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
@@ -108,6 +109,7 @@ def new_Klient_Tabel(klients, window_new_klient):
             "Method new_Klient_Tabel - Method add_new - try to add a new klient...",
         )
         wind = Win.Window("Add New klient", "1000x300")
+        wind.make_protokol(wind.close_window)
         windows.append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
