@@ -1,4 +1,4 @@
-from tkinter.messagebox import showerror, showwarning, showinfo
+from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 import Log
 from Log import Logger
 import Class_New_klient as New

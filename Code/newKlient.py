@@ -10,28 +10,20 @@ from Global_per import windows, basadate, klients
 file_name = "File newKlient"
 
 
-# -----------------------------------------------------------------------------------------------------------------------
-# Работа со списком новых клиентов
 def new_Klient_Tabel(window_new_klient):
     """
-    This function creates a new client table and provides functionality to add new clients.
-
-    Parameters:
-    - window_new_klient (Window): The main window for displaying the new client table.
-
-    Returns:
-    None
+    The `new_Klient_Tabel` function in Python defines a set of sub-functions for adding, renaming, and deleting clients, as well as creating a GUI interface for managing client data in a table.
+    
+    @param window_new_klient `window_new_klient` is a parameter that represents the window or GUI element where the functions for adding, renaming, and deleting clients will be displayed and interacted with. It serves as the main window for managing client information and operations within the application.
     """
-
-    # ГОТОВО
-    # Обновление и запись новых данных
+    # Функция для добавления нового клиента
     def take_this(name_entry, phone_entry, email_entry):
         """
-        The function `take_this` adds a new entry to a table and then creates a new table.
+        The function `take_this` adds a new entry to a table and creates a new client object based on the provided name, phone, and email entries.
 
-        @param name_entry The `name_entry` parameter likely refers to the name of a client or individual being entered into a table or database.
-        @param phone_entry The `phone_entry` parameter in the `take_this` function is likely intended to store the phone number information provided by the user. This parameter is expected to be passed to the `Error.add_new_to_table` function along with the `name_entry` and `email_entry` parameters. The purpose
-        @param email_entry The `email_entry` parameter in the `take_this` function is used to store the email address of a client. This information is then passed to the `Error.add_new_to_table` function along with the `name_entry` (client"s name) and `phone_entry` (client"s phone
+        @param name_entry The `name_entry` parameter likely refers to an entry field where the user can input their name. This function seems to be taking the name, phone number, and email address entered by the user, adding them to a table, creating a new client object, and then entering that client into a database
+        @param phone_entry The `phone_entry` parameter in the `take_this` function seems to be a variable that holds the phone number entered by the user. It is likely used as part of adding a new entry to a table or database. The function appears to check if adding a new entry to the table is successful
+        @param email_entry The `email_entry` parameter in the `take_this` function is a variable that holds the email information entered by the user. It is used as one of the inputs to the `add_new_to_table` function and is also passed as a parameter to create a new `New_Klient` object
         """
         if add_new_to_table(name_entry, phone_entry, email_entry) == 0:
             klient = New.New_Klient(
@@ -43,41 +35,50 @@ def new_Klient_Tabel(window_new_klient):
             klient.enter_klient_to_bd()
             make_Table()
 
+    # Функция для изменения данных существующего клиента
     def do_this(klient, name_entry, phone_entry, email_entry):
+        """
+        The function `do_this` adds a new entry to a table and renames a client if successful.
+
+        @param klient It looks like the `do_this` function takes four parameters: `klient`, `name_entry`, `phone_entry`, and `email_entry`.
+        @param name_entry The `name_entry` parameter seems to be a reference to an entry widget where the user can input a name. This input is then used to add a new entry to a table and also to rename a client in the `klient` object.
+        @param phone_entry The `phone_entry` parameter in the `do_this` function seems to be a variable that holds the phone number entered by the user. It is likely a field or input where the user can input their phone number.
+        @param email_entry The `email_entry` parameter in the `do_this` function seems to be a reference to an entry field where the user can input their email address. This parameter is likely used to retrieve the email address entered by the user and pass it to the `add_new_to_table` function for processing.
+        """
         if add_new_to_table(name_entry, phone_entry, email_entry) == 0:
             klient.rename_newklient(
                 str(name_entry.get()), int(phone_entry.get()), str(email_entry.get())
             )
             make_Table()
 
-    # ГОТОВО
-    # Удаление клиента по ID
+    # Функция для удаления клиента
     def id_for_delite(id, window):
         """
-        The function `id_for_delite` attempts to delete a client from a list based on their ID.
+        This function checks if a record with a specific ID exists in a table, prompts for confirmation before deleting it, and then removes the record from the table.
 
-        @param id The `id` parameter in the `id_for_delite` function seems to represent the identifier of a client or record that is being processed for deletion. It is used to identify the specific client within a list of clients (`klients`) and perform operations such as deleting the client from a database and
-        @param window The `window` parameter in the `id_for_delite` function seems to be missing from the code snippet you provided. It is likely used as a reference to the window or GUI element where the deletion operation is taking place. Typically, in GUI applications, the `window` parameter would refer to
+        @param id The `id` parameter in the `id_for_delite` function seems to represent the unique identifier of a client in a system. It is used to identify and delete a specific client from a table or database.
+        @param window The `window` parameter in the `id_for_delite` function seems to represent a window object or a reference to the window that needs to be closed after the operation is completed. The `window.close_window()` method is likely used to close this window once the deletion process is finished.
         """
-        Logger(
-            file_name,
-            "",
-            "Method new_Klient_Tabel - id_for_delite - try to delete from list of new klient...",
-        )
         if delete_from_table(id) == 0:
             id = int(id.get())
             for klient in klients:
                 if klient.get_ID() == id:
-                    klient.delete_klient_from_bd()
-                    klients.remove(klient)
-                    make_Table()
+                    # Подтверждение удаления клиента
+                    confirm = Error.askyesno(
+                        "Confirm Delete",
+                        f"Are you sure you want to delete the client with ID: {id}, Name: {klient.get_name()}?",
+                    )
+                    if confirm:
+                        klient.delete_klient_from_bd()
+                        klients.remove(klient)
+                        make_Table()
+                    break
         window.close_window()
 
-    # ГОТОВО
-    # Создание окна для удаления элемента таблици
+    # Функция для создания окна удаления клиента
     def delete_element():
         """
-        This function creates a window with a form to enter an ID for deleting a client.
+        This Python function creates a window for deleting a client by entering their ID.
         """
         wind = Win.Window("Delete New klient", "1000x300")
         wind.make_protokol(wind.close_window)
@@ -85,13 +86,10 @@ def new_Klient_Tabel(window_new_klient):
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         Id_for_delite = Win.Label(
-            frame_for,
-            text="Enter id for new klient, witch you wont delete",
+            frame_for, text="Enter ID of the client you want to delete:"
         )
         Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-        text_for_delite = Win.Entry(
-            frame_for,
-        )
+        text_for_delite = Win.Entry(frame_for)
         text_for_delite.grid(row=1, column=2, padx=5)
         button_for_delite = Win.Button(
             frame_for,
@@ -101,60 +99,36 @@ def new_Klient_Tabel(window_new_klient):
         button_for_delite.grid(row=2, column=2, padx=5)
         Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
 
-    # ГОТОВО
-    # Кнопка добавления нового клиента
+    # Функция для добавления нового клиента
     def add_new():
-        """Creates a new client entry interface.
-
-        This function initializes a graphical user interface for adding a new client,
-        including fields for the client"s name, phone number, and email. It also sets
-        up buttons for saving the new client information or closing the window.
-
-        Args:
-            None
-
-        Returns:
-            None
         """
-        Logger(
-            file_name,
-            "",
-            "Method new_Klient_Tabel - Method add_new - try to add a new klient...",
-        )
+        The `add_new` function creates a window for adding a new client with fields for name, phone number, and email, along with save and back buttons.
+        """
         wind = Win.Window("Add New klient", "1000x300")
         wind.make_protokol(wind.close_window)
         windows.append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
-
         name_text = Win.Label(
             frame_for,
-            text='Enter name for new klient, in formate:\n"Secondname Name Surname"',
+            text='Enter name for new client in format:\n"Secondname Name Surname"',
         )
-        name_entry = Win.Entry(
-            frame_for,
-        )
+        name_entry = Win.Entry(frame_for)
         name_text.grid(row=1, column=1)
         name_entry.grid(row=1, column=2, padx=5)
         phone_text = Win.Label(
             frame_for,
-            text='Enter phone number for new klient, in formate:\n"88888888888"',
+            text='Enter phone number for new client in format:\n"88888888888"',
         )
-        phone_entry = Win.Entry(
-            frame_for,
-        )
+        phone_entry = Win.Entry(frame_for)
         phone_text.grid(row=2, column=1, pady=5)
         phone_entry.grid(row=2, column=2, pady=5, padx=5)
         email_text = Win.Label(
-            frame_for,
-            text='Enter email for new klient, in formate:\n"email@domain.com"',
+            frame_for, text='Enter email for new client in format:\n"email@domain.com"'
         )
-        email_entry = Win.Entry(
-            frame_for,
-        )
+        email_entry = Win.Entry(frame_for)
         email_text.grid(row=3, column=1, pady=5)
         email_entry.grid(row=3, column=2, pady=5, padx=5)
-
         save_button = Win.Button(
             frame_for,
             text="Save",
@@ -162,32 +136,15 @@ def new_Klient_Tabel(window_new_klient):
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
-            frame_for,
-            text="Back",
-            command=lambda: wind.close_window(),
+            frame_for, text="Back", command=lambda: wind.close_window()
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
 
-    # ГОТОВО
-    # Создание таблицы клиентов
+    # Функция для создания таблицы клиентов
     def make_Table():
-        """Creates and displays a table of new clients.
-
-        This function initializes a treeview widget to display client information,
-        including their ID, name, phone number, and email. It also sets up the
-        necessary columns and headings for the table.
-
-        Args:
-            None
-
-        Returns:
-            None
         """
-        Logger(
-            file_name,
-            "",
-            "Method new_Klient_Tabel - Method make_Table - making table of new klient...",
-        )
+        The function `make_Table` creates a table with specified columns and headings, populating it with data from a list of clients and adding a vertical scrollbar.
+        """
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_new_klient.grid(row=1, column=1, sticky="nsew", rowspan=10)
@@ -195,7 +152,6 @@ def new_Klient_Tabel(window_new_klient):
         table_new_klient.heading("Name", text="Name", anchor=Win.W)
         table_new_klient.heading("Phone", text="Phone", anchor=Win.W)
         table_new_klient.heading("Mail", text="Mail", anchor=Win.W)
-
         table_new_klient.column("#1", stretch=Win.NO, width=50)
         for klient in klients:
             table_new_klient.insert("", Win.END, values=klient.get())
@@ -203,7 +159,15 @@ def new_Klient_Tabel(window_new_klient):
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
 
+    # Функция для получения текста для изменения клиента
     def get_text(id, frame_for, wind):
+        """
+        The function `get_text` updates client information in a GUI window based on user input.
+        
+        @param id The `id` parameter in the `get_text` function seems to be used as an identifier for a client. It is likely used to search for a specific client in a list of clients (`klients`). The function then allows the user to update information (name, phone number, email) for
+        @param frame_for `frame_for` is a tkinter frame where labels, entries, and buttons are being placed for user input and interaction in a graphical user interface (GUI) application.
+        @param wind The `wind` parameter in the `get_text` function seems to be an instance of a window or GUI class that is used to create and manage the graphical user interface elements. It is likely used to display labels, entry fields, buttons, and handle user interactions within the window or frame specified by
+        """
         if Error.delete_from_table(id) == 0:
             try:
                 flag = 0
@@ -213,37 +177,28 @@ def new_Klient_Tabel(window_new_klient):
                         flag = 1
                         name_text = Win.Label(
                             frame_for,
-                            text='Enter new name for new klient, in formate:\n"Secondname Name Surname"',
+                            text='Enter new name for client in format:\n"Secondname Name Surname"',
                         )
-                        name_entry = Win.Entry(
-                            frame_for,
-                        )
+                        name_entry = Win.Entry(frame_for)
                         name_text.grid(row=2, column=1)
                         name_entry.insert(0, klient.get_name())
                         name_entry.grid(row=2, column=2, padx=5)
-
                         phone_text = Win.Label(
                             frame_for,
-                            text='Enter new phone number for new klient, in formate:\n"88888888888"',
+                            text='Enter new phone number for client in format:\n"88888888888"',
                         )
-                        phone_entry = Win.Entry(
-                            frame_for,
-                        )
+                        phone_entry = Win.Entry(frame_for)
                         phone_text.grid(row=3, column=1, pady=5)
                         phone_entry.insert(0, str(klient.get_phone()))
                         phone_entry.grid(row=3, column=2, pady=5, padx=5)
-
                         email_text = Win.Label(
                             frame_for,
-                            text='Enter new email for new klient, in formate:\n"email@domain.com"',
+                            text='Enter new email for client in format:\n"email@domain.com"',
                         )
-                        email_entry = Win.Entry(
-                            frame_for,
-                        )
+                        email_entry = Win.Entry(frame_for)
                         email_text.grid(row=4, column=1, pady=5)
                         email_entry.insert(0, klient.get_email())
                         email_entry.grid(row=4, column=2, pady=5, padx=5)
-
                         save_button = Win.Button(
                             frame_for,
                             text="Save",
@@ -255,37 +210,26 @@ def new_Klient_Tabel(window_new_klient):
                         )
                         save_button.grid(row=5, column=1, pady=5)
                         break
-
                 if flag == 0:
-                    message = f"Klient with ID = {id} not found!"
+                    message = f"Client with ID = {id} not found!"
                     raise Error.ErrorNewKlient(message)
             except Error.ErrorNewKlient:
                 wind.close_window()
-                Logger(
-                    file_name,
-                    "Error renaname from Method new_Klient_Tabel - Method get_text",
-                    str(Error.ErrorNewKlient(message)),
-                )
 
+    # Функция для переименования клиента
     def rename():
-        Logger(
-            file_name,
-            "",
-            "Method new_Klient_Tabel - Method renam - try to rename a new klient...",
-        )
+        """
+        The `rename` function creates a window for renaming a client and includes elements for entering the client's ID and performing actions related to renaming.
+        """
         wind = Win.Window("Rename New klient", "1000x300")
         wind.make_protokol(wind.close_window)
         windows.append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
-
         ID_text = Win.Label(
-            frame_for,
-            text="Enter ID for new klient, witch You wont to rename",
+            frame_for, text="Enter ID of the client you want to rename:"
         )
-        ID_entry = Win.Entry(
-            frame_for,
-        )
+        ID_entry = Win.Entry(frame_for)
         ID_find = Win.Button(
             frame_for,
             text="Find element",
@@ -294,88 +238,66 @@ def new_Klient_Tabel(window_new_klient):
         ID_find.grid(row=1, column=3, padx=5)
         ID_text.grid(row=1, column=1)
         ID_entry.grid(row=1, column=2, padx=5)
-
         delete_button = Win.Button(
-            frame_for,
-            text="Back",
-            command=lambda: wind.close_window(),
+            frame_for, text="Back", command=lambda: wind.close_window()
         )
         delete_button.grid(row=5, column=2, pady=5, padx=5)
 
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
-
-    add_new_klient = Win.Button(frame, text="Add Klient", command=add_new)
+    add_new_klient = Win.Button(frame, text="Add Client", command=add_new)
     add_new_klient.grid(row=1, column=2, padx=10, pady=10)
-
-    rename_klient = Win.Button(frame, text="Rename Klient", command=rename)
+    rename_klient = Win.Button(frame, text="Rename Client", command=rename)
     rename_klient.grid(row=2, column=2, padx=10, pady=10)
-
-    Delete_element = Win.Button(
-        frame,
-        text="Delete",
-        command=delete_element,
-    )
+    Delete_element = Win.Button(frame, text="Delete", command=delete_element)
     Delete_element.grid(row=3, column=2, padx=10, pady=10)
-
     close_table = Win.Button(
-        frame,
-        text="Close Table",
-        command=lambda: window_new_klient.close_window(),
+        frame, text="Close Table", command=(lambda: window_new_klient.close_window(), New.clear_array_all())
     )
     close_table.grid(row=4, column=2, padx=10, pady=10)
-
     make_Table()
 
 
-# ------------------------------------------------------------------------------------------------------------------------
-
-
-# Создание массива
 def make_array():
     """
-    This function retrieves new client data from the database and populates a list of New_Klient objects.
+    This function connects to the SQLite database and retrieves all records from the 'Klient_new' table.
+    It then creates a new 'New_Klient' object for each record and appends it to the 'klients' list.
+
+    Parameters:
+    None
 
     Returns:
     None
-
-    The function connects to the SQLite database specified by the "basadate" variable, executes a SQL query to select all records from the "Klient_new" table, and then iterates through the result set. For each record, it creates a new New_Klient object using the data from the record and appends it to the "klients" list. Finally, it closes the database connection.
     """
     conn = bd.connect(basadate)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Klient_new")
     rows = cursor.fetchall()
-
-    # Загрузка клиентов из базы данных в список клиентов
     for line in rows:
         klient = New.New_Klient(int(line[0]), str(line[1]), int(line[2]), str(line[3]))
         klients.append(klient)
-
     cursor.close()
 
 
-# Начальный метод работы с новым клиентом
 def do_new_klient(flag, window_new_klient):
     """
-    This function manages the process of creating new clients. It retrieves existing clients from the database,
-    and based on the provided flag, it either creates a new client table or performs another operation.
+    This function manages the creation of a new client window based on the provided flag.
+    If the flag is 1, it calls the 'new_Klient_Tabel' function to create a new client window.
+    If the flag is not 1, it logs an error message using the 'Logger' function.
 
     Parameters:
-    - flag (int): A flag indicating the desired operation. If flag is 1, a new client table is created.
-                  Otherwise, an error is logged.
-    - window_new_klient (Window): The main window for displaying the new client table.
-    - windows (list): A list of all open windows.
+    flag (int): A flag indicating the action to be performed. If flag is 1, a new client window is created.
+                If flag is not 1, an error is logged.
+    window_new_klient (Window): The window object for creating a new client.
 
     Returns:
     None
     """
-    Logger(file_name, "", "Method do_new_klient - making list of new klient...")
     make_array()
-
-    # Выбор способа работы
     if flag == 1:
-        Logger(file_name, "", "Make table...")
         new_Klient_Tabel(window_new_klient)
     else:
-        # MAKE LATEST VERSION
-        Logger(file_name, "Error in create new klient", "Invalid flag in do_new_klient")
+        # Логирование ошибки
+        Logger(
+            file_name, "Error in creating new client", "Invalid flag in do_new_klient"
+        )
