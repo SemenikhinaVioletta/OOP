@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter.ttk import Combobox
 import Log
 from Log import Logger
+from Global_per import windows
 
 file_name = "File Window"
 
@@ -45,7 +46,7 @@ class Window(Tk):
         Logger(file_name, "", "Class Window - Method open - open window: " + self.name)
 
 
-    def close_window(self, windows):
+    def close_window(self):
         """
         Close the current window and remove it from the list of open windows.
 
@@ -81,3 +82,4 @@ class Window(Tk):
         None
         """
         Logger(file_name, "", "Class Window - Method __del__ - delete window: " + self.name)
+        windows.remove(self)

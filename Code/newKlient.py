@@ -5,6 +5,7 @@ import Error as Error
 from Error import add_new_to_table
 import Log
 from Log import Logger
+from Global_per import windows
 
 file_name = "File newKlient"
 
@@ -13,14 +14,13 @@ basadate = "Code\DateBase\Pc.db"
 
 # -----------------------------------------------------------------------------------------------------------------------
 # Работа со списком новых клиентов
-def new_Klient_Tabel(klients, window_new_klient, windows):
+def new_Klient_Tabel(klients, window_new_klient):
     """
     This function creates a new client table and provides functionality to add new clients.
 
     Parameters:
     - klients (list): A list of New_Klient objects representing existing clients.
     - window_new_klient (Window): The main window for displaying the new client table.
-    - windows (list): A list of all open windows.
 
     Returns:
     None
@@ -60,7 +60,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
                     klient.delete_klient_from_bd()
                     klients.remove(klient)
                     make_Table()
-        window.close_window(windows)
+        window.close_window()
 
     # Создание окна для удаления элемента таблици
     def delete_element():
@@ -149,7 +149,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
         delete_button = Win.Button(
             frame_for,
             text="Back",
-            command=lambda: wind.close_window(windows),
+            command=lambda: wind.close_window(),
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
 
@@ -195,7 +195,7 @@ def new_Klient_Tabel(klients, window_new_klient, windows):
     close_table = Win.Button(
         frame,
         text="Close Table",
-        command=lambda: window_new_klient.close_window(windows),
+        command=lambda: window_new_klient.close_window(),
     )
     close_table.grid(row=2, column=2, padx=10, pady=10)
 
@@ -238,7 +238,7 @@ def make_array(klients):
 
 
 # Начальный метод работы с новым клиентом
-def do_new_klient(flag, window_new_klient, windows):
+def do_new_klient(flag, window_new_klient):
     """
     This function manages the process of creating new clients. It retrieves existing clients from the database,
     and based on the provided flag, it either creates a new client table or performs another operation.
@@ -259,7 +259,7 @@ def do_new_klient(flag, window_new_klient, windows):
     # Выбор способа работы
     if flag == 1:
         Logger(file_name, "", "Make table...")
-        new_Klient_Tabel(klients, window_new_klient, windows)
+        new_Klient_Tabel(klients, window_new_klient)
     else:
         # MAKE LATEST VERSION
         Logger(file_name, "Error in create new klient", "Invalid flag in do_new_klient")

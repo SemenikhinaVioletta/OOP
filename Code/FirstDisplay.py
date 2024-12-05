@@ -3,6 +3,7 @@ import newKlient
 from newKlient import do_new_klient
 import Log
 from Log import Logger
+from Global_per import windows
 
 file_name = "File FirstDisplay"
 
@@ -89,7 +90,7 @@ def start_new_klient(flag):
     """
     Logger(file_name, "", "Method start_new_klient - open new window...")
     windows.append(Win.Window("New klient", "1000x300"))
-    do_new_klient(flag, windows[len(windows) - 1], windows)
+    do_new_klient(flag, windows[len(windows) - 1])
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -133,7 +134,6 @@ def end():
 
 # Делаем основное окно приложения
 Logger(file_name, "", "start program...")
-windows = []
 windows.append(Win.Window("PC for management", "600x400"))
 
 Logger(file_name, "", "make frame...")
