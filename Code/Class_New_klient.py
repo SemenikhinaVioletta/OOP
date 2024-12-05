@@ -1,14 +1,15 @@
 import Log
 from Log import Logger
 import sqlite3 as bd
+import Error as Error
+from Global_per import basadate, klients
 
 file_name = "File Class_New_Klient"
-basadate = "Code\DateBase\Pc.db"
 
 
 class New_Klient:
 
-    def __init__(self, ID, name, phone, meil):
+    def __init__(self, ID, name, phone, email):
         """
         Initialize a new New_Klient object.
 
@@ -16,7 +17,7 @@ class New_Klient:
         ID (int): Unique identifier for the new client.
         name (str): Name of the new client.
         phone (int): Phone number of the new client.
-        meil (str): Email address of the new client.
+        email (str): email address of the new client.
 
         Returns:
         None
@@ -31,12 +32,12 @@ class New_Klient:
         )
         self.name = str(name)
         self.phone = int(phone)
-        self.meil = str(meil)
+        self.email = str(email)
         self.ID = int(ID)
 
     # --------------------------------------------------------------------------------------------------------------------------------
     # Дополнительные функции
-    def rename_newklient(self, name, phone, mail):
+    def rename_newklient(self, name, phone, email):
         """
         Renames the new client"s details.
 
@@ -46,7 +47,7 @@ class New_Klient:
         Parameters:
         name (str): The new name of the client.
         phone (int): The new phone number of the client.
-        mail (str): The new email address of the client.
+        email (str): The new email address of the client.
 
         Returns:
         None
@@ -56,14 +57,62 @@ class New_Klient:
             "",
             "Class New_Klient - Method rename_newklient - rename New klient",
         )
-        if self.name != name:
-            self.name = name
+        try:
+            conn = bd.connect(basadate)
+            cur = conn.cursor()
+            if self.get_name() != name:
+                for klient in klients:
+                    if klient.get_name() == name and klient.get_ID() != self.get_ID():
+                        flag = 1
+                        message = (
+                            "This element (" + self.get_name() + ") has already been"
+                        )
+                        raise Error.ErrorNewKlient(message)
+                self.name = name
+                cur.execute(
+                    """UPDATE Klient_new SET Name = ? WHERE Id_klient = ?""",
+                    (self.get_name(), self.get_ID()),
+                )
 
-        if self.phone != phone:
-            self.phone = phone
+            if self.get_phone() != phone:
+                for klient in klients:
+                    if klient.get_phone() == name and klient.get_ID() != self.get_ID():
+                        flag = 1
+                        message = (
+                            "This element (" + str(self.get_phone()) + ") has already been"
+                        )
+                        raise Error.ErrorNewKlient(message)
+                self.phone = phone
+                cur.execute(
+                    """UPDATE Klient_new SET Phone = ? WHERE Id_klient = ?""",
+                    (self.get_phone(), self.get_ID()),
+                )
 
-        if self.meil != mail:
-            self.meil = mail
+            if self.get_email() != email:
+                for klient in klients:
+                    if klient.get_email() == name and klient.get_ID() != self.get_ID():
+                        flag = 1
+                        message = (
+                            "This element (" + self.get_email() + ") has already been"
+                        )
+                        raise Error.ErrorNewKlient(message)
+                self.email = email
+                cur.execute(
+                    """UPDATE Klient_new SET Mail = ? WHERE Id_klient = ?""",
+                    (self.get_email(), self.get_ID()),
+                )
+
+            conn.commit()
+            conn.close()
+
+        except Error.ErrorNewKlient:
+            Logger(
+                file_name,
+                "Error renaname from Method rename_newklient",
+                str(Error.ErrorNewKlient(message)),
+            )
+        finally:
+            conn.close()
 
     def get(self):
         """
@@ -79,14 +128,14 @@ class New_Klient:
             ID (int): The unique identifier of the new client.
             name (str): The name of the new client.
             phone (int): The phone number of the new client.
-            meil (str): The email address of the new client.
+            email (str): The email address of the new client.
         """
         Logger(
             file_name,
             "",
             "Class New_Klient - Method get - get information about klient",
         )
-        return int(self.ID), str(self.name), int(self.phone), str(self.meil)
+        return int(self.ID), str(self.name), int(self.phone), str(self.email)
 
     def get_name(self):
         """
@@ -124,7 +173,7 @@ class New_Klient:
         )
         return int(self.phone)
 
-    def get_mail(self):
+    def get_email(self):
         """
         Retrieves the email address of the new client.
 
@@ -138,9 +187,11 @@ class New_Klient:
         str: The email address of the new client.
         """
         Logger(
-            file_name, "", "Class New_Klient - Method get_mail - get mail of New klient"
+            file_name,
+            "",
+            "Class New_Klient - Method get_email - get email of New klient",
         )
-        return str(self.meil)
+        return str(self.email)
 
     def get_ID(self):
         """
@@ -179,7 +230,7 @@ class New_Klient:
 
         cursor.execute(
             """INSERT INTO Klient_new (Name, Phone, Mail) VALUES(?, ?, ?)""",
-            (self.get_name(), self.get_phone(), self.get_mail()),
+            (self.get_name(), self.get_phone(), self.get_email()),
         )
         conn.commit()
         cursor.close()
@@ -200,7 +251,11 @@ class New_Klient:
         Returns:
         None
         """
-        Logger(file_name, "", "Method delete_klient_from_bd - delete from list of new klient...")
+        Logger(
+            file_name,
+            "",
+            "Method delete_klient_from_bd - delete from list of new klient...",
+        )
         try:
             sqlite_connection = bd.connect(basadate)
             cursor = sqlite_connection.cursor()
@@ -208,7 +263,7 @@ class New_Klient:
 
             cursor.execute(
                 """DELETE FROM Klient_new where Id_klient = ?""",
-                (self.get_ID(), ),
+                (self.get_ID(),),
             )
             sqlite_connection.commit()
             Logger("\t", "", "the entry was successfully deleted")

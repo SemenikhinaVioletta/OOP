@@ -53,7 +53,7 @@ class ErrorNewKlient(Exception):
 # --------------------------------------------------------------------------------------------------------------------------------
 
 # Методы для проверки вводимых значений (для удаления и добавления элементов)
-def add_new_to_table(name_entry, phone_entry, email_entry, klients):
+def add_new_to_table(name_entry, phone_entry, email_entry):
     """
     This function validates and adds new client information to the 'klients' list.
 
@@ -72,11 +72,11 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
     Logger(
         file_name, "", "Method add_new_to_table - cheking information for new klient..."
     )
+    flag = 0
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
         email = str(email_entry.get())
-        flag = 0
         message = "In this all god."
 
         names = name.split()
@@ -144,14 +144,10 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
             raise ErrorNewKlient(message)
         else:
             Logger("\t", "", "Good email: " + email)
-        if flag == 0:
-            klient = New.New_Klient(
-                klients[-1].get_ID() + 1, str(name), int(phone), str(email)
-            )
-            klient.enter_klient_to_bd()
-            klients.append(klient)
     except ErrorNewKlient:
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
+    finally:
+        return flag
 
 
 def delete_from_table(id):
