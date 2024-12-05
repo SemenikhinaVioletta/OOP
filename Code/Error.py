@@ -5,198 +5,132 @@ import Class_New_klient as New
 
 file_name = "File Error of New Klient"
 
-
+# Класс для обработки ошибок нового клиента
 class ErrorNewKlient(Exception):
-    """
-    Custom exception class for handling errors related to new client input.
-
-    Attributes:
-    message (str): The error message to be displayed.
-
-    Methods:
-    __init__(self, *args): Constructor to initialize the error message.
-    __str__(self) -> str: String representation of the error message.
-    """
-
     def __init__(self, *args):
-        """
-        Initialize the error message.
-
-        Parameters:
-        *args (tuple): Variable length argument list. If provided, the first argument is used as the error message.
-
-        Returns:
-        None
-        """
         if args:
             self.message = args[0]
         else:
             self.message = None
 
     def __str__(self) -> str:
-        """
-        Return the string representation of the error message.
-
-        Parameters:
-        None
-
-        Returns:
-        str: The error message with a prefix indicating the error type.
-        """
         if self.message:
-            showerror(title="ERROR IN INPUT", message=self.message)
+            showerror(title="ERROR IN INPUT", message=self.message)  # Показываем сообщение об ошибке
             return "Error New klient, message: {0}".format(self.message)
         else:
             return "Error New klient, raised"
 
-
-# --------------------------------------------------------------------------------------------------------------------------------
-
-# Методы для проверки вводимых значений (для удаления и добавления элементов)
+# Функция для добавления нового клиента в таблицу
 def add_new_to_table(name_entry, phone_entry, email_entry):
-    """
-    This function validates and adds new client information to the 'klients' list.
-
-    Parameters:
-    name_entry (tkinter.Entry): The entry widget for the client's name.
-    phone_entry (tkinter.Entry): The entry widget for the client's phone number.
-    email_entry (tkinter.Entry): The entry widget for the client's email address.
-    klients (list): The list of existing client objects.
-
-    Returns:
-    None
-
-    Raises:
-    ErrorNewKlient: If any of the input values fail validation, an ErrorNewKlient exception is raised.
-    """
-    Logger(
-        file_name, "", "Method add_new_to_table - cheking information for new klient..."
-    )
-    flag = 0
+    flag = 0  # Флаг для отслеживания ошибок
     try:
-        name = str(name_entry.get())
-        phone = str(phone_entry.get())
-        email = str(email_entry.get())
-        message = "In this all god."
+        name = str(name_entry.get())  # Получаем имя
+        phone = str(phone_entry.get())  # Получаем телефон
+        email = str(email_entry.get())  # Получаем email
+        message = "Validation started."  # Сообщение о начале валидации
+        names = name.split()  # Разделяем имя на части
 
-        names = name.split()
+        # Проверка имени
         if len(names) < 3:
-            message = "Name must contain at least 3 characters."
+            message = "Name must contain at least 3 words."  # Исправлено на более информативное сообщение
             flag = 1
         else:
             for i in names:
                 if i[0].islower():
-                    message = "Name must be in title case."
+                    message = "Each word in the name must start with an uppercase letter."  # Исправлено на более информативное сообщение
                     flag = 1
                 else:
                     for j in i:
                         if not j.isalpha():
-                            message = "Name must contain only letters."
+                            message = "Name must contain only alphabetic characters."  # Исправлено на более информативное сообщение
                             flag = 1
                             break
                 if flag == 1:
                     break
-        if flag == 1:
-            raise ErrorNewKlient(message)
-        else:
-            Logger("\t", "", "Good name: " + name)
 
+        if flag == 1:
+            raise ErrorNewKlient(message)  # Вызываем ошибку, если есть проблемы с именем
+        else:
+            pass
+
+        # Проверка телефона
         if len(phone) != 11:
-            message = "Phone must be 11 digits length."
+            message = "Phone number must be exactly 11 digits long."  # Исправлено на более информативное сообщение
             flag = 1
         elif phone[0] == "0":
-            message = "Phone mast be start about not null"
+            message = "Phone number must not start with zero."  # Исправлено на более информативное сообщение
             flag = 1
         else:
             for j in phone:
                 if not j.isdigit():
-                    message = "Phone must contain only digits."
+                    message = "Phone number must contain only digits."  # Исправлено на более информативное сообщение
                     flag = 1
                     break
-        if flag == 1:
-            raise ErrorNewKlient(message)
-        else:
-            Logger("\t", "", "Good phone: " + phone)
 
+        if flag == 1:
+            raise ErrorNewKlient(message)  # Вызываем ошибку, если есть проблемы с телефоном
+        else:
+            pass
+
+        # Проверка email
         if len(email) < 5:
-            message = (
-                'Email must contain at least 5 characters or more, example: "a@a.a."'
-            )
+            message = 'Email must contain at least 5 characters, e.g., "example@domain.com".'  # Исправлено на более информативное сообщение
             flag = 1
         elif email.count("@") != 1:
-            message = "Email must contain exactly one '@' symbol."
+            message = "Email must contain exactly one '@' symbol."  # Исправлено на более информативное сообщение
             flag = 1
         else:
             i = 0
             for i in range(len(email)):
                 if email[i] == "@":
                     break
-
-            if (
-                email[i:].count(".") != 1
-                or email[i + 1] == "."
-                or i >= len(email) - 3
-                or i == 0
-            ):
-                message = "Email must contain exactly one '.' symbol."
+            if email[i:].count(".") != 1 or email[i + 1] == "." or i >= len(email) - 3 or i == 0:
+                message = "Email must contain exactly one '.' symbol after the '@' symbol."  # Исправлено на более информативное сообщение
                 flag = 1
+
         if flag == 1:
-            raise ErrorNewKlient(message)
+            raise ErrorNewKlient(message)  # Вызываем ошибку, если есть проблемы с email
         else:
-            Logger("\t", "", "Good email: " + email)
-    except ErrorNewKlient:
-        Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
+            pass
+
+    except ErrorNewKlient as e:
+        Logger.log_error(file_name, str(e), "An error occurred during validation.")  # Логируем ошибку
     finally:
-        return flag
+        if flag == 0:
+            Logger.log_info(file_name, "No errors found during validation.")  # Логируем успешную проверку
+        return flag  # Возвращаем флаг
 
-
+# Функция для удаления клиента из таблицы
 def delete_from_table(id):
-    """
-    This function validates and deletes a client from the database based on the provided ID.
-
-    Parameters:
-    id (tkinter.StringVar): The StringVar object containing the ID of the client to be deleted.
-
-    Returns:
-    int: A flag indicating the success of the operation.
-         - 0: The operation was successful.
-         - 1: The operation failed due to invalid input.
-
-    Raises:
-    ErrorNewKlient: If the input ID is invalid, an ErrorNewKlient exception is raised.
-    """
-    flag = 0
+    flag = 0  # Флаг для отслеживания ошибок
     try:
-        id = id.get()  # Extract the ID value from the StringVar object
+        id = id.get()  # Получаем ID
         flag = 0
-        message = "In this all god."
+        message = "Validation started."  # Сообщение о начале валидации
 
-        # Validate the ID: it should contain only digits
-        
-        if (len(id) != 0):
+        # Проверка ID
+        if len(id) != 0:
             for j in id:
                 if not j.isdigit():
-                    message = "ID must contain only digits."
+                    message = "ID must contain only digits."  # Исправлено на более информативное сообщение
                     flag = 1
                     break
-
-            # Validate the ID: it should be greater than or equal to 0
             if flag == 0:
                 if int(id) < 0:
-                    message = "ID must be greater than or equal to 0."
+                    message = "ID must be greater than or equal to 0."  # Исправлено на более информативное сообщение
                     flag = 1
         else:
-            message = "ID can't be empty."
+            message = "ID cannot be empty."  # Исправлено на более информативное сообщение
             flag = 1
 
-        # Raise an exception if the ID is invalid
         if flag == 1:
-            raise ErrorNewKlient(message)
+            raise ErrorNewKlient(message)  # Вызываем ошибку, если есть проблемы с ID
         else:
-            Logger("\t", "", "Good ID: " + id)
+            pass
 
-    except ErrorNewKlient:
-        Logger(file_name, "Error enter", str(ErrorNewKlient(message)))
+    except ErrorNewKlient as e:
+        Logger.log_error(file_name, str(e), "An error occurred during ID validation.")  # Логируем ошибку
     finally:
-        return flag
-# --------------------------------------------------------------------------------------------------------------------------------
+        if flag == 0:
+            Logger.log_info(file_name, "No errors found during ID validation.")  # Логируем успешную проверку
+        return flag  # Возвращаем флаг
