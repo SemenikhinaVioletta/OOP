@@ -1,57 +1,34 @@
 import logging
-
+from tkinter import messagebox  # Importing messagebox for error dialogs
 
 class Logger:
-    """
-    A class to handle logging messages with different levels.
-
-    Attributes
-    ----------
-    name : str
-        The name of the logger.
-    errors : str
-        The error message to be logged.
-    message : str
-        The main message to be logged.
-
-    Methods
-    -------
-    __init__(self, name, errors, message)
-        Initializes the Logger object and logs the messages based on the presence of errors.
-    """
-
     def __init__(self, name, errors, message):
-        """
-        Initializes the Logger object and logs the messages based on the presence of errors.
+        self.name = name
+        self.errors = errors
+        self.message = message
+        self.setup_logging()
+        self.log_message()
 
-        Parameters
-        ----------
-        name : str
-            The name of the logger.
-        errors : str
-            The error message to be logged.
-        message : str
-            The main message to be logged.
+    def setup_logging(self):
+        logging.basicConfig(
+            format="%(asctime)s - %(levelname)s - %(filename)s - %(message)s",
+            level=logging.INFO,
+        )
 
-        Returns
-        -------
-        None
-        """
-        file_name = "Logs_data"
-        if len(errors) == 0:
-            logging.basicConfig(
-                format="%(asctime)s - %(levelname)s - %(filename)s - %(message)s",
-                level=logging.INFO,
-            )
-            logging.info(f"{name}: {message}")
-
-            logging.basicConfig(
-                format="%(asctime)s - %(levelname)s - %(filename)s - %(message)s",
-                level=logging.INFO,
-            )
+    def log_message(self):
+        if len(self.errors) == 0:
+            logging.info(f"{self.name}: {self.message}")
         else:
-            logging.basicConfig(
-                format="%(asctime)s - %(levelname)s - %(filename)s - %(message)s",
-                level=logging.INFO,
-            )
-            logging.error(f"{name}: {errors}: {message}")
+            logging.error(f"{self.name}: {self.errors}: {self.message}")
+            self.show_error_dialog()
+
+    def show_error_dialog(self):
+        messagebox.showerror(title="ERROR IN INPUT", message=self.message)
+
+    @staticmethod
+    def log_info(name, message):
+        logging.info(f"{name}: {message}")
+
+    @staticmethod
+    def log_error(name, errors, message):
+        logging.error(f"{name}: {errors}: {message}")
