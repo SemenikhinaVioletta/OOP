@@ -41,13 +41,10 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
             )
             klient.enter_klient_to_bd()
-            klients.append(klient)
-        klients.clear()
-        make_array()
-        make_Table()
+            make_Table()
 
     def do_this(klient, name_entry, phone_entry, email_entry):
-        if add_new_to_table(name_entry, phone_entry, email_entry):
+        if add_new_to_table(name_entry, phone_entry, email_entry) == 0:
             klient.rename_newklient(
                 str(name_entry.get()), int(phone_entry.get()), str(email_entry.get())
             )

@@ -193,7 +193,7 @@ def delete_from_table(id):
         if flag == 1:
             raise ErrorNewKlient(message)
         else:
-            Logger("\t", "", "Good phone: " + id)
+            Logger("\t", "", "Good ID: " + id)
 
     except ErrorNewKlient:
         Logger(file_name, "Error enter", str(ErrorNewKlient(message)))

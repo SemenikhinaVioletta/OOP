@@ -63,7 +63,6 @@ class New_Klient:
             if self.get_name() != name:
                 for klient in klients:
                     if klient.get_name() == name and klient.get_ID() != self.get_ID():
-                        flag = 1
                         message = (
                             "This element (" + self.get_name() + ") has already been"
                         )
@@ -77,7 +76,6 @@ class New_Klient:
             if self.get_phone() != phone:
                 for klient in klients:
                     if klient.get_phone() == name and klient.get_ID() != self.get_ID():
-                        flag = 1
                         message = (
                             "This element (" + str(self.get_phone()) + ") has already been"
                         )
@@ -91,7 +89,6 @@ class New_Klient:
             if self.get_email() != email:
                 for klient in klients:
                     if klient.get_email() == name and klient.get_ID() != self.get_ID():
-                        flag = 1
                         message = (
                             "This element (" + self.get_email() + ") has already been"
                         )
@@ -103,7 +100,6 @@ class New_Klient:
                 )
 
             conn.commit()
-            conn.close()
 
         except Error.ErrorNewKlient:
             Logger(
