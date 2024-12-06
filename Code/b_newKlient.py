@@ -3,7 +3,6 @@ import sqlite3 as bd
 import b_Class_New_klient as New
 import b_Error as Error
 from b_Error import add_new_to_table, delete_from_table
-import a_Log
 from a_Log import Logger
 from a_Global_per import windows, basadate
 

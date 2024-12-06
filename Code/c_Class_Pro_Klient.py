@@ -11,7 +11,7 @@ logger = Logger(file_name, [], "Application started")
 
 class Pro_Klient(New.New_Klient):
 
-    def __init__(self, ID, name, phone, mora, kontrakt, email, status, klient):
+    def __init__(self, ID, name, mora, kontrakt, phone, email, status, klient):
         self.status = status
         self.mora = mora
         self.kontrakt = []
