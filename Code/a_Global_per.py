@@ -1,3 +1,4 @@
 windows = []
 basadate = "Code\DateBase\Pc.db"
-klients = []
+status_klient = []
+status_kontrakt = []

@@ -1,12 +1,11 @@
-import Log
-from Log import Logger
+import a_Log
+from a_Log import Logger
 import sqlite3 as bd
-import Error as Error
-from Global_per import basadate, klients
+import b_Error as Error
+from a_Global_per import basadate
 
 file_name = "File Class_New_Klient"
 logger = Logger(file_name, [], "Application started")
-
 
 class New_Klient:
     def __init__(self, ID, name, phone, email):
@@ -30,7 +29,7 @@ class New_Klient:
         self.email = str(email)
         self.ID = int(ID)
 
-    def rename_newklient(self, name, phone, email):
+    def rename_newklient(self, name, phone, email, klients):
         """
         Updates the name, phone, and email of the client in the database.
 
@@ -164,7 +163,7 @@ class New_Klient:
         logger.log_info(file_name, "Fetching client email: " + f"Email: {self.email}")
         return str(self.email)
 
-    def clear_array(self):
+    def clear_array(self, klients):
         """
         Removes the current client object from the 'klients' list.
 
@@ -291,19 +290,3 @@ class New_Klient:
             file_name,
             "Class New_Klient - Method __del__ - delete client: " + str(self.ID),
         )
-
-def clear_array_all():
-    """
-    Removes all client objects from the 'klients' list.
-
-    This function iterates over the 'klients' list and calls the 'clear_array' method on each client object.
-    The 'clear_array' method removes the client object from the 'klients' list.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-    """
-    for klient in klients:
-        klient.clear_array()

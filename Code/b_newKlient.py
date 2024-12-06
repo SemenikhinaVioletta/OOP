@@ -1,11 +1,11 @@
-import Window as Win
+import a_Window as Win
 import sqlite3 as bd
-import Class_New_klient as New
-import Error as Error
-from Error import add_new_to_table, delete_from_table
-import Log
-from Log import Logger
-from Global_per import windows, basadate, klients
+import b_Class_New_klient as New
+import b_Error as Error
+from b_Error import add_new_to_table, delete_from_table
+import a_Log
+from a_Log import Logger
+from a_Global_per import windows, basadate
 
 file_name = "File newKlient"
 
@@ -13,9 +13,10 @@ file_name = "File newKlient"
 def new_Klient_Tabel(window_new_klient):
     """
     The `new_Klient_Tabel` function in Python defines a set of sub-functions for adding, renaming, and deleting clients, as well as creating a GUI interface for managing client data in a table.
-    
+
     @param window_new_klient `window_new_klient` is a parameter that represents the window or GUI element where the functions for adding, renaming, and deleting clients will be displayed and interacted with. It serves as the main window for managing client information and operations within the application.
     """
+
     # Функция для добавления нового клиента
     def take_this(name_entry, phone_entry, email_entry):
         """
@@ -33,6 +34,7 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
             )
             klient.enter_klient_to_bd()
+            klients.append(klient)
             make_Table()
 
     # Функция для изменения данных существующего клиента
@@ -47,7 +49,7 @@ def new_Klient_Tabel(window_new_klient):
         """
         if add_new_to_table(name_entry, phone_entry, email_entry) == 0:
             klient.rename_newklient(
-                str(name_entry.get()), int(phone_entry.get()), str(email_entry.get())
+                str(name_entry.get()), int(phone_entry.get()), str(email_entry.get()), klients
             )
             make_Table()
 
@@ -163,7 +165,7 @@ def new_Klient_Tabel(window_new_klient):
     def get_text(id, frame_for, wind):
         """
         The function `get_text` updates client information in a GUI window based on user input.
-        
+
         @param id The `id` parameter in the `get_text` function seems to be used as an identifier for a client. It is likely used to search for a specific client in a list of clients (`klients`). The function then allows the user to update information (name, phone number, email) for
         @param frame_for `frame_for` is a tkinter frame where labels, entries, and buttons are being placed for user input and interaction in a graphical user interface (GUI) application.
         @param wind The `wind` parameter in the `get_text` function seems to be an instance of a window or GUI class that is used to create and manage the graphical user interface elements. It is likely used to display labels, entry fields, buttons, and handle user interactions within the window or frame specified by
@@ -252,7 +254,9 @@ def new_Klient_Tabel(window_new_klient):
     Delete_element = Win.Button(frame, text="Delete", command=delete_element)
     Delete_element.grid(row=3, column=2, padx=10, pady=10)
     close_table = Win.Button(
-        frame, text="Close Table", command=(lambda: window_new_klient.close_window(), New.clear_array_all())
+        frame,
+        text="Close Table",
+        command=(lambda: window_new_klient.close_window()),
     )
     close_table.grid(row=4, column=2, padx=10, pady=10)
     make_Table()
@@ -293,6 +297,8 @@ def do_new_klient(flag, window_new_klient):
     Returns:
     None
     """
+    global klients
+    klients = []
     make_array()
     if flag == 1:
         new_Klient_Tabel(window_new_klient)

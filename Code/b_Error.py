@@ -1,7 +1,7 @@
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
-import Log
-from Log import Logger
-import Class_New_klient as New
+import a_Log
+from a_Log import Logger
+import b_Class_New_klient as New
 
 file_name = "File Error of New Klient"
 
@@ -74,8 +74,6 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(
                 message
             )  # Вызываем ошибку, если есть проблемы с именем
-        else:
-            pass
 
         # Проверка телефона
         if len(phone) != 11:
@@ -95,8 +93,6 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
             raise ErrorNewKlient(
                 message
             )  # Вызываем ошибку, если есть проблемы с телефоном
-        else:
-            pass
 
         # Проверка email
         if len(email) < 5:
@@ -121,8 +117,6 @@ def add_new_to_table(name_entry, phone_entry, email_entry):
 
         if flag == 1:
             raise ErrorNewKlient(message)  # Вызываем ошибку, если есть проблемы с email
-        else:
-            pass
 
     except ErrorNewKlient as e:
         Logger.log_error(

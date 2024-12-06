@@ -2,9 +2,9 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
-import Log
-from Log import Logger
-from Global_per import windows
+import a_Log
+from a_Log import Logger
+from a_Global_per import windows
 
 file_name = "File Window"
 

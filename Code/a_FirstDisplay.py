@@ -1,14 +1,10 @@
-import Window as Win
-"""
-    The code defines functions for managing clients in a GUI application, logging events, and opening windows based on user selections.
-    
-    @param event The `event` parameter in the `selected` function is typically an event object that represents the event that triggered the function to be called. This could be a user interaction event like a button click or a selection change in a dropdown menu. The event object may contain information about the event such as the
-    """
-import newKlient
-from newKlient import do_new_klient
-import Log
-from Log import Logger
-from Global_per import windows
+import a_Window as Win
+from f_Class_status_klient import make_status
+import b_newKlient
+from b_newKlient import do_new_klient
+import a_Log
+from a_Log import Logger
+from a_Global_per import windows
 
 file_name = "File FirstDisplay"
 logger = Logger(file_name, [], "Application started")
@@ -101,4 +97,5 @@ button_to_end = Win.Button(
 )
 button_to_end.grid(row=5, column=1, pady=10)
 
+make_status()
 start()
