@@ -1,4 +1,3 @@
-import a_Log
 from a_Log import Logger
 import sqlite3 as bd
 import b_Error as Error
@@ -273,20 +272,3 @@ class New_Klient:
             if sqlite_connection:
                 sqlite_connection.close()
 
-    def __del__(self):
-        """
-        Destructor method for the New_Klient class.
-
-        This method logs a message indicating that the client object is being deleted.
-        The log message includes the class name, method name, and the ID of the client being deleted.
-
-        Parameters:
-        None
-
-        Returns:
-        None
-        """
-        logger.log_info(
-            file_name,
-            "Class New_Klient - Method __del__ - delete client: " + str(self.ID),
-        )
