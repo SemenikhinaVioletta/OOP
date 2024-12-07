@@ -25,7 +25,7 @@ def new_Klient_Tabel(window_new_klient):
         @param phone_entry The `phone_entry` parameter in the `take_this` function seems to be a variable that holds the phone number entered by the user. It is likely used as part of adding a new entry to a table or database. The function appears to check if adding a new entry to the table is successful
         @param email_entry The `email_entry` parameter in the `take_this` function is a variable that holds the email information entered by the user. It is used as one of the inputs to the `add_new_to_table` function and is also passed as a parameter to create a new `New_Klient` object
         """
-        if add_new_to_table(name_entry, phone_entry, email_entry) == 0:
+        if add_new_to_table(name_entry, phone_entry, email_entry, klients):
             klient = New.New_Klient(
                 klients[-1].get_ID() + 1,
                 str(name_entry.get()),
@@ -46,7 +46,7 @@ def new_Klient_Tabel(window_new_klient):
         @param phone_entry The `phone_entry` parameter in the `do_this` function seems to be a variable that holds the phone number entered by the user. It is likely a field or input where the user can input their phone number.
         @param email_entry The `email_entry` parameter in the `do_this` function seems to be a reference to an entry field where the user can input their email address. This parameter is likely used to retrieve the email address entered by the user and pass it to the `add_new_to_table` function for processing.
         """
-        if add_new_to_table(name_entry, phone_entry, email_entry) == 0:
+        if add_new_to_table(name_entry, phone_entry, email_entry, klients):
             klient.rename_newklient(
                 str(name_entry.get()), int(phone_entry.get()), str(email_entry.get()), klients
             )
@@ -60,14 +60,14 @@ def new_Klient_Tabel(window_new_klient):
         @param id The `id` parameter in the `id_for_delite` function seems to represent the unique identifier of a client in a system. It is used to identify and delete a specific client from a table or database.
         @param window The `window` parameter in the `id_for_delite` function seems to represent a window object or a reference to the window that needs to be closed after the operation is completed. The `window.close_window()` method is likely used to close this window once the deletion process is finished.
         """
-        if delete_from_table(id) == 0:
+        if delete_from_table(id):
             id = int(id.get())
             for klient in klients:
                 if klient.get_ID() == id:
                     # Подтверждение удаления клиента
                     confirm = Error.askyesno(
                         "Confirm Delete",
-                        f"Are you sure you want to delete the client with ID: {id}, Name: {klient.get_name()}?",
+                        f"Are you sure you want to delete the client with ID: {id}, Name: {klient.get_name()}?", parent = False
                     )
                     if confirm:
                         klient.delete_klient_from_bd()
@@ -169,7 +169,7 @@ def new_Klient_Tabel(window_new_klient):
         @param frame_for `frame_for` is a tkinter frame where labels, entries, and buttons are being placed for user input and interaction in a graphical user interface (GUI) application.
         @param wind The `wind` parameter in the `get_text` function seems to be an instance of a window or GUI class that is used to create and manage the graphical user interface elements. It is likely used to display labels, entry fields, buttons, and handle user interactions within the window or frame specified by
         """
-        if Error.delete_from_table(id) == 0:
+        if Error.delete_from_table(id):
             try:
                 flag = 0
                 id = int(id.get())

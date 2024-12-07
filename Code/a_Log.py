@@ -40,7 +40,7 @@ class Logger:
         """
         The function `show_error_dialog` displays an error message dialog with a specified title and message.
         """
-        messagebox.showerror(title="ERROR IN INPUT", message=self.message)
+        messagebox.showerror(title="ERROR IN INPUT", message=self.message, parent = False)
 
     @staticmethod
     def log_info(name, message):
@@ -62,3 +62,4 @@ class Logger:
         @param message The `message` parameter in the `log_error` function is a string that represents the error message or description that you want to log when an error occurs. It provides additional context or information about the error that occurred.
         """
         logging.error(f"{name}: {errors}: {message}")
+        

@@ -16,11 +16,11 @@ class ErrorProKlient(Exception):
     def __str__(self) -> str:
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message
+                title="ERROR IN INPUT", message=self.message, parent = False
             )  # Показываем сообщение об ошибке
-            return "Error New klient, message: {0}".format(self.message)
+            return "Error Pro klient, message: {0}".format(self.message)
         else:
-            return "Error New klient, raised"
+            return "Error Pro klient, raised"
 
 
 def chek_name(name_entry):
@@ -41,13 +41,13 @@ def chek_name(name_entry):
                         if not j.isalpha():
                             message = "Name must contain only alphabetic characters."  # Исправлено на более информативное сообщение
                             raise ErrorProKlient(message)
-        Logger.log_info(file_name, "No errors found during validation.")
+        Logger.log_info(file_name, "NO errors found during validation.")
         return True
+
     except ErrorProKlient as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # Логируем ошибку
-    finally:
         return False
 
 
@@ -66,13 +66,13 @@ def chek_phone(phone_entry):
                 if not j.isdigit():
                     message = "Phone number must contain only digits."  # Исправлено на более информативное сообщение
                     raise ErrorProKlient(message)
-        Logger.log_info(file_name, "No errors found during validation.")
+        Logger.log_info(file_name, "NO errors found during validation.")
         return True
+
     except ErrorProKlient as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # Логируем ошибку
-    finally:
         return False
 
 
@@ -99,13 +99,13 @@ def chek_email(email_entry):
             ):
                 message = "Email must contain exactly one '.' symbol after the '@' symbol."  # Исправлено на более информативное сообщение
                 raise ErrorProKlient(message)
-        Logger.log_info(file_name, "No errors found during validation.")
+        Logger.log_info(file_name, "NO errors found during validation.")
         return True
+
     except ErrorProKlient as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # Логируем ошибку
-    finally:
         return False
 
 
@@ -118,17 +118,17 @@ def chek_mora(mora_entry):
                 if not i.isdigit():
                     message = "Mora must contain only digits and > 0"  # Исправлено на более информативное сообщение
                     raise ErrorProKlient(message)
-        Logger.log_info(file_name, "No errors found during validation.")
+        Logger.log_info(file_name, "NO errors found during validation.")
         return True
+
     except ErrorProKlient as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # Логируем ошибку
-    finally:
         return False
 
 
-def chek_kontrakt(kontrakt_entry):
+"""def chek_kontrakt(kontrakt_entry):
     kontrakt = str(kontrakt_entry.get())
     message = "Validation started."  # Сообщение о начале валидации
     try:
@@ -137,36 +137,68 @@ def chek_kontrakt(kontrakt_entry):
                 if not i.isdigit():
                     message = "Mora must contain only digits and > 0"  # Исправлено на более информативное сообщение
                     raise ErrorProKlient(message)
-        Logger.log_info(file_name, "No errors found during validation.")
+        Logger.log_info(file_name, "NO errors found during validation.")
+        return True
+
+    except ErrorProKlient as e:
+        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        return False  # Логируем ошибку"""
+
+
+def chek_id(id):
+    try:
+        id = id.get()
+        message = (
+            "No errors found during ID validation."  # Сообщение о начале валидации
+        )
+
+        # Проверка ID
+        if len(id) != 0:
+            for j in id:
+                if not j.isdigit():
+                    message = "ID must contain only digits."  # Исправлено на более информативное сообщение
+                    raise ErrorProKlient(message)
+        else:
+            message = (
+                "ID cannot be empty."  # Исправлено на более информативное сообщение
+            )
+            raise ErrorProKlient(message)
+
+        Logger.log_info(file_name, "No errors found during ID validation.")
         return True
     except ErrorProKlient as e:
         Logger.log_error(
-            file_name, str(e), "An error occurred during validation."
+            file_name, str(e), "An error occurred during ID validation."
         )  # Логируем ошибку
-    finally:
         return False
 
 
 # Функция для добавления нового клиента в таблицу
-def add_new_to_table(name_entry, phone_entry, email_entry, mora_entry, kontrakt_entry):
-    flag = 0  # Флаг для отслеживания ошибок
+def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients):
     try:
         if (
-            not chek_kontrakt(kontrakt_entry)
-            or not chek_name(name_entry)
+            not chek_name(name_entry)
             or not chek_phone(phone_entry)
             or not chek_email(email_entry)
             or not chek_mora(mora_entry)
         ):
             message = "Error in element to add"
             raise ErrorProKlient(message)
+        phone = int(phone_entry.get())
+        email = str(email_entry.get())
+        for k in klients:
+            if int(phone) == k.get_phone():
+                message = "This phone is already in table"
+                raise ErrorProKlient(message)
+            
+            if email == k.get_email():
+                message = "This email is already in table"
+                raise ErrorProKlient(message)
+
         return True
     except ErrorProKlient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during ID validation."
-        )  # Логируем ошибку
-    finally:
-        Logger.log_info(
-            file_name, "No errors found during ID validation."
-        )  # Логируем успешную проверку
-        return False  # Возвращаем флаг
+        if e != "Error in element to add":
+            Logger.log_error(
+                file_name, str(e), "An error occurred during ID validation."
+            )  # Логируем ошибку
+        return False

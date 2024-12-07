@@ -34,7 +34,7 @@ class Pro_Klient(New.New_Klient):
         self.short = names[0] + " " + names[1][0] + ". " + names[2][0] + "."
 
     def set_kontrakt(self, kontrakt):
-        kontrakts = list(map(int, kontrakt.split))
+        kontrakts = list(map(int, kontrakt.split()))
         for i in kontrakts:
             if i not in self.kontrakt:  # Если контра��т еще не добавлен
                 self.kontrakt.append(i)
@@ -55,7 +55,7 @@ class Pro_Klient(New.New_Klient):
         return str(self.email)
 
     def get_status(self):
-        return str(self.status.stat.get_status())
+        return str(self.status)
 
     def get_mora(self):
         return int(self.mora)
@@ -69,12 +69,12 @@ class Pro_Klient(New.New_Klient):
 
     def get(self):
         return (
-            self.get_ID,
+            self.get_ID(),
             self.get_short_name(),
             self.get_mora(),
             self.get_phone(),
             self.get_email(),
-            self.status.get_status(),
+            self.get_status(),
         )
 
     def enter_klient_to_bd(self):
@@ -125,7 +125,7 @@ class Pro_Klient(New.New_Klient):
             if sqlite_connection:
                 sqlite_connection.close()
 
-    def rename_newklient(self, name, phone, mora, kontrakt, email, status, klients):
+    def rename_proklient(self, name, phone, mora, email, status, klients):
         try:
             conn = bd.connect(basadate)
             cur = conn.cursor()

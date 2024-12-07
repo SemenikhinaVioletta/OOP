@@ -91,7 +91,7 @@ def start_pro_klient(flag):
     logger.log_info(
         file_name, f"Opening new client window with flag: {flag}"
     )  # Log window opening
-    wind = Win.Window("Pro klient", "1000x300")
+    wind = Win.Window("Pro klient", "1500x300")
     wind.make_protokol(wind.close_window)
     windows.append(wind)
     do_pro_klient(flag, wind)
