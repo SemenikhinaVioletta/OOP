@@ -64,8 +64,8 @@ def start_new_klient(flag):
         file_name, f"Opening new client window with flag: {flag}"
     )  # Log window opening
     wind = Win.Window("New klient", "1000x300")
-    wind.make_protokol(wind.close_window)
-    windows.append(wind)
+    wind.make_protokol(lambda: Win.end(2))
+    windows[2].append(wind)
     do_new_klient(flag, wind)
 
 
@@ -92,8 +92,8 @@ def start_pro_klient(flag):
         file_name, f"Opening new client window with flag: {flag}"
     )  # Log window opening
     wind = Win.Window("Pro klient", "1500x300")
-    wind.make_protokol(wind.close_window)
-    windows.append(wind)
+    wind.make_protokol(lambda: Win.end(1))
+    windows[1].append(wind)
     do_pro_klient(flag, wind)
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -108,10 +108,10 @@ def start():
 
 # Делаем основное окно приложения
 window = Win.Window("PC for management", "600x400")
-window.make_protokol(Win.end)
-windows.append(window)
+window.make_protokol(lambda: Win.end(0))
+windows[0].append(window)
 
-frame = Win.Frame(master=windows[0], relief=Win.SUNKEN)
+frame = Win.Frame(master=window, relief=Win.SUNKEN)
 frame.pack(expand=True)
 
 method_lbl = Win.Label(frame, text="Select the table you will work with")
@@ -126,7 +126,7 @@ combobox.bind("<<ComboboxSelected>>", selected)
 button_to_end = Win.Button(
     frame,
     text="End all",
-    command=Win.end,
+    command=lambda: Win.end(0),
 )
 button_to_end.grid(row=5, column=1, pady=10)
 

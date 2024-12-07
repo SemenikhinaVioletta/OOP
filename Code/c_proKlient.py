@@ -14,7 +14,9 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для добавления нового клиента
     def take_this(name_entry, phone_entry, email_entry, mora_entry, status_entry):
-        if Error.add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients):
+        if Error.add_pro_to_table(
+            name_entry, phone_entry, email_entry, mora_entry, klients
+        ):
             name = str(name_entry.get())
             mora = str(mora_entry.get())
             phone = int(phone_entry.get())
@@ -33,7 +35,9 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для изменения данных существующего клиента
     def do_this(klient, name_entry, phone_entry, email_entry, mora_entry, status_entry):
-        if Error.add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients):
+        if Error.add_pro_to_table(
+            name_entry, phone_entry, email_entry, mora_entry, klients
+        ):
             name = str(name_entry.get())
             mora = str(mora_entry.get())
             phone = int(phone_entry.get())
@@ -51,7 +55,8 @@ def pro_Klient_Tabel(window_new_klient):
                     # Подтверждение удаления клиента
                     confirm = Error.askyesno(
                         "Confirm Delete",
-                        f"Are you sure you want to delete the klient with ID: {id}, Name: {klient.get_name()}?", parent = False
+                        f"Are you sure you want to delete the klient with ID: {id}, Name: {klient.get_name()}?",
+                        parent=windows[-1],
                     )
                     if confirm:
                         klient.delete_klient_from_bd()
@@ -62,8 +67,8 @@ def pro_Klient_Tabel(window_new_klient):
     # Функция для создания окна удаления клиента
     def delete_element():
         wind = Win.Window("Delete pro klient", "500x300")
-        wind.make_protokol(wind.close_window)
-        windows.append(wind)
+        wind.make_protokol(lambda: wind.close_window(1))
+        windows[1].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         Id_for_delite = Win.Label(
@@ -83,33 +88,33 @@ def pro_Klient_Tabel(window_new_klient):
     # Функция для добавления нового клиента
     def add_new():
         wind = Win.Window("Add pro klient", "900x500")
-        wind.make_protokol(wind.close_window)
-        windows.append(wind)
+        wind.make_protokol(lambda: wind.close_window(1))
+        windows[1].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         name_text = Win.Label(
             frame_for,
-            text="Enter name for pro klient in format:\n\"Secondname Name Surname\"",
+            text='Enter name for pro klient in format:\n"Secondname Name Surname"',
         )
         name_entry = Win.Entry(frame_for)
         name_text.grid(row=1, column=1)
         name_entry.grid(row=1, column=2, padx=5)
         phone_text = Win.Label(
             frame_for,
-            text="Enter phone number for pro klient in format:\n\"88888888888\"",
+            text='Enter phone number for pro klient in format:\n"88888888888"',
         )
         phone_entry = Win.Entry(frame_for)
         phone_text.grid(row=2, column=1, pady=5)
         phone_entry.grid(row=2, column=2, pady=5, padx=5)
         email_text = Win.Label(
-            frame_for, text="Enter email for pro klient in format:\n\"email@domain.com\""
+            frame_for, text='Enter email for pro klient in format:\n"email@domain.com"'
         )
         email_entry = Win.Entry(frame_for)
         email_text.grid(row=3, column=1, pady=5)
         email_entry.grid(row=3, column=2, pady=5, padx=5)
         mora_text = Win.Label(
             frame_for,
-            text="Enter mora for pro klient in format:\n\"0\"",
+            text='Enter mora for pro klient in format:\n"0"',
         )
         mora_entry = Win.Entry(frame_for)
         mora_text.grid(row=4, column=1, pady=5)
@@ -133,7 +138,7 @@ def pro_Klient_Tabel(window_new_klient):
         )
         save_button.grid(row=6, column=1, pady=5)
         delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window()
+            frame_for, text="Back", command=lambda: wind.close_window(1)
         )
         delete_button.grid(row=6, column=2, pady=5, padx=5)
 
@@ -155,9 +160,6 @@ def pro_Klient_Tabel(window_new_klient):
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
 
-
-    
-            
     def make_combox(now, row_i, frame_for):
         method = []
         for i in status_klient:
@@ -167,7 +169,6 @@ def pro_Klient_Tabel(window_new_klient):
         combobox.grid(row=row_i, column=2, pady=5)
         combobox.set(now)
         return combobox
-        
 
     # Функция для получения текста для изменения клиента
     def get_text(id, frame_for, wind):
@@ -180,7 +181,7 @@ def pro_Klient_Tabel(window_new_klient):
                         flag = 1
                         name_text = Win.Label(
                             frame_for,
-                            text="Enter pro name for klient in format:\n\"Secondname Name Surname\"",
+                            text='Enter pro name for klient in format:\n"Secondname Name Surname"',
                         )
                         name_entry = Win.Entry(frame_for)
                         name_text.grid(row=2, column=1)
@@ -188,7 +189,7 @@ def pro_Klient_Tabel(window_new_klient):
                         name_entry.grid(row=2, column=2, padx=5)
                         phone_text = Win.Label(
                             frame_for,
-                            text="Enter pro phone number for klient in format:\n\"88888888888\"",
+                            text='Enter pro phone number for klient in format:\n"88888888888"',
                         )
                         phone_entry = Win.Entry(frame_for)
                         phone_text.grid(row=3, column=1, pady=5)
@@ -196,7 +197,7 @@ def pro_Klient_Tabel(window_new_klient):
                         phone_entry.grid(row=3, column=2, pady=5, padx=5)
                         email_text = Win.Label(
                             frame_for,
-                            text="Enter pro email for klient in format:\n\"email@domain.com\"",
+                            text='Enter pro email for klient in format:\n"email@domain.com"',
                         )
                         email_entry = Win.Entry(frame_for)
                         email_text.grid(row=4, column=1, pady=5)
@@ -205,7 +206,7 @@ def pro_Klient_Tabel(window_new_klient):
 
                         mora_text = Win.Label(
                             frame_for,
-                            text="Enter mora for pro klient in format:\n\"0\"",
+                            text='Enter mora for pro klient in format:\n"0"',
                         )
                         mora_entry = Win.Entry(
                             frame_for,
@@ -246,8 +247,8 @@ def pro_Klient_Tabel(window_new_klient):
     # Функция для переименования клиента
     def rename():
         wind = Win.Window("Rename pro klient", "900x500")
-        wind.make_protokol(wind.close_window)
-        windows.append(wind)
+        wind.make_protokol(lambda: wind.close_window(1))
+        windows[1].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         ID_text = Win.Label(
@@ -263,7 +264,7 @@ def pro_Klient_Tabel(window_new_klient):
         ID_text.grid(row=1, column=1)
         ID_entry.grid(row=1, column=2, padx=5)
         delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window()
+            frame_for, text="Back", command=lambda: wind.close_window(1)
         )
         delete_button.grid(row=5, column=2, pady=5, padx=5)
 
@@ -278,7 +279,7 @@ def pro_Klient_Tabel(window_new_klient):
     close_table = Win.Button(
         frame,
         text="Close Table",
-        command=(lambda: window_new_klient.close_window()),
+        command=(lambda: Win.end(1)),
     )
     close_table.grid(row=4, column=2, padx=10, pady=10)
     make_Table()

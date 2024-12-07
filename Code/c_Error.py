@@ -1,7 +1,7 @@
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 import a_Log
 from a_Log import Logger
-from a_Global_per import status_klient
+from a_Global_per import status_klient, windows
 
 file_name = "File Error of Pro Klient"
 
@@ -16,7 +16,7 @@ class ErrorProKlient(Exception):
     def __str__(self) -> str:
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent = False
+                title="ERROR IN INPUT", message=self.message, parent = windows[-1]
             )  # Показываем сообщение об ошибке
             return "Error Pro klient, message: {0}".format(self.message)
         else:

@@ -67,7 +67,7 @@ def new_Klient_Tabel(window_new_klient):
                     # Подтверждение удаления клиента
                     confirm = Error.askyesno(
                         "Confirm Delete",
-                        f"Are you sure you want to delete the client with ID: {id}, Name: {klient.get_name()}?", parent = False
+                        f"Are you sure you want to delete the client with ID: {id}, Name: {klient.get_name()}?", parent = windows[-1]
                     )
                     if confirm:
                         klient.delete_klient_from_bd()
@@ -82,8 +82,8 @@ def new_Klient_Tabel(window_new_klient):
         This Python function creates a window for deleting a client by entering their ID.
         """
         wind = Win.Window("Delete New klient", "1000x300")
-        wind.make_protokol(wind.close_window)
-        windows.append(wind)
+        wind.make_protokol(lambda: wind.close_window(2))
+        windows[2].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         Id_for_delite = Win.Label(
@@ -106,8 +106,8 @@ def new_Klient_Tabel(window_new_klient):
         The `add_new` function creates a window for adding a new client with fields for name, phone number, and email, along with save and back buttons.
         """
         wind = Win.Window("Add New klient", "1000x300")
-        wind.make_protokol(wind.close_window)
-        windows.append(wind)
+        wind.make_protokol(lambda: wind.close_window(2))
+        windows[2].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         name_text = Win.Label(
@@ -137,7 +137,7 @@ def new_Klient_Tabel(window_new_klient):
         )
         save_button.grid(row=4, column=1, pady=5)
         delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window()
+            frame_for, text="Back", command=lambda: wind.close_window(2)
         )
         delete_button.grid(row=4, column=2, pady=5, padx=5)
 
@@ -215,7 +215,7 @@ def new_Klient_Tabel(window_new_klient):
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorNewKlient(message)
             except Error.ErrorNewKlient:
-                wind.close_window()
+                wind.close_window(2)
 
     # Функция для переименования клиента
     def rename():
@@ -223,8 +223,8 @@ def new_Klient_Tabel(window_new_klient):
         The `rename` function creates a window for renaming a client and includes elements for entering the client's ID and performing actions related to renaming.
         """
         wind = Win.Window("Rename New klient", "1000x300")
-        wind.make_protokol(wind.close_window)
-        windows.append(wind)
+        wind.make_protokol(lambda: wind.close_window(2))
+        windows[2].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         ID_text = Win.Label(
@@ -240,7 +240,7 @@ def new_Klient_Tabel(window_new_klient):
         ID_text.grid(row=1, column=1)
         ID_entry.grid(row=1, column=2, padx=5)
         delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window()
+            frame_for, text="Back", command=lambda: wind.close_window(2)
         )
         delete_button.grid(row=5, column=2, pady=5, padx=5)
 
@@ -255,7 +255,7 @@ def new_Klient_Tabel(window_new_klient):
     close_table = Win.Button(
         frame,
         text="Close Table",
-        command=(lambda: window_new_klient.close_window()),
+        command=(lambda: Win.end(2)),
     )
     close_table.grid(row=4, column=2, padx=10, pady=10)
     make_Table()

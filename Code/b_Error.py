@@ -2,6 +2,7 @@ from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 import a_Log
 from a_Log import Logger
 import b_Class_New_klient as New
+from a_Global_per import windows
 
 file_name = "File Error of New Klient"
 
@@ -26,7 +27,7 @@ class ErrorNewKlient(Exception):
         """
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent = False
+                title="ERROR IN INPUT", message=self.message, parent = windows[-1]
             )  # Показываем сообщение об ошибке
             return "Error New klient, message: {0}".format(self.message)
         else:

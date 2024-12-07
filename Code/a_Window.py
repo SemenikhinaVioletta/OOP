@@ -54,7 +54,7 @@ class Window(Tk):
         """
         self.protocol("WM_DELETE_WINDOW", fun)
 
-    def close_window(self):
+    def close_window(self, flag):
         """
         Close the current window and remove it from the list of open windows.
 
@@ -72,8 +72,10 @@ class Window(Tk):
             "",
             "Class Window - Method close_window - go bak",
         )
-        windows.remove(self)
+        print(windows)
+        windows[flag].remove(self)
         self.destroy()
+        print(windows)
 
     # --------------------------------------------------------------------------------------------------------------------------------
 
@@ -98,7 +100,7 @@ class Window(Tk):
 
 # --------------------------------------------------------------------------------------------------------------------------------
 # Конец приложения
-def end():
+def end(flag):
     """
     This function closes all the windows in the application and logs the end event.
 
@@ -115,6 +117,12 @@ def end():
     The `windows` list is expected to be a global variable containing a list of open windows.
     """
     Logger(file_name, "", "Method end - end main loop...")
-    for window in windows:
-        window.destroy()
+    if flag == 0:
+        for window in windows:
+            for i in window:
+                i.destroy()
+    else:
+        for i in range(len(windows[flag])):
+            windows[flag][i].destroy()
+        windows[flag].clear()
     Logger(file_name, "", "Method end - close program...")
