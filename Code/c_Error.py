@@ -128,21 +128,23 @@ def chek_mora(mora_entry):
         return False
 
 
-"""def chek_kontrakt(kontrakt_entry):
+def chek_kontrakt(kontrakt_entry):
     kontrakt = str(kontrakt_entry.get())
     message = "Validation started."  # Сообщение о начале валидации
+    kontrakt = kontrakt.split()
     try:
-        if len(kontrakt) != 0:
+        if len(kontrakt) == 1:
+            kontrakt = kontrakt[0]
             for i in kontrakt:
                 if not i.isdigit():
-                    message = "Mora must contain only digits and > 0"  # Исправлено на более информативное сообщение
+                    message = "kontrakt must contain only digits and > 0"  # Исправлено на более информативное сообщение
                     raise ErrorProKlient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
 
     except ErrorProKlient as e:
         Logger.log_error(file_name, str(e), "An error occurred during validation.")
-        return False  # Логируем ошибку"""
+        return False  # Логируем ошибку
 
 
 def chek_id(id):

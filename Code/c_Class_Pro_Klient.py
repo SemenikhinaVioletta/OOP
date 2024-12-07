@@ -77,7 +77,7 @@ class Pro_Klient(New.New_Klient):
             self.get_status(),
         )
 
-    def enter_klient_to_bd(self):
+    def enter_klient_to_pro_bd(self):
         try:
             conn = bd.connect(basadate)
             cursor = conn.cursor()

@@ -1,6 +1,5 @@
 import c_Class_Pro_Klient as Pro
-import f_Class_status_klient as stat
-from a_Global_per import basadate, windows, status_klient
+from a_Global_per import basadate, windows, pro_klient, make_combox
 from a_Log import Logger
 import c_Error as Error
 import a_Window as Win
@@ -14,8 +13,17 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для добавления нового клиента
     def take_this(name_entry, phone_entry, email_entry, mora_entry, status_entry):
+        """
+        The function `take_this` adds a new entry to a table with provided information.
+
+        @param name_entry The `name_entry` parameter seems to be a reference to an entry field where the user can input a name. This function appears to be taking various input fields related to a client (such as name, phone number, email, mora, and status) and creating a new client object with that
+        @param phone_entry The `phone_entry` parameter in the `take_this` function seems to be a field where the user enters a phone number. It is being used to extract the phone number input from the user interface element and then convert it to an integer using `int(phone_entry.get())`. This integer value is
+        @param email_entry The `email_entry` parameter in the `take_this` function seems to be a reference to an entry widget where the user can input their email address. This function appears to be part of a larger program that involves adding a professional client to a table or database. The `email_entry` parameter is
+        @param mora_entry It seems like the `mora_entry` parameter is used to get input for the amount owed by a client. This value is being retrieved as a string and then converted to an integer later in the code. If the input is empty, it is set to "0" before conversion.
+        @param status_entry The `status_entry` parameter in the `take_this` function appears to be an integer value representing the status of a client. It is used in the function to create a new `Pro_Klient` object with the provided information and then add it to a list of clients (`pro_klient`). The
+        """
         if Error.add_pro_to_table(
-            name_entry, phone_entry, email_entry, mora_entry, klients
+            name_entry, phone_entry, email_entry, mora_entry, pro_klient
         ):
             name = str(name_entry.get())
             mora = str(mora_entry.get())
@@ -26,17 +34,27 @@ def pro_Klient_Tabel(window_new_klient):
                 mora = "0"
             mora = int(mora)
             klient = Pro.Pro_Klient(
-                klients[-1].get_ID() + 1, name, mora, "", phone, email, status, None
+                pro_klient[-1].get_ID() + 1, name, mora, "", phone, email, status, None
             )
 
-            klient.enter_klient_to_bd()
-            klients.append(klient)
+            klient.enter_klient_to_pro_bd()
+            pro_klient.append(klient)
             make_Table()
 
     # Функция для изменения данных существующего клиента
     def do_this(klient, name_entry, phone_entry, email_entry, mora_entry, status_entry):
+        """
+        The function `do_this` updates a client's information in a table based on user input.
+
+        @param klient It looks like the `do_this` function is taking several input parameters. Here is a breakdown of what each parameter represents:
+        @param name_entry The `name_entry`, `phone_entry`, `email_entry`, `mora_entry`, `status_entry`, and `klient` parameters are likely input fields or values that are being passed to the `do_this` function.
+        @param phone_entry The `phone_entry` parameter seems to be used to get the phone number input from the user interface. It is likely an entry widget or field where the user can enter their phone number. In the provided code snippet, the phone number is retrieved using `phone_entry.get()` and then converted to an
+        @param email_entry The `email_entry` parameter in the `do_this` function seems to be a field where the user can input an email address. This email address is then retrieved as a string using `str(email_entry.get())` in the function.
+        @param mora_entry It seems like the `mora_entry` parameter is used to get the value entered by the user for some kind of debt or outstanding amount. The value is then converted to a string using `str(mora_entry.get())`. This value is likely related to financial information or outstanding payments associated with the
+        @param status_entry It seems like the `status_entry` parameter is used to update the status of a client in the `klient` object. The `status_entry` parameter is expected to be an integer value that represents the new status of the client.
+        """
         if Error.add_pro_to_table(
-            name_entry, phone_entry, email_entry, mora_entry, klients
+            name_entry, phone_entry, email_entry, mora_entry, pro_klient
         ):
             name = str(name_entry.get())
             mora = str(mora_entry.get())
@@ -50,7 +68,7 @@ def pro_Klient_Tabel(window_new_klient):
     def id_for_delite(id):
         if Error.chek_id(id):
             id = int(id.get())
-            for klient in klients:
+            for klient in pro_klient:
                 if klient.get_ID() == id:
                     # Подтверждение удаления клиента
                     confirm = Error.askyesno(
@@ -60,7 +78,7 @@ def pro_Klient_Tabel(window_new_klient):
                     )
                     if confirm:
                         klient.delete_klient_from_bd()
-                        klients.remove(klient)
+                        pro_klient.remove(klient)
                         make_Table()
                     break
 
@@ -154,21 +172,11 @@ def pro_Klient_Tabel(window_new_klient):
         table_new_klient.heading("Mail", text="Mail", anchor=Win.W)
         table_new_klient.heading("Status", text="Status", anchor=Win.W)
         table_new_klient.column("#1", stretch=Win.NO, width=50)
-        for klient in klients:
+        for klient in pro_klient:
             table_new_klient.insert("", Win.END, values=klient.get())
         scrollbar = Win.ttk.Scrollbar(
             frame, orient=Win.VERTICAL, command=table_new_klient.yview
         )
-
-    def make_combox(now, row_i, frame_for):
-        method = []
-        for i in status_klient:
-            if i.get_status() != now:
-                method.append(str(i.get_ID()))
-        combobox = Win.Combobox(frame_for, values=method, width=30, state="readonly")
-        combobox.grid(row=row_i, column=2, pady=5)
-        combobox.set(now)
-        return combobox
 
     # Функция для получения текста для изменения клиента
     def get_text(id, frame_for, wind):
@@ -176,7 +184,7 @@ def pro_Klient_Tabel(window_new_klient):
             try:
                 flag = 0
                 id = int(id.get())
-                for klient in klients:
+                for klient in pro_klient:
                     if klient.ID == id:
                         flag = 1
                         name_text = Win.Label(
@@ -299,15 +307,13 @@ def make_array():
             int(line[5]),
             str(line[6]),
             int(line[7]),
-            None,
+            None
         )
-        klients.append(klient)
+        pro_klient.append(klient)
     cursor.close()
 
 
 def do_pro_klient(flag, window_pro_klient):
-    global klients
-    klients = []
     make_array()
     if flag == 1:
         pro_Klient_Tabel(window_pro_klient)

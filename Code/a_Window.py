@@ -72,10 +72,8 @@ class Window(Tk):
             "",
             "Class Window - Method close_window - go bak",
         )
-        print(windows)
         windows[flag].remove(self)
         self.destroy()
-        print(windows)
 
     # --------------------------------------------------------------------------------------------------------------------------------
 
