@@ -61,6 +61,23 @@ def new_Klient_Tabel(window_new_klient):
             make_Table()
     
     def make_this(klient, mora_entry, status_entry):
+        """Creates a new professional client entry in the database.
+
+        This function checks for the existence of a client based on their phone number and email address. 
+        If the client does not already exist, it creates a new professional client and adds them to the database.
+
+        Args:
+            klient (Pro_Klient): The client instance containing personal information.
+            mora_entry (Entry): The entry field for the client's debt amount.
+            status_entry (int): The status of the client represented as an integer.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorNewKlient: If a client with the same phone number or email already exists.
+            bd.Error: If an error occurs while interacting with the SQLite database.
+        """
         basa = bd.connect(basadate)
         cur = basa.cursor()
         try:
@@ -182,6 +199,20 @@ def new_Klient_Tabel(window_new_klient):
                     break
 
     def id_for_pro(id, frame_for):
+        """Retrieves and displays client information based on the provided ID.
+
+        This function checks if a client exists in the database using the given ID. If found, it displays the client's name, phone number, and email address, and provides input fields for updating the client's debt and status.
+
+        Args:
+            id (Entry): The entry field containing the client's ID.
+            frame_for (Frame): The frame in which the client information will be displayed.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorNewKlient: If the client with the specified ID is not found.
+        """
         if Error.delete_from_table(id):
             try:
                 flag = 0
@@ -351,6 +382,19 @@ def new_Klient_Tabel(window_new_klient):
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     def do_pro():
+        """Opens a new window for creating a professional client.
+
+        This function checks if there are fewer than two open windows. If so, it creates a new window where the user can enter the ID of a client to convert to a professional client, along with options to find the client or go back.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorNewKlient: If there are already two or more open windows.
+        """
         try:
             if len(windows[1]) < 2:
                 wind = Win.Window("Make Pro klient", "600x500")

@@ -10,6 +10,17 @@ file_name = "File Error of New Klient"
 # Класс для обработки ошибок нового клиента
 # The `ErrorNewKlient` class in Python defines a custom exception with an error message attribute that is displayed when the exception is raised.
 class ErrorNewKlient(Exception):
+    """Custom exception for handling errors related to new clients.
+
+    This class extends the built-in Exception class to provide a specific error type for issues encountered when creating or managing new clients. It allows for the inclusion of a custom error message and provides a string representation of the error.
+
+    Args:
+        *args: Variable length argument list that can include a custom error message.
+
+    Returns:
+        None
+    """
+
     def __init__(self, *args):
         """
         This Python function initializes an object with a message attribute based on the provided arguments.
@@ -27,7 +38,7 @@ class ErrorNewKlient(Exception):
         """
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent = None
+                title="ERROR IN INPUT", message=self.message, parent=None
             )  # Показываем сообщение об ошибке
             return "Error New klient, message: {0}".format(self.message)
         else:
@@ -119,16 +130,16 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
                 raise ErrorNewKlient(
                     message
                 )  # Raise an error if there are issues with the email address
-                
+
         for k in klients:
             if int(phone) == k.get_phone():
                 message = "This phone is already in table"
                 raise ErrorNewKlient(message)
-            
+
             if email == k.get_email():
                 message = "This email is already in table"
                 raise ErrorNewKlient(message)
-        
+
         Logger.log_info(
             file_name, "No errors found during validation."
         )  # Log successful validation

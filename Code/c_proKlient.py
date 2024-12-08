@@ -10,6 +10,16 @@ file_name = "File proKlient"
 
 
 def pro_Klient_Tabel(window_new_klient):
+    """Creates a user interface for managing professional clients.
+
+    This function sets up a window that allows users to add, rename, and delete professional clients. It includes input fields for client details and displays a table of existing clients.
+
+    Args:
+        window_new_klient (Window): The parent window for the client management interface.
+
+    Returns:
+        None
+    """
 
     # Функция для добавления нового клиента
     def take_this(name_entry, phone_entry, email_entry, mora_entry, status_entry):
@@ -66,6 +76,19 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для удаления клиента
     def id_for_delite(id):
+        """Deletes a professional client based on the provided ID.
+
+        This function checks if the given ID corresponds to an existing client. If found, it prompts the user for confirmation before deleting the client from the database and updating the client list.
+
+        Args:
+            id (Entry): The entry field containing the ID of the client to be deleted.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
         if Error.chek_id(id):
             id = int(id.get())
             for klient in pro_klient:
@@ -84,6 +107,19 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для создания окна удаления клиента
     def delete_element():
+        """Creates a window for deleting a professional client.
+
+        This function opens a new window that allows the user to enter the ID of a client they wish to delete. It includes input fields and a button to confirm the deletion, while ensuring that no more than one deletion window is open at a time.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProKlient: If there are already two or more open windows.
+        """
         try:
             if len(windows[2]) < 2:
                 wind = Win.Window("Delete pro klient", "500x300")
@@ -113,6 +149,19 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для добавления нового клиента
     def add_new():
+        """Opens a window for adding a new professional client.
+
+        This function creates a user interface that allows the user to input details for a new professional client, including name, phone number, email, debt amount, and status. It ensures that no more than one addition window is open at a time and provides options to save the new client or go back.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProKlient: If there are already two or more open windows.
+        """
         try:
             if len(windows[2]) < 2:
                 wind = Win.Window("Add pro klient", "600x300")
@@ -183,6 +232,16 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для создания таблицы клиентов
     def make_Table():
+        """Creates and displays a table of professional clients.
+
+        This function initializes a treeview table to present client information, including ID, name, debt amount, phone number, email, and status. It populates the table with data from the list of professional clients and adds a vertical scrollbar for navigation.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         columns = ("ID", "Name", "Mora", "Phone", "Mail", "Status")
         table_new_klient = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_new_klient.grid(row=1, column=1, sticky="nsew", rowspan=10)
@@ -201,6 +260,20 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для получения текста для изменения клиента
     def get_text(id, frame_for):
+        """Retrieves and displays client information for editing.
+
+        This function checks if the provided ID corresponds to an existing client and, if found, populates the input fields with the client's current information for editing. It allows the user to update the client's name, phone number, email, debt amount, and status.
+
+        Args:
+            id (Entry): The entry field containing the ID of the client to be retrieved.
+            frame_for (Frame): The frame in which the client information will be displayed.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProKlient: If the client with the specified ID is not found.
+        """
         if Error.chek_id(id):
             try:
                 flag = 0
@@ -275,6 +348,19 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для переименования клиента
     def rename():
+        """Opens a window for renaming a professional client.
+
+        This function creates a user interface that allows the user to enter the ID of a client they wish to rename. It provides input fields to find the client and options to go back, ensuring that no more than one renaming window is open at a time.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProKlient: If there are already two or more open windows.
+        """
         try:
             if len(windows[2]) < 2:
                 wind = Win.Window("Rename pro klient", "700x400")
@@ -323,6 +409,20 @@ def pro_Klient_Tabel(window_new_klient):
 
 
 def make_array():
+    """
+    Connects to the database and retrieves all records from the 'Klient' table.
+    Creates a list of Pro_Klient objects, each representing a client from the database.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Side Effects:
+    Populates the global variable 'pro_klient' with Pro_Klient objects.
+    Closes the database connection.
+    """
     conn = bd.connect(basadate)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Klient")
@@ -343,6 +443,18 @@ def make_array():
 
 
 def do_pro_klient(flag, window_pro_klient):
+    """
+    Connects to the database, retrieves all records from the 'Klient' table, and creates a list of Pro_Klient objects.
+    Depending on the flag value, it either opens a new window with a table of pro clients or logs an error.
+
+    Parameters:
+    flag (int): A flag indicating the action to be performed. If flag is 1, a new window with a table of pro clients is opened.
+                 If flag is not 1, an error is logged.
+    window_pro_klient (Window): The window in which the table of pro clients will be displayed.
+
+    Returns:
+    None
+    """
     global pro_klient
     pro_klient = []
     make_array()

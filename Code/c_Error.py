@@ -7,13 +7,36 @@ file_name = "File Error of Pro Klient"
 
 
 class ErrorProKlient(Exception):
+    """
+    Custom exception class for handling errors in the Pro Klient application.
+
+    Attributes:
+    message (str): The error message associated with the exception.
+
+    Methods:
+    __init__(self, *args): Constructor that initializes the error message.
+    __str__(self) -> str: String representation of the exception, showing the error message.
+    """
+
     def __init__(self, *args):
+        """
+        Initializes the ErrorProKlient exception with an optional error message.
+
+        Parameters:
+        *args: Variable length argument list. If provided, the first argument is used as the error message.
+        """
         if args:
             self.message = args[0]
         else:
             self.message = None
 
     def __str__(self) -> str:
+        """
+        Returns a string representation of the ErrorProKlient exception, showing the error message.
+
+        Returns:
+        str: A string representation of the exception, including the error message.
+        """
         if self.message:
             showerror(
                 title="ERROR IN INPUT", message=self.message, parent=None
@@ -24,6 +47,19 @@ class ErrorProKlient(Exception):
 
 
 def chek_name(name_entry):
+    """
+    Validates the name of a client.
+
+    This function checks if the provided name is at least 3 words long, each word starts with an uppercase letter,
+    and contains only alphabetic characters. If the name is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the name is valid, it logs a success message and returns True.
+
+    Parameters:
+    name_entry (tkinter.Entry): The entry widget for the client's name. The name is obtained from the 'get' method of the tkinter.Entry object.
+
+    Returns:
+    bool: True if the name is valid, False otherwise. Raises an ErrorProKlient exception if the name is not valid.
+    """
     name = str(name_entry.get())  # Получаем имя
     message = "Validation started."  # Сообщение о начал
     names = name.split()  # Разделяем имя на части
@@ -52,6 +88,19 @@ def chek_name(name_entry):
 
 
 def chek_phone(phone_entry):
+    """
+    Validates the phone number of a client.
+
+    This function checks if the provided phone number is exactly 11 digits long, does not start with zero,
+    and contains only digits. If the phone number is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the phone number is valid, it logs a success message and returns True.
+
+    Parameters:
+    phone_entry (tkinter.Entry): The entry widget for the client's phone number. The phone number is obtained from the 'get' method of the tkinter.Entry object.
+
+    Returns:
+    bool: True if the phone number is valid, False otherwise. Raises an ErrorProKlient exception if the phone number is not valid.
+    """
     phone = str(phone_entry.get())
     message = "Validation started."  # Сообщение о начал
     try:
@@ -77,6 +126,20 @@ def chek_phone(phone_entry):
 
 
 def chek_email(email_entry):
+    """
+    Validates the email of a client.
+
+    This function checks if the provided email is not empty, contains at least 5 characters, exactly one '@' symbol,
+    exactly one '.' symbol after the '@' symbol, and does not start or end with a '.' or '@' symbol.
+    If the email is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the email is valid, it logs a success message and returns True.
+
+    Parameters:
+    email_entry (tkinter.Entry): The entry widget for the client's email. The email is obtained from the 'get' method of the tkinter.Entry object.
+
+    Returns:
+    bool: True if the email is valid, False otherwise. Raises an ErrorProKlient exception if the email is not valid.
+    """
     email = str(email_entry.get())  # Получаем email
     message = "Validation started."  # Сообщение о начале валидации
     try:
@@ -110,6 +173,19 @@ def chek_email(email_entry):
 
 
 def chek_mora(mora_entry):
+    """
+    Validates the mora of a client.
+
+    This function checks if the provided mora is not empty, contains only digits, and is greater than 0.
+    If the mora is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the mora is valid, it logs a success message and returns True.
+
+    Parameters:
+    mora_entry (tkinter.Entry): The entry widget for the client's mora. The mora is obtained from the 'get' method of the tkinter.Entry object.
+
+    Returns:
+    bool: True if the mora is valid, False otherwise. Raises an ErrorProKlient exception if the mora is not valid.
+    """
     mora = str(mora_entry.get())  # Получаем email
     message = "Validation started."  # Сообщение о начале валидации
     try:
@@ -129,6 +205,19 @@ def chek_mora(mora_entry):
 
 
 def chek_kontrakt(kontrakt_entry):
+    """
+    Validates the contract number of a client.
+
+    This function checks if the provided contract number is not empty, contains only digits, and is greater than 0.
+    If the contract number is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the contract number is valid, it logs a success message and returns True.
+
+    Parameters:
+    kontrakt_entry (tkinter.Entry): The entry widget for the client's contract number. The contract number is obtained from the 'get' method of the tkinter.Entry object.
+
+    Returns:
+    bool: True if the contract number is valid, False otherwise. Raises an ErrorProKlient exception if the contract number is not valid.
+    """
     kontrakt = str(kontrakt_entry.get())
     message = "Validation started."  # Сообщение о начале валидации
     kontrakt = kontrakt.split()
@@ -148,6 +237,19 @@ def chek_kontrakt(kontrakt_entry):
 
 
 def chek_id(id):
+    """
+    Validates the ID of a client.
+
+    This function checks if the provided ID is not empty and contains only digits.
+    If the ID is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the ID is valid, it logs a success message and returns True.
+
+    Parameters:
+    id (tkinter.StringVar): The ID to be validated. The ID is obtained from the 'get' method of the tkinter.StringVar object.
+
+    Returns:
+    bool: True if the ID is valid, False otherwise. Raises an ErrorProKlient exception if the ID is not valid.
+    """
     try:
         id = id.get()
         message = (
@@ -176,6 +278,19 @@ def chek_id(id):
 
 
 def chek_status(status):
+    """
+    Validates the status of a client.
+
+    This function checks if the provided status is one of the valid options (1, 2, or 3).
+    If the status is not valid, it raises an ErrorProKlient exception with an appropriate error message.
+    If the status is valid, it logs a success message and returns True.
+
+    Parameters:
+    status (int): The status to be validated.
+
+    Returns:
+    bool: True if the status is valid, False otherwise. Raises an ErrorProKlient exception if the status is not valid.
+    """
     try:
         message = "Validation started."  # Сообщение о начале валидации
         if status != 1 or status != 2 or status != 3:
@@ -193,6 +308,20 @@ def chek_status(status):
 
 # Функция для добавления нового клиента в таблицу
 def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients, flag):
+    """
+    This function validates and checks if a new client's data is unique in the table.
+
+    Parameters:
+    name_entry (tkinter.Entry): The entry widget for the client's name.
+    phone_entry (tkinter.Entry): The entry widget for the client's phone number.
+    email_entry (tkinter.Entry): The entry widget for the client's email.
+    mora_entry (tkinter.Entry): The entry widget for the client's mora.
+    klients (list): A list of existing client objects.
+    flag (int): A flag indicating whether the client is being added (0) or updated (1).
+
+    Returns:
+    bool: True if the data is valid and unique, False otherwise.
+    """
     try:
         if (
             chek_name(name_entry)

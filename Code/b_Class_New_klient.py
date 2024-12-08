@@ -6,7 +6,22 @@ from a_Global_per import basadate
 file_name = "File Class_New_Klient"
 logger = Logger(file_name, [], "Application started")
 
+
 class New_Klient:
+    """Represents a new client with associated attributes and methods.
+
+    This class encapsulates the details of a client, including their unique identifier, name, phone number, and email address. It provides methods for updating client information, retrieving client data, and managing interactions with a database.
+
+    Args:
+        ID (int): The unique identifier of the client.
+        name (str): The name of the client.
+        phone (int): The phone number of the client.
+        email (str): The email address of the client.
+
+    Returns:
+        None
+    """
+
     def __init__(self, ID, name, phone, email):
         """
         Initialize a new instance of the New_Klient class.
@@ -183,7 +198,7 @@ class New_Klient:
             klients.remove(self)
         else:
             raise ValueError("Client object not found in 'klients' list")
-        
+
     def get_ID(self):
         """
         Retrieves the unique identifier of the client.
@@ -271,4 +286,3 @@ class New_Klient:
         finally:
             if sqlite_connection:
                 sqlite_connection.close()
-

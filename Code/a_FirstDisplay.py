@@ -22,6 +22,13 @@ def selected(event):
     elif selection == "Pro Klients":
         logger.log_info(file_name, "Starting Pro Klients process")  # Log process start
         method_pro_klient(selection)
+    elif selection == "Produkts":
+        logger.log_info(file_name, "Starting Produkts process")  # Log process start
+        method_produkts(selection)
+    elif selection == "Kontrakts":
+        # logger.log_info(file_name, "Starting Kontrakts process")  # Log process start
+        # method_Kontrakts()
+        logger.log_info(file_name, "No method available for selection")  # Log no method
     else:
         logger.log_info(file_name, "No method available for selection")  # Log no method
 
@@ -64,7 +71,7 @@ def start_new_klient(flag):
     @param flag The `flag` parameter in the `start_new_klient` function is used to determine some behavior or configuration related to opening a new client window. It is passed as an argument to the function and then used within the function to perform specific actions based on its value.
     """
     try:
-        if(len(windows[2]) != 0):
+        if len(windows[2]) != 0:
             raise new_Error.ErrorNewKlient("The window already open")
         logger.log_info(
             file_name, f"Opening new client window with flag: {flag}"
@@ -95,9 +102,10 @@ def method_pro_klient(message):
     )
     new_window.grid(row=3, column=2, padx=10)
 
+
 def start_pro_klient(flag):
     try:
-        if(len(windows[1]) != 0):
+        if len(windows[1]) != 0:
             raise pro_Error.ErrorProKlient("The window already open")
         logger.log_info(
             file_name, f"Opening new client window with flag: {flag}"
@@ -108,6 +116,62 @@ def start_pro_klient(flag):
         do_pro_klient(flag, wind)
     except pro_Error.ErrorProKlient as e:
         logger.log_error(file_name, str(e), "A Error intoopen window")
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+# Работа с Продуктами
+
+
+def method_produkts(message: str) -> None:
+    """
+    This function is responsible for displaying a GUI window with options to open a table for managing products.
+    It logs the entry into the method and displays a label and a button in the GUI window.
+
+    Parameters:
+    message (str): A message that is displayed in the GUI window to inform the user about the purpose of the function.
+
+    Returns:
+    None: The function does not return any value.
+    """
+    logger.log_info(
+        file_name, f"Entering method_produkts with message: {message}"
+    )  # Log method entry
+    lable = Win.Label(frame, text="For " + message + " you can:")
+    lable.grid(row=3, column=1, padx=10)
+
+    new_window = Win.Button(
+        frame,
+        text="Open table",
+        command=lambda: start_produkts(1),
+    )
+    new_window.grid(row=3, column=2, padx=10)
+
+
+def start_produkts(flag: int) -> None:
+    """
+    This function opens a new window for managing products based on a given flag.
+    It also logs the opening of the window and handles any exceptions that may occur.
+
+    Parameters:
+    flag (int): A flag indicating the type of operation to be performed.
+                 In this case, it is used to determine the behavior of the function.
+
+    Returns:
+    None: The function does not return any value.
+    """
+    try:
+        if len(windows[3]) != 0:
+            raise pro_Error.ErrorProKlient("The window already open")
+        logger.log_info(
+            file_name, f"Opening new client window with flag: {flag}"
+        )  # Log window opening
+        wind = Win.Window("Produkt", "1500x300")
+        wind.make_protokol(lambda: Win.end(3))
+        windows[3].append(wind)
+        do_pro_klient(flag, wind)
+    except pro_Error.ErrorProKlient as e:
+        logger.log_error(file_name, str(e), "A Error intoopen window")
+
 
 # --------------------------------------------------------------------------------------------------------------------------------
 # Старт приложение
