@@ -4,8 +4,11 @@ from c_proKlient import do_pro_klient
 from b_newKlient import do_new_klient
 from a_Log import Logger
 from a_Global_per import windows
+import b_Error as new_Error
+import c_Error as pro_Error
 
 file_name = "File FirstDisplay"
+window = Win.Window("PC for management", "600x400")
 logger = Logger(file_name, [], "Application started")
 
 
@@ -60,13 +63,18 @@ def start_new_klient(flag):
 
     @param flag The `flag` parameter in the `start_new_klient` function is used to determine some behavior or configuration related to opening a new client window. It is passed as an argument to the function and then used within the function to perform specific actions based on its value.
     """
-    logger.log_info(
-        file_name, f"Opening new client window with flag: {flag}"
-    )  # Log window opening
-    wind = Win.Window("New klient", "1000x300")
-    wind.make_protokol(lambda: Win.end(2))
-    windows[2].append(wind)
-    do_new_klient(flag, wind)
+    try:
+        if(len(windows[2]) != 0):
+            raise new_Error.ErrorNewKlient("The window already open")
+        logger.log_info(
+            file_name, f"Opening new client window with flag: {flag}"
+        )  # Log window opening
+        wind = Win.Window("New klient", "1000x300")
+        wind.make_protokol(lambda: Win.end(2))
+        windows[2].append(wind)
+        do_new_klient(flag, wind)
+    except new_Error.ErrorNewKlient as e:
+        logger.log_error(file_name, str(e), "A Error intoopen window")
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -88,13 +96,18 @@ def method_pro_klient(message):
     new_window.grid(row=3, column=2, padx=10)
 
 def start_pro_klient(flag):
-    logger.log_info(
-        file_name, f"Opening new client window with flag: {flag}"
-    )  # Log window opening
-    wind = Win.Window("Pro klient", "1500x300")
-    wind.make_protokol(lambda: Win.end(1))
-    windows[1].append(wind)
-    do_pro_klient(flag, wind)
+    try:
+        if(len(windows[1]) != 0):
+            raise pro_Error.ErrorProKlient("The window already open")
+        logger.log_info(
+            file_name, f"Opening new client window with flag: {flag}"
+        )  # Log window opening
+        wind = Win.Window("Pro klient", "1500x300")
+        wind.make_protokol(lambda: Win.end(1))
+        windows[1].append(wind)
+        do_pro_klient(flag, wind)
+    except pro_Error.ErrorProKlient as e:
+        logger.log_error(file_name, str(e), "A Error intoopen window")
 
 # --------------------------------------------------------------------------------------------------------------------------------
 # Старт приложение
@@ -107,7 +120,6 @@ def start():
 
 
 # Делаем основное окно приложения
-window = Win.Window("PC for management", "600x400")
 window.make_protokol(lambda: Win.end(0))
 windows[0].append(window)
 
