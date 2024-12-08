@@ -4,7 +4,7 @@ import b_Class_New_klient as New
 import b_Error as Error
 from b_Error import add_new_to_table, delete_from_table
 from a_Log import Logger
-from a_Global_per import windows, basadate, pro_klient, make_combox
+from a_Global_per import windows, basadate, make_combox
 from c_Error import chek_mora
 import c_Class_Pro_Klient as Pro
 
@@ -35,7 +35,8 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
             )
             klient.enter_klient_to_bd()
-            klients.append(klient)
+            klients = []
+            make_array()
             make_Table()
 
     # Функция для изменения данных существующего клиента
@@ -55,20 +56,49 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
                 klients,
             )
+            klients = []
+            make_array()
             make_Table()
-
+    
     def make_this(klient, mora_entry, status_entry):
-        if chek_mora(mora_entry):
-            mora_entry = str(mora_entry.get())
-            if len(mora_entry) == 0:
-                mora_entry = "0"
-            mora_entry = int(mora_entry)
-            pro = Pro.Pro_Klient(0, "", mora_entry, "", 0, "", status_entry, klient)
-            pro.enter_klient_to_pro_bd()
-            id = Win.Entry()
-            id.insert(0, str(klient.get_ID()))
-            id_for_delite(id, None)
-            make_Table()
+        basa = bd.connect(basadate)
+        cur = basa.cursor()
+        try:
+            # Проверка существования клиента по телефону
+            cur.execute(
+                """SELECT EXISTS(SELECT 1 FROM Klient WHERE Phone = ?)""", (klient.get_phone(),)
+            )
+            info_phone = cur.fetchone()[0]  # Получаем результат запроса
+
+            # Проверка существования клиента по электронной почте
+            cur.execute(
+                """SELECT EXISTS(SELECT 1 FROM Klient WHERE Mail = ?)""", (klient.get_email(),)
+            )
+            info_email = cur.fetchone()[0]  # Получаем результат запроса
+
+            if info_email:
+                raise Error.ErrorNewKlient("There is already a client with this email")
+            if info_phone:
+                raise Error.ErrorNewKlient("There is already a client with this phone")
+
+            if chek_mora(mora_entry):
+                mora_entry = str(mora_entry.get())
+                if len(mora_entry) == 0:
+                    mora_entry = "0"
+                mora_entry = int(mora_entry)
+                pro = Pro.Pro_Klient(0, "", mora_entry, "", 0, "", status_entry, klient)
+                pro.enter_klient_to_pro_bd()
+                id = Win.Entry()
+                id.insert(0, str(klient.get_ID()))
+                id_for_delite(id)
+                make_Table()
+        except Error.ErrorNewKlient as e:
+            Logger.log_error(file_name, str(e), "Error with already")
+        except bd.Error as error:
+            Logger(file_name, "Error while adding client to database", error)
+        finally:
+            cur.close()
+            basa.close()
 
     # Функция для получения текста для изменения клиента
     def get_text(id, frame_for, wind):
@@ -88,7 +118,7 @@ def new_Klient_Tabel(window_new_klient):
                         flag = 1
                         name_text = Win.Label(
                             frame_for,
-                            text="Enter new name for client in format:\n\"Secondname Name Surname\"",
+                            text='Enter new name for client in format:\n"Secondname Name Surname"',
                         )
                         name_entry = Win.Entry(frame_for)
                         name_text.grid(row=2, column=1)
@@ -96,7 +126,7 @@ def new_Klient_Tabel(window_new_klient):
                         name_entry.grid(row=2, column=2, padx=5)
                         phone_text = Win.Label(
                             frame_for,
-                            text="Enter new phone number for client in format:\n\"88888888888\"",
+                            text='Enter new phone number for client in format:\n"88888888888"',
                         )
                         phone_entry = Win.Entry(frame_for)
                         phone_text.grid(row=3, column=1, pady=5)
@@ -104,7 +134,7 @@ def new_Klient_Tabel(window_new_klient):
                         phone_entry.grid(row=3, column=2, pady=5, padx=5)
                         email_text = Win.Label(
                             frame_for,
-                            text="Enter new email for client in format:\n\"email@domain.com\"",
+                            text='Enter new email for client in format:\n"email@domain.com"',
                         )
                         email_entry = Win.Entry(frame_for)
                         email_text.grid(row=4, column=1, pady=5)
@@ -128,12 +158,12 @@ def new_Klient_Tabel(window_new_klient):
                 wind.close_window(2)
 
     # Функция для удаления клиента
-    def id_for_delite(id, window):
+    def id_for_delite(id):
         """
         This function checks if a record with a specific ID exists in a table, prompts for confirmation before deleting it, and then removes the record from the table.
 
         @param id The `id` parameter in the `id_for_delite` function seems to represent the unique identifier of a client in a system. It is used to identify and delete a specific client from a table or database.
-        @param window The `window` parameter in the `id_for_delite` function seems to represent a window object or a reference to the window that needs to be closed after the operation is completed. The `window.close_window()` method is likely used to close this window once the deletion process is finished.
+        @param window The `window` parameter in the `id_for_delite` function seems to represent a window object or a reference to the window that needs to be closed after the operation is completed. The `window.close_window(2)` method is likely used to close this window once the deletion process is finished.
         """
         if delete_from_table(id):
             id = int(id.get())
@@ -150,9 +180,8 @@ def new_Klient_Tabel(window_new_klient):
                         klients.remove(klient)
                         make_Table()
                     break
-        window.close_window()
 
-    def id_for_pro(id, frame_for, wind):
+    def id_for_pro(id, frame_for):
         if Error.delete_from_table(id):
             try:
                 flag = 0
@@ -161,7 +190,8 @@ def new_Klient_Tabel(window_new_klient):
                     if klient.ID == id:
                         flag = 1
                         name_text = Win.Label(
-                            frame_for, text="Name: " + klient.get_name(),
+                            frame_for,
+                            text="Name: " + klient.get_name(),
                         )
                         name_text.grid(row=2, column=1, pady=5, columnspan=2)
                         phone_text = Win.Label(
@@ -174,11 +204,11 @@ def new_Klient_Tabel(window_new_klient):
                             text="Email Address: " + klient.get_email(),
                         )
                         email_text.grid(row=4, column=1, pady=5, columnspan=2)
-                        
+
                         mora_entry = Win.Entry(frame_for)
                         mora_text = Win.Label(
                             frame_for,
-                            text="Enter mora for pro klient in format:\n\"0\"",
+                            text='Enter mora for pro klient in format:\n"0"',
                         )
                         mora_text.grid(row=5, column=1, pady=5)
                         mora_entry.grid(row=5, column=2, padx=5)
@@ -192,15 +222,17 @@ def new_Klient_Tabel(window_new_klient):
                         save_button = Win.Button(
                             frame_for,
                             text="Save",
-                            command=lambda: make_this(klient, mora_entry, status_entry.get())
+                            command=lambda: make_this(
+                                klient, mora_entry, status_entry.get()
+                            ),
                         )
                         save_button.grid(row=7, column=1, pady=5)
                         break
                 if flag == 0:
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorNewKlient(message)
-            except Error.ErrorNewKlient:
-                wind.close_window(2)
+            except Error.ErrorNewKlient as e:
+                Logger.log_error(file_name, str(e), "Error creating to pro")
 
     # Функция для создания окна удаления клиента
     def delete_element():
@@ -221,7 +253,7 @@ def new_Klient_Tabel(window_new_klient):
         button_for_delite = Win.Button(
             frame_for,
             text="Delete",
-            command=lambda: id_for_delite(text_for_delite, wind),
+            command=lambda: id_for_delite(text_for_delite),
         )
         button_for_delite.grid(row=2, column=2, padx=5)
         Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
@@ -231,27 +263,27 @@ def new_Klient_Tabel(window_new_klient):
         """
         The `add_new` function creates a window for adding a new client with fields for name, phone number, and email, along with save and back buttons.
         """
-        wind = Win.Window("Add New klient", "1000x300")
+        wind = Win.Window("Add New klient", "600x300")
         wind.make_protokol(lambda: wind.close_window(2))
         windows[2].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
         frame_for.pack(expand=True)
         name_text = Win.Label(
             frame_for,
-            text="Enter name for new client in format:\n\"Secondname Name Surname\"",
+            text='Enter name for new client in format:\n"Secondname Name Surname"',
         )
         name_entry = Win.Entry(frame_for)
         name_text.grid(row=1, column=1)
         name_entry.grid(row=1, column=2, padx=5)
         phone_text = Win.Label(
             frame_for,
-            text="Enter phone number for new client in format:\n\"88888888888\"",
+            text='Enter phone number for new client in format:\n"88888888888"',
         )
         phone_entry = Win.Entry(frame_for)
         phone_text.grid(row=2, column=1, pady=5)
         phone_entry.grid(row=2, column=2, pady=5, padx=5)
         email_text = Win.Label(
-            frame_for, text="Enter email for new client in format:\n\"email@domain.com\""
+            frame_for, text='Enter email for new client in format:\n"email@domain.com"'
         )
         email_entry = Win.Entry(frame_for)
         email_text.grid(row=3, column=1, pady=5)
@@ -272,7 +304,7 @@ def new_Klient_Tabel(window_new_klient):
         """
         The `rename` function creates a window for renaming a client and includes elements for entering the client"s ID and performing actions related to renaming.
         """
-        wind = Win.Window("Rename New klient", "900x500")
+        wind = Win.Window("Rename New klient", "600x300")
         wind.make_protokol(lambda: wind.close_window(2))
         windows[2].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
@@ -295,7 +327,7 @@ def new_Klient_Tabel(window_new_klient):
         delete_button.grid(row=5, column=2, pady=5, padx=5)
 
     def do_pro():
-        wind = Win.Window("Make Pro klient", "900x500")
+        wind = Win.Window("Make Pro klient", "600x500")
         wind.make_protokol(lambda: wind.close_window(2))
         windows[2].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
@@ -307,7 +339,7 @@ def new_Klient_Tabel(window_new_klient):
         ID_find = Win.Button(
             frame_for,
             text="Find element",
-            command=lambda: id_for_pro(ID_entry, frame_for, wind),
+            command=lambda: id_for_pro(ID_entry, frame_for),
         )
         ID_find.grid(row=1, column=3, padx=5)
         ID_text.grid(row=1, column=1)

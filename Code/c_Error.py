@@ -16,7 +16,7 @@ class ErrorProKlient(Exception):
     def __str__(self) -> str:
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent = windows[-1]
+                title="ERROR IN INPUT", message=self.message, parent=None
             )  # Показываем сообщение об ошибке
             return "Error Pro klient, message: {0}".format(self.message)
         else:
@@ -175,32 +175,47 @@ def chek_id(id):
         return False
 
 
+def chek_status(status):
+    try:
+        message = "Validation started."  # Сообщение о начале валидации
+        if status != 1 or status != 2 or status != 3:
+            message = "Unknown this status"
+            raise ErrorProKlient(message)
+        Logger.log_info(file_name, "NO errors found during status validation.")
+        return True
+
+    except ErrorProKlient as e:
+        Logger.log_error(
+            file_name, str(e), "An error occurred during status validation."
+        )
+        return False
+
+
 # Функция для добавления нового клиента в таблицу
-def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients):
+def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients, flag):
     try:
         if (
-            not chek_name(name_entry)
-            or not chek_phone(phone_entry)
-            or not chek_email(email_entry)
-            or not chek_mora(mora_entry)
+            chek_name(name_entry)
+            or chek_phone(phone_entry)
+            or chek_email(email_entry)
+            or chek_mora(mora_entry)
         ):
-            message = "Error in element to add"
-            raise ErrorProKlient(message)
-        phone = int(phone_entry.get())
-        email = str(email_entry.get())
-        for k in klients:
-            if int(phone) == k.get_phone():
-                message = "This phone is already in table"
-                raise ErrorProKlient(message)
-            
-            if email == k.get_email():
-                message = "This email is already in table"
-                raise ErrorProKlient(message)
+            phone = int(phone_entry.get())
+            email = str(email_entry.get())
+            if flag == 0:
+                for k in klients:
+                    if int(phone) == k.get_phone():
+                        message = "This phone is already in table"
+                        raise ErrorProKlient(message)
 
-        return True
+                    if email == k.get_email():
+                        message = "This email is already in table"
+                        raise ErrorProKlient(message)
+
+            Logger.log_info(file_name, "NO errors found during status validation.")
+            return True
     except ErrorProKlient as e:
-        if e != "Error in element to add":
-            Logger.log_error(
-                file_name, str(e), "An error occurred during ID validation."
-            )  # Логируем ошибку
+        Logger.log_error(
+            file_name, str(e), "An error occurred during ID validation."
+        )  # Логируем ошибку
         return False

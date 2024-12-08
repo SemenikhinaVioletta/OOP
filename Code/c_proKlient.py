@@ -1,5 +1,5 @@
 import c_Class_Pro_Klient as Pro
-from a_Global_per import basadate, windows, pro_klient, make_combox
+from a_Global_per import basadate, windows, make_combox
 from a_Log import Logger
 import c_Error as Error
 import a_Window as Win
@@ -23,7 +23,7 @@ def pro_Klient_Tabel(window_new_klient):
         @param status_entry The `status_entry` parameter in the `take_this` function appears to be an integer value representing the status of a client. It is used in the function to create a new `Pro_Klient` object with the provided information and then add it to a list of clients (`pro_klient`). The
         """
         if Error.add_pro_to_table(
-            name_entry, phone_entry, email_entry, mora_entry, pro_klient
+            name_entry, phone_entry, email_entry, mora_entry, pro_klient, 0
         ):
             name = str(name_entry.get())
             mora = str(mora_entry.get())
@@ -54,14 +54,14 @@ def pro_Klient_Tabel(window_new_klient):
         @param status_entry It seems like the `status_entry` parameter is used to update the status of a client in the `klient` object. The `status_entry` parameter is expected to be an integer value that represents the new status of the client.
         """
         if Error.add_pro_to_table(
-            name_entry, phone_entry, email_entry, mora_entry, pro_klient
+            name_entry, phone_entry, email_entry, mora_entry, pro_klient, 1
         ):
             name = str(name_entry.get())
             mora = str(mora_entry.get())
             phone = int(phone_entry.get())
             email = str(email_entry.get())
             status = int(status_entry)
-            klient.rename_proklient(name, mora, "", phone, email, status)
+            klient.rename_proklient(name, mora, phone, email, status, pro_klient)
             make_Table()
 
     # Функция для удаления клиента
@@ -105,7 +105,7 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для добавления нового клиента
     def add_new():
-        wind = Win.Window("Add pro klient", "900x500")
+        wind = Win.Window("Add pro klient", "600x300")
         wind.make_protokol(lambda: wind.close_window(1))
         windows[1].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
@@ -179,7 +179,7 @@ def pro_Klient_Tabel(window_new_klient):
         )
 
     # Функция для получения текста для изменения клиента
-    def get_text(id, frame_for, wind):
+    def get_text(id, frame_for):
         if Error.chek_id(id):
             try:
                 flag = 0
@@ -240,7 +240,7 @@ def pro_Klient_Tabel(window_new_klient):
                                     phone_entry,
                                     email_entry,
                                     mora_entry,
-                                    status_entry,
+                                    status_entry.get(),
                                 )
                             ),
                         )
@@ -254,7 +254,7 @@ def pro_Klient_Tabel(window_new_klient):
 
     # Функция для переименования клиента
     def rename():
-        wind = Win.Window("Rename pro klient", "900x500")
+        wind = Win.Window("Rename pro klient", "700x400")
         wind.make_protokol(lambda: wind.close_window(1))
         windows[1].append(wind)
         frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
@@ -266,7 +266,7 @@ def pro_Klient_Tabel(window_new_klient):
         ID_find = Win.Button(
             frame_for,
             text="Find element",
-            command=lambda: get_text(ID_entry, frame_for, wind),
+            command=lambda: get_text(ID_entry, frame_for),
         )
         ID_find.grid(row=1, column=3, padx=5)
         ID_text.grid(row=1, column=1)
@@ -274,7 +274,7 @@ def pro_Klient_Tabel(window_new_klient):
         delete_button = Win.Button(
             frame_for, text="Back", command=lambda: wind.close_window(1)
         )
-        delete_button.grid(row=5, column=2, pady=5, padx=5)
+        delete_button.grid(row=6, column=2, pady=5, padx=5)
 
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)
@@ -307,13 +307,15 @@ def make_array():
             int(line[5]),
             str(line[6]),
             int(line[7]),
-            None
+            None,
         )
         pro_klient.append(klient)
     cursor.close()
 
 
 def do_pro_klient(flag, window_pro_klient):
+    global pro_klient
+    pro_klient = []
     make_array()
     if flag == 1:
         pro_Klient_Tabel(window_pro_klient)

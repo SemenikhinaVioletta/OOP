@@ -55,7 +55,7 @@ class Pro_Klient(New.New_Klient):
         return str(self.email)
 
     def get_status(self):
-        return str(self.status)
+        return int(self.status)
 
     def get_mora(self):
         return int(self.mora)
@@ -155,8 +155,8 @@ class Pro_Klient(New.New_Klient):
                     """UPDATE Klient SET Phone = ? WHERE Id_klient = ?""",
                     (self.get_phone(), self.get_ID()),
                 )
-            if self.get_status() != status.get_status():
-                self.status = status.get_status()
+            if self.get_status() != status:
+                self.status = status
                 cur.execute(
                     """UPDATE Klient SET Status = ? WHERE Id_klient = ?""",
                     (status, self.get_ID()),
