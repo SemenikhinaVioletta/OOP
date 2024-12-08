@@ -239,115 +239,147 @@ def new_Klient_Tabel(window_new_klient):
         """
         This Python function creates a window for deleting a client by entering their ID.
         """
-        wind = Win.Window("Delete New klient", "500x300")
-        wind.make_protokol(lambda: wind.close_window(2))
-        windows[2].append(wind)
-        frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-        frame_for.pack(expand=True)
-        Id_for_delite = Win.Label(
-            frame_for, text="Enter ID of the client you want to delete:"
-        )
-        Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-        text_for_delite = Win.Entry(frame_for)
-        text_for_delite.grid(row=1, column=2, padx=5)
-        button_for_delite = Win.Button(
-            frame_for,
-            text="Delete",
-            command=lambda: id_for_delite(text_for_delite),
-        )
-        button_for_delite.grid(row=2, column=2, padx=5)
-        Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
+        try:
+            if len(windows[1]) < 2:
+                wind = Win.Window("Delete New klient", "500x300")
+                wind.make_protokol(lambda: wind.close_window(2))
+                windows[2].append(wind)
+                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                frame_for.pack(expand=True)
+                Id_for_delite = Win.Label(
+                    frame_for, text="Enter ID of the client you want to delete:"
+                )
+                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
+                text_for_delite = Win.Entry(frame_for)
+                text_for_delite.grid(row=1, column=2, padx=5)
+                button_for_delite = Win.Button(
+                    frame_for,
+                    text="Delete",
+                    command=lambda: id_for_delite(text_for_delite),
+                )
+                button_for_delite.grid(row=2, column=2, padx=5)
+                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
+            else:
+                raise Error.ErrorNewKlient(
+                    "Please close other windows for work with new klient"
+                )
+        except Error.ErrorNewKlient as e:
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для добавления нового клиента
     def add_new():
         """
         The `add_new` function creates a window for adding a new client with fields for name, phone number, and email, along with save and back buttons.
         """
-        wind = Win.Window("Add New klient", "600x300")
-        wind.make_protokol(lambda: wind.close_window(2))
-        windows[2].append(wind)
-        frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-        frame_for.pack(expand=True)
-        name_text = Win.Label(
-            frame_for,
-            text='Enter name for new client in format:\n"Secondname Name Surname"',
-        )
-        name_entry = Win.Entry(frame_for)
-        name_text.grid(row=1, column=1)
-        name_entry.grid(row=1, column=2, padx=5)
-        phone_text = Win.Label(
-            frame_for,
-            text='Enter phone number for new client in format:\n"88888888888"',
-        )
-        phone_entry = Win.Entry(frame_for)
-        phone_text.grid(row=2, column=1, pady=5)
-        phone_entry.grid(row=2, column=2, pady=5, padx=5)
-        email_text = Win.Label(
-            frame_for, text='Enter email for new client in format:\n"email@domain.com"'
-        )
-        email_entry = Win.Entry(frame_for)
-        email_text.grid(row=3, column=1, pady=5)
-        email_entry.grid(row=3, column=2, pady=5, padx=5)
-        save_button = Win.Button(
-            frame_for,
-            text="Save",
-            command=(lambda: take_this(name_entry, phone_entry, email_entry)),
-        )
-        save_button.grid(row=4, column=1, pady=5)
-        delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window(2)
-        )
-        delete_button.grid(row=4, column=2, pady=5, padx=5)
+        try:
+            if len(windows[1]) < 2:
+                wind = Win.Window("Add New klient", "600x300")
+                wind.make_protokol(lambda: wind.close_window(2))
+                windows[2].append(wind)
+                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                frame_for.pack(expand=True)
+                name_text = Win.Label(
+                    frame_for,
+                    text='Enter name for new client in format:\n"Secondname Name Surname"',
+                )
+                name_entry = Win.Entry(frame_for)
+                name_text.grid(row=1, column=1)
+                name_entry.grid(row=1, column=2, padx=5)
+                phone_text = Win.Label(
+                    frame_for,
+                    text='Enter phone number for new client in format:\n"88888888888"',
+                )
+                phone_entry = Win.Entry(frame_for)
+                phone_text.grid(row=2, column=1, pady=5)
+                phone_entry.grid(row=2, column=2, pady=5, padx=5)
+                email_text = Win.Label(
+                    frame_for, text='Enter email for new client in format:\n"email@domain.com"'
+                )
+                email_entry = Win.Entry(frame_for)
+                email_text.grid(row=3, column=1, pady=5)
+                email_entry.grid(row=3, column=2, pady=5, padx=5)
+                save_button = Win.Button(
+                    frame_for,
+                    text="Save",
+                    command=(lambda: take_this(name_entry, phone_entry, email_entry)),
+                )
+                save_button.grid(row=4, column=1, pady=5)
+                delete_button = Win.Button(
+                    frame_for, text="Back", command=lambda: wind.close_window(2)
+                )
+                delete_button.grid(row=4, column=2, pady=5, padx=5)
+            else:
+                raise Error.ErrorNewKlient(
+                    "Please close other windows for work with new klient"
+                )
+        except Error.ErrorNewKlient as e:
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для переименования клиента
     def rename():
         """
         The `rename` function creates a window for renaming a client and includes elements for entering the client"s ID and performing actions related to renaming.
         """
-        wind = Win.Window("Rename New klient", "600x300")
-        wind.make_protokol(lambda: wind.close_window(2))
-        windows[2].append(wind)
-        frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-        frame_for.pack(expand=True)
-        ID_text = Win.Label(
-            frame_for, text="Enter ID of the client you want to rename:"
-        )
-        ID_entry = Win.Entry(frame_for)
-        ID_find = Win.Button(
-            frame_for,
-            text="Find element",
-            command=lambda: get_text(ID_entry, frame_for, wind),
-        )
-        ID_find.grid(row=1, column=3, padx=5)
-        ID_text.grid(row=1, column=1)
-        ID_entry.grid(row=1, column=2, padx=5)
-        delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window(2)
-        )
-        delete_button.grid(row=5, column=2, pady=5, padx=5)
+        try:
+            if len(windows[1]) < 2:
+                wind = Win.Window("Rename New klient", "600x300")
+                wind.make_protokol(lambda: wind.close_window(2))
+                windows[2].append(wind)
+                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                frame_for.pack(expand=True)
+                ID_text = Win.Label(
+                    frame_for, text="Enter ID of the client you want to rename:"
+                )
+                ID_entry = Win.Entry(frame_for)
+                ID_find = Win.Button(
+                    frame_for,
+                    text="Find element",
+                    command=lambda: get_text(ID_entry, frame_for, wind),
+                )
+                ID_find.grid(row=1, column=3, padx=5)
+                ID_text.grid(row=1, column=1)
+                ID_entry.grid(row=1, column=2, padx=5)
+                delete_button = Win.Button(
+                    frame_for, text="Back", command=lambda: wind.close_window(2)
+                )
+                delete_button.grid(row=5, column=2, pady=5, padx=5)
+            else:
+                raise Error.ErrorNewKlient(
+                    "Please close other windows for work with new klient"
+                )
+        except Error.ErrorNewKlient as e:
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     def do_pro():
-        wind = Win.Window("Make Pro klient", "600x500")
-        wind.make_protokol(lambda: wind.close_window(2))
-        windows[2].append(wind)
-        frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-        frame_for.pack(expand=True)
-        ID_text = Win.Label(
-            frame_for, text="Enter ID of the client you want to remake to pro:"
-        )
-        ID_entry = Win.Entry(frame_for)
-        ID_find = Win.Button(
-            frame_for,
-            text="Find element",
-            command=lambda: id_for_pro(ID_entry, frame_for),
-        )
-        ID_find.grid(row=1, column=3, padx=5)
-        ID_text.grid(row=1, column=1)
-        ID_entry.grid(row=1, column=2, padx=5)
-        delete_button = Win.Button(
-            frame_for, text="Back", command=lambda: wind.close_window(2)
-        )
-        delete_button.grid(row=7, column=2, pady=5, padx=5)
+        try:
+            if len(windows[1]) < 2:
+                wind = Win.Window("Make Pro klient", "600x500")
+                wind.make_protokol(lambda: wind.close_window(2))
+                windows[2].append(wind)
+                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                frame_for.pack(expand=True)
+                ID_text = Win.Label(
+                    frame_for, text="Enter ID of the client you want to remake to pro:"
+                )
+                ID_entry = Win.Entry(frame_for)
+                ID_find = Win.Button(
+                    frame_for,
+                    text="Find element",
+                    command=lambda: id_for_pro(ID_entry, frame_for),
+                )
+                ID_find.grid(row=1, column=3, padx=5)
+                ID_text.grid(row=1, column=1)
+                ID_entry.grid(row=1, column=2, padx=5)
+                delete_button = Win.Button(
+                    frame_for, text="Back", command=lambda: wind.close_window(2)
+                )
+                delete_button.grid(row=7, column=2, pady=5, padx=5)
+            else:
+                raise Error.ErrorNewKlient(
+                    "Please close other windows for work with new klient"
+                )
+        except Error.ErrorNewKlient as e:
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для создания таблицы клиентов
     def make_Table():
