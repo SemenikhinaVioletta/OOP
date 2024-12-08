@@ -8,15 +8,15 @@ logger = Logger(file_name, [], "Application started")
 
 
 class New_Klient:
-    """Represents a new client with associated attributes and methods.
+    """Represents a new klient with associated attributes and methods.
 
-    This class encapsulates the details of a client, including their unique identifier, name, phone number, and email address. It provides methods for updating client information, retrieving client data, and managing interactions with a database.
+    This class encapsulates the details of a klient, including their unique identifier, name, phone number, and email address. It provides methods for updating klient information, retrieving klient data, and managing interactions with a database.
 
     Args:
-        ID (int): The unique identifier of the client.
-        name (str): The name of the client.
-        phone (int): The phone number of the client.
-        email (str): The email address of the client.
+        ID (int): The unique identifier of the klient.
+        name (str): The name of the klient.
+        phone (int): The phone number of the klient.
+        email (str): The email address of the klient.
 
     Returns:
         None
@@ -26,14 +26,14 @@ class New_Klient:
         """
         Initialize a new instance of the New_Klient class.
 
-        This method initializes a new client object with the provided ID, name, phone, and email.
+        This method initializes a new klient object with the provided ID, name, phone, and email.
         It also ensures that the ID, name, phone, and email are of the correct data types.
 
         Parameters:
-        ID (int): The unique identifier of the client.
-        name (str): The name of the client.
-        phone (int): The phone number of the client.
-        email (str): The email address of the client.
+        ID (int): The unique identifier of the klient.
+        name (str): The name of the klient.
+        phone (int): The phone number of the klient.
+        email (str): The email address of the klient.
 
         Returns:
         None
@@ -45,22 +45,22 @@ class New_Klient:
 
     def rename_newklient(self, name, phone, email, klients):
         """
-        Updates the name, phone, and email of the client in the database.
+        Updates the name, phone, and email of the klient in the database.
 
-        This method checks if the new name, phone, or email are unique among all clients in the database.
+        This method checks if the new name, phone, or email are unique among all klients in the database.
         If any of the new values are not unique, it raises an ErrorNewKlient exception.
-        If all values are unique, it updates the corresponding fields in the database and updates the client object.
+        If all values are unique, it updates the corresponding fields in the database and updates the klient object.
 
         Parameters:
-        name (str): The new name of the client.
-        phone (int): The new phone number of the client.
-        email (str): The new email address of the client.
+        name (str): The new name of the klient.
+        phone (int): The new phone number of the klient.
+        email (str): The new email address of the klient.
 
         Returns:
         None
 
         Raises:
-        ErrorNewKlient: If any of the new values (name, phone, or email) are not unique among all clients.
+        ErrorNewKlient: If any of the new values (name, phone, or email) are not unique among all klients.
         """
         try:
             conn = bd.connect(basadate)
@@ -111,78 +111,78 @@ class New_Klient:
 
     def get(self):
         """
-        Fetch client data from the object.
+        Fetch klient data from the object.
 
-        This method retrieves the ID, name, phone, and email of the client.
+        This method retrieves the ID, name, phone, and email of the klient.
         It logs the fetched data using the logger object.
 
         Parameters:
         None
 
         Returns:
-        tuple: A tuple containing the ID, name, phone, and email of the client.
+        tuple: A tuple containing the ID, name, phone, and email of the klient.
         """
         logger.log_info(
             file_name,
-            "Fetching client data: "
+            "Fetching klient data: "
             + f"ID: {self.ID}, Name: {self.name}, Phone: {self.phone}, Email: {self.email}",
         )
         return int(self.ID), str(self.name), int(self.phone), str(self.email)
 
     def get_name(self):
         """
-        Retrieves the name of the client.
+        Retrieves the name of the klient.
 
-        This method retrieves the name of the client from the object's internal state.
+        This method retrieves the name of the klient from the object's internal state.
         It logs the fetched name using the logger object.
 
         Parameters:
         None
 
         Returns:
-        str: The name of the client.
+        str: The name of the klient.
         """
-        logger.log_info(file_name, "Fetching client name: " + f"Name: {self.name}")
+        logger.log_info(file_name, "Fetching klient name: " + f"Name: {self.name}")
         return str(self.name)
 
     def get_phone(self):
         """
-        Retrieves the phone number of the client.
+        Retrieves the phone number of the klient.
 
-        This method retrieves the phone number of the client from the object's internal state.
+        This method retrieves the phone number of the klient from the object's internal state.
         It logs the fetched phone number using the logger object.
 
         Parameters:
         None
 
         Returns:
-        int: The phone number of the client.
+        int: The phone number of the klient.
         """
-        logger.log_info(file_name, "Fetching client phone: " + f"Phone: {self.phone}")
+        logger.log_info(file_name, "Fetching klient phone: " + f"Phone: {self.phone}")
         return int(self.phone)
 
     def get_email(self):
         """
-        Retrieves the email address of the client.
+        Retrieves the email address of the klient.
 
-        This method retrieves the email address of the client from the object's internal state.
+        This method retrieves the email address of the klient from the object's internal state.
         It logs the fetched email address using the logger object.
 
         Parameters:
         None
 
         Returns:
-        str: The email address of the client.
+        str: The email address of the klient.
         """
-        logger.log_info(file_name, "Fetching client email: " + f"Email: {self.email}")
+        logger.log_info(file_name, "Fetching klient email: " + f"Email: {self.email}")
         return str(self.email)
 
     def clear_array(self, klients):
         """
-        Removes the current client object from the 'klients' list.
+        Removes the current klient object from the 'klients' list.
 
-        This method is used to remove the current client object from the 'klients' list.
-        It is typically called when the client object is no longer needed or when the client
+        This method is used to remove the current klient object from the 'klients' list.
+        It is typically called when the klient object is no longer needed or when the klient
         is being deleted from the system.
 
         Parameters:
@@ -192,34 +192,34 @@ class New_Klient:
         None
 
         Raises:
-        ValueError: If the client object is not found in the 'klients' list.
+        ValueError: If the klient object is not found in the 'klients' list.
         """
         if self in klients:
             klients.remove(self)
         else:
-            raise ValueError("Client object not found in 'klients' list")
+            raise ValueError("klient object not found in 'klients' list")
 
     def get_ID(self):
         """
-        Retrieves the unique identifier of the client.
+        Retrieves the unique identifier of the klient.
 
-        This method retrieves the ID of the client from the object's internal state.
+        This method retrieves the ID of the klient from the object's internal state.
         It logs the fetched ID using the logger object.
 
         Parameters:
         None
 
         Returns:
-        int: The unique identifier of the client.
+        int: The unique identifier of the klient.
         """
-        logger.log_info(file_name, "Fetching client ID: " + f"ID: {self.ID}")
+        logger.log_info(file_name, "Fetching klient ID: " + f"ID: {self.ID}")
         return int(self.ID)
 
     def enter_klient_to_bd(self):
         """
-        Inserts the client's data into the SQLite database.
+        Inserts the klient's data into the SQLite database.
 
-        This method establishes a connection to the SQLite database, retrieves the client's data,
+        This method establishes a connection to the SQLite database, retrieves the klient's data,
         and inserts it into the 'Klient_new' table. It also logs relevant information using the logger object.
 
         Parameters:
@@ -243,20 +243,20 @@ class New_Klient:
             conn.commit()
             logger.log_info(
                 file_name,
-                "Client added to database: "
+                "klient added to database: "
                 + f"Name: {self.get_name()}, Phone: {self.get_phone()}, Email: {self.get_email()}",
             )
         except bd.Error as error:
-            Logger(file_name, "Error while adding client to database", error)
+            Logger(file_name, "Error while adding klient to database", error)
         finally:
             cursor.close()
             conn.close()
 
     def delete_klient_from_bd(self):
         """
-        Deletes the client from the SQLite database.
+        Deletes the klient from the SQLite database.
 
-        This method establishes a connection to the SQLite database, retrieves the client's ID,
+        This method establishes a connection to the SQLite database, retrieves the klient's ID,
         and deletes the corresponding record from the 'Klient_new' table. It also logs relevant information
         using the logger object.
 
@@ -279,7 +279,7 @@ class New_Klient:
             )
             sqlite_connection.commit()
             logger.log_info(
-                file_name, "Client deleted from database: " + f"ID: {self.get_ID()}"
+                file_name, "klient deleted from database: " + f"ID: {self.get_ID()}"
             )
         except bd.Error as error:
             Logger(file_name, "Error while working with SQLite", error)

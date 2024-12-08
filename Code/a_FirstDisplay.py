@@ -2,10 +2,12 @@ import a_Window as Win
 from f_Class_status_klient import make_status
 from c_proKlient import do_pro_klient
 from b_newKlient import do_new_klient
+from d_Produkt import do_produkt
 from a_Log import Logger
 from a_Global_per import windows
 import b_Error as new_Error
 import c_Error as pro_Error
+import d_Error as prod_Error
 
 file_name = "File FirstDisplay"
 window = Win.Window("PC for management", "600x400")
@@ -17,7 +19,7 @@ def selected(event):
     selection = combobox.get()
     logger.log_info(file_name, f"Selected option: {selection}")  # Log selection
     if selection == "New Klients":
-        logger.log_info(file_name, "Starting new client process")  # Log process start
+        logger.log_info(file_name, "Starting new klient process")  # Log process start
         method_New_Klient(selection)
     elif selection == "Pro Klients":
         logger.log_info(file_name, "Starting Pro Klients process")  # Log process start
@@ -66,15 +68,15 @@ def method_New_Klient(messeg):
 
 def start_new_klient(flag):
     """
-    The function `start_new_klient` opens a new client window with a specified flag and performs additional operations related to the new client.
+    The function `start_new_klient` opens a new klient window with a specified flag and performs additional operations related to the new klient.
 
-    @param flag The `flag` parameter in the `start_new_klient` function is used to determine some behavior or configuration related to opening a new client window. It is passed as an argument to the function and then used within the function to perform specific actions based on its value.
+    @param flag The `flag` parameter in the `start_new_klient` function is used to determine some behavior or configuration related to opening a new klient window. It is passed as an argument to the function and then used within the function to perform specific actions based on its value.
     """
     try:
         if len(windows[2]) != 0:
             raise new_Error.ErrorNewKlient("The window already open")
         logger.log_info(
-            file_name, f"Opening new client window with flag: {flag}"
+            file_name, f"Opening new klient window with flag: {flag}"
         )  # Log window opening
         wind = Win.Window("New klient", "1000x300")
         wind.make_protokol(lambda: Win.end(2))
@@ -108,7 +110,7 @@ def start_pro_klient(flag):
         if len(windows[1]) != 0:
             raise pro_Error.ErrorProKlient("The window already open")
         logger.log_info(
-            file_name, f"Opening new client window with flag: {flag}"
+            file_name, f"Opening new klient window with flag: {flag}"
         )  # Log window opening
         wind = Win.Window("Pro klient", "1500x300")
         wind.make_protokol(lambda: Win.end(1))
@@ -161,15 +163,15 @@ def start_produkts(flag: int) -> None:
     """
     try:
         if len(windows[3]) != 0:
-            raise pro_Error.ErrorProKlient("The window already open")
+            raise prod_Error.ErrorProduct("The window already open")
         logger.log_info(
-            file_name, f"Opening new client window with flag: {flag}"
+            file_name, f"Opening produkt window with flag: {flag}"
         )  # Log window opening
-        wind = Win.Window("Produkt", "1500x300")
+        wind = Win.Window("Produkt", "1000x300")
         wind.make_protokol(lambda: Win.end(3))
         windows[3].append(wind)
-        do_pro_klient(flag, wind)
-    except pro_Error.ErrorProKlient as e:
+        do_produkt(flag, wind)
+    except prod_Error.ErrorProduct as e:
         logger.log_error(file_name, str(e), "A Error intoopen window")
 
 
