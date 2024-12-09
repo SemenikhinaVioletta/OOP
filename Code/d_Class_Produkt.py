@@ -143,6 +143,25 @@ class Produkt:
 
 
     def rename_produkt(self, name, mora, number, produkts):
+        """
+        Updates the name, mora, and number of the product in the database and in the instance attributes.
+
+        This method connects to the SQLite database, checks if the new name already exists in the database,
+        and raises an error if it does. It then updates the name, mora, and number of the product in the database
+        and in the instance attributes.
+
+        Parameters:
+        name (str): The new name for the product.
+        mora (int): The new mora value for the product.
+        number (int): The new number value for the product.
+        produkts (list): A list of Produkt objects.
+
+        Returns:
+        None
+
+        Raises:
+        Error.ErrorProdukt: If the new name already exists in the database.
+        """
         try:
             conn = bd.connect(basadate)
             cur = conn.cursor()
@@ -177,6 +196,21 @@ class Produkt:
             conn.close()
 
     def enter_produkt_to_bd(self):
+        """
+        Inserts the current product instance into the SQLite database.
+
+        This method establishes a connection to the SQLite database, retrieves the current product details,
+        and inserts them into the "Produkts" table. It logs the successful insertion of the product into the database.
+
+        Parameters:
+        self (Produkt): The instance of the class.
+
+        Returns:
+        None
+
+        Raises:
+        bd.Error: If an error occurs while interacting with the SQLite database.
+        """
         try:
             conn = bd.connect(basadate)
             cursor = conn.cursor()
@@ -199,6 +233,22 @@ class Produkt:
             conn.close()
 
     def delete_produkt_from_bd(self):
+        """
+        Deletes the current product instance from the SQLite database.
+
+        This method establishes a connection to the SQLite database, retrieves the ID of the current product,
+        and deletes the corresponding record from the "Produkts" table. It logs the successful deletion of the product
+        from the database.
+
+        Parameters:
+        self (Produkt): The instance of the class.
+
+        Returns:
+        None
+
+        Raises:
+        bd.Error: If an error occurs while interacting with the SQLite database.
+        """
         try:
             sqlite_connection = bd.connect(basadate)
             cursor = sqlite_connection.cursor()
