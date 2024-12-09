@@ -97,7 +97,7 @@ def pro_Klient_Tabel(window_new_klient):
                     confirm = Error.askyesno(
                         "Confirm Delete",
                         f"Are you sure you want to delete the klient with ID: {id}, Name: {klient.get_name()}?",
-                        parent=windows[-1],
+                        parent=windows[1][-1],
                     )
                     if confirm:
                         klient.delete_klient_from_bd()

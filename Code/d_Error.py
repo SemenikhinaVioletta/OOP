@@ -43,7 +43,7 @@ class ErrorProdukt(Exception):
         """
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent=None
+                title="ERROR IN INPUT", message=self.message, parent=windows[3][-1]
             )  # Показываем сообщение об ошибке
             return "Error Produkt, message: {0}".format(self.message)
         else:
@@ -72,16 +72,15 @@ def chek_mora(mora):
             raise ErrorProdukt("Morad must be a positive number")
         for i in mora:
             if not i.isdigit():
+                print(i)
                 raise ErrorProdukt(
-                    "Morad must contain only digits and mora can`t be < 0"
+                    ")))Mora must contain only digits and mora can`t be < 0"
                 )
 
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
     except ErrorProdukt as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during validation."
-        )  # ��огируем ошибку
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -168,10 +167,11 @@ def check_Id(id, produkts):
         for i in id:
             if not i.isdigit():
                 raise ErrorProdukt("ID must contain only digits")
-        flag = 0
+        flag = False
         for i in produkts:
-            if i == id:
-                flag = 1
+            print(i.get_ID(), int(id))
+            if i.get_ID() == int(id):
+                flag = True
                 break
         if not flag:
             raise ErrorProdukt("ID must be in produkts")
@@ -184,7 +184,7 @@ def check_Id(id, produkts):
         return False
 
 
-def check_all(mora, price, name, produkts):
+def check_all(name, mora, price, produkts):
     """
     Validates the input data for a product.
 
@@ -214,5 +214,5 @@ def check_all(mora, price, name, produkts):
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
     except ErrorProdukt as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False

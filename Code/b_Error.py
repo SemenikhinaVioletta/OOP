@@ -38,7 +38,7 @@ class ErrorNewKlient(Exception):
         """
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent=None
+                title="ERROR IN INPUT", message=self.message, parent=windows[2][-1]
             )  # Показываем сообщение об ошибке
             return "Error New klient, message: {0}".format(self.message)
         else:

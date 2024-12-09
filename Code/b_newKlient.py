@@ -35,8 +35,7 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
             )
             klient.enter_klient_to_bd()
-            klients = []
-            make_array()
+            klients.append(klient)
             make_Table()
 
     # Функция для изменения данных существующего клиента
@@ -190,7 +189,7 @@ def new_Klient_Tabel(window_new_klient):
                     confirm = Error.askyesno(
                         "Confirm Delete",
                         f"Are you sure you want to delete the client with ID: {id}, Name: {klient.get_name()}?",
-                        parent=None,
+                        parent=windows[2][-1],
                     )
                     if confirm:
                         klient.delete_klient_from_bd()

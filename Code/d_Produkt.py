@@ -34,8 +34,7 @@ def produkt_Table(window_produkt):
                 int(number_entry.get()),
             )
             produkt.enter_produkt_to_bd()
-            produkts = []
-            make_array()
+            produkts.append(produkt)
             make_Table()
 
     # Функция для добавления нового клиента
@@ -229,7 +228,7 @@ def produkt_Table(window_produkt):
                     confirm = Error.askyesno(
                         "Confirm Delete",
                         f"Are you sure you want to delete the client with ID: {id}, Name: {produkt.get_name()}?",
-                        parent=None,
+                        parent=windows[3][-1],
                     )
                     if confirm:
                         produkt.delete_produkt_from_bd()
@@ -355,9 +354,9 @@ def produkt_Table(window_produkt):
 
     frame = Win.Frame(master=window_produkt, relief=Win.SUNKEN)
     frame.pack(expand=True)
-    add_prod = Win.Button(frame, text="Add Client", command=add_produkt)
+    add_prod = Win.Button(frame, text="Add Produkt", command=add_produkt)
     add_prod.grid(row=1, column=2, padx=10, pady=10)
-    rename_produkt = Win.Button(frame, text="Rename Client", command=rename)
+    rename_produkt = Win.Button(frame, text="Rename Produkt", command=rename)
     rename_produkt.grid(row=2, column=2, padx=10, pady=10)
     Delete_element = Win.Button(frame, text="Delete", command=delete_element)
     Delete_element.grid(row=4, column=2, padx=10, pady=10)
