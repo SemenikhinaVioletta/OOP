@@ -1,8 +1,8 @@
-from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 import a_Log
-from a_Log import Logger
 import b_Class_New_klient as New
 from a_Global_per import windows
+from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
+from a_Log import Logger
 
 file_name = "File Error of New Klient"
 

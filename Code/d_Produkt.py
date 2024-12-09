@@ -1,9 +1,9 @@
-from a_Global_per import basadate, windows
 import a_Window as Win
 import sqlite3 as bd
 import d_Class_Produkt as prod
-from a_Log import Logger
 import d_Error as Error
+from a_Log import Logger
+from a_Global_per import basadate, windows
 
 file_name = "File Produkt"
 logger = Logger(file_name, [], "Application started")
@@ -24,7 +24,9 @@ def produkt_Table(window_produkt):
         Examples:
             produkt_Table(main_window)
         """
-        if Error.check_all(name_entry.get(), coast_entry.get(), number_entry.get(), produkts):
+        if Error.check_all(
+            name_entry.get(), coast_entry.get(), number_entry.get(), produkts
+        ):
             produkt = prod.Produkt(
                 produkts[-1].get_ID() + 1,
                 str(name_entry.get()),
@@ -118,7 +120,9 @@ def produkt_Table(window_produkt):
         Examples:
             do_this(existing_product, name_entry, cost_entry, quantity_entry)
         """
-        if Error.check_all(name_entry.get(), mora_entry.get(), number_entry.get(), produkts):
+        if Error.check_all(
+            name_entry.get(), mora_entry.get(), number_entry.get(), produkts
+        ):
             produkt.rename_Produkts(
                 str(name_entry.get()),
                 int(mora_entry.get()),

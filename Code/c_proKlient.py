@@ -1,9 +1,9 @@
 import c_Class_Pro_Klient as Pro
 from a_Global_per import basadate, windows, make_combox
-from a_Log import Logger
 import c_Error as Error
 import a_Window as Win
 import sqlite3 as bd
+from a_Log import Logger
 
 
 file_name = "File proKlient"

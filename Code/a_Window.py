@@ -1,9 +1,9 @@
+import sqlite3 as bd
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
 from a_Log import Logger
 from a_Global_per import windows
-import sqlite3 as bd
 
 file_name = "File Window"
 

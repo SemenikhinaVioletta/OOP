@@ -1,7 +1,7 @@
 import d_Error as Error
+import sqlite3 as bd
 from a_Log import Logger
 from a_Global_per import basadate, windows
-import sqlite3 as bd
 
 
 

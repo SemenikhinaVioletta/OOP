@@ -1,7 +1,8 @@
-from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 import a_Log
 from a_Log import Logger
 from a_Global_per import windows
+from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
+
 
 file_name = "File Error of Produkt"
 
@@ -17,6 +18,7 @@ class ErrorProdukt(Exception):
     __init__(self, *args): Constructor to initialize the error message.
     __str__(self) -> str: String representation of the error message.
     """
+
     def __init__(self, *args):
         """
         Initialize the error message.
@@ -145,6 +147,7 @@ def check_name(name):
         )  # ��огируем ошибку
         return False
 
+
 def check_Id(id, produkts):
     """
     Validates the ID of a product against a list of existing product IDs.
@@ -179,6 +182,7 @@ def check_Id(id, produkts):
             file_name, str(e), "An error occurred during validation."
         )  # ��огируем ошибку
         return False
+
 
 def check_all(mora, price, name, produkts):
     """

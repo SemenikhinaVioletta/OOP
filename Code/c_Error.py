@@ -1,7 +1,6 @@
-from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
-import a_Log
 from a_Log import Logger
 from a_Global_per import status_klient, windows
+from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 
 file_name = "File Error of Pro Klient"
 

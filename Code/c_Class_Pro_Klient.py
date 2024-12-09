@@ -1,9 +1,9 @@
 import b_Class_New_klient as New
 import f_Class_status_klient as stat
-from a_Global_per import basadate
 import sqlite3 as bd
-from a_Log import Logger
 import c_Error as Error
+from a_Log import Logger
+from a_Global_per import basadate
 
 file_name = "File Class_Pro_Klient"
 logger = Logger(file_name, [], "Application started")
@@ -12,7 +12,7 @@ logger = Logger(file_name, [], "Application started")
 class Pro_Klient(New.New_Klient):
     """Represents a professional klient with associated attributes and methods.
 
-    This class extends the New_Klient class to manage klient information, including personal details, 
+    This class extends the New_Klient class to manage klient information, including personal details,
     contract IDs, and methods for database interactions such as adding, deleting, and updating klient records.
 
     Args:
@@ -28,6 +28,7 @@ class Pro_Klient(New.New_Klient):
     Returns:
         None
     """
+
     def __init__(self, ID, name, mora, kontrakt, phone, email, status, klient):
         """
         Initialize a new instance of Pro_Klient class.

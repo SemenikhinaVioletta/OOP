@@ -1,13 +1,13 @@
 import a_Window as Win
+import b_Error as new_Error
+import c_Error as pro_Error
+import d_Error as prod_Error
 from f_Class_status_klient import make_status
 from c_proKlient import do_pro_klient
 from b_newKlient import do_new_klient
 from d_Produkt import do_produkt
 from a_Log import Logger
 from a_Global_per import windows
-import b_Error as new_Error
-import c_Error as pro_Error
-import d_Error as prod_Error
 
 file_name = "File FirstDisplay"
 window = Win.Window("PC for management", "600x400")
