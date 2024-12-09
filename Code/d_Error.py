@@ -7,7 +7,7 @@ from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 file_name = "File Error of Produkt"
 
 
-class ErrorProdukt(Exception):
+class ErrorProduct(Exception):
     """
     Custom exception class for handling errors related to product input.
 
@@ -55,7 +55,7 @@ def chek_mora(mora):
     Validates the mora value of a product.
 
     This function checks if the provided mora value is a valid positive number.
-    It raises an ErrorProdukt exception if the mora value is not a positive number or contains non-digit characters.
+    It raises an ErrorProduct exception if the mora value is not a positive number or contains non-digit characters.
 
     Parameters:
     mora (int or str): The mora value of the product to be validated.
@@ -64,22 +64,22 @@ def chek_mora(mora):
     bool: True if the mora value is valid, False otherwise.
 
     Raises:
-    ErrorProdukt: If the mora value is not a positive number or contains non-digit characters.
+    ErrorProduct: If the mora value is not a positive number or contains non-digit characters.
     """
     try:
         mora = str(mora)
         if len(mora) < 1:
-            raise ErrorProdukt("Morad must be a positive number")
+            raise ErrorProduct("Morad must be a positive number")
         for i in mora:
             if not i.isdigit():
                 print(i)
-                raise ErrorProdukt(
+                raise ErrorProduct(
                     ")))Mora must contain only digits and mora can`t be < 0"
                 )
 
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
-    except ErrorProdukt as e:
+    except ErrorProduct as e:
         Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
@@ -89,7 +89,7 @@ def check_price(price):
     Validates the price of a product.
 
     This function checks if the provided price is a valid positive integer.
-    It raises an ErrorProdukt exception if the price is not a positive number or contains non-digit characters.
+    It raises an ErrorProduct exception if the price is not a positive number or contains non-digit characters.
 
     Parameters:
     price (int or str): The price of the product to be validated.
@@ -98,20 +98,20 @@ def check_price(price):
     bool: True if the price is valid, False otherwise.
 
     Raises:
-    ErrorProdukt: If the price is not a positive number or contains non-digit characters.
+    ErrorProduct: If the price is not a positive number or contains non-digit characters.
     """
     try:
         price = str(price)
         if len(price) < 1:
-            raise ErrorProdukt("Price must be a positive number")
+            raise ErrorProduct("Price must be a positive number")
         for i in price:
             if not i.isdigit():
-                raise ErrorProdukt(
+                raise ErrorProduct(
                     "Price must contain only digits and price can`t be < 0"
                 )
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
-    except ErrorProdukt as e:
+    except ErrorProduct as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # ��огируем ошибку
@@ -123,7 +123,7 @@ def check_name(name):
     Validates the name of a product.
 
     This function checks if the provided name is valid according to the defined rules.
-    It raises an ErrorProdukt exception if the name is empty.
+    It raises an ErrorProduct exception if the name is empty.
 
     Parameters:
     name (str): The name of the product to be validated.
@@ -132,15 +132,15 @@ def check_name(name):
     bool: True if the name is valid, False otherwise.
 
     Raises:
-    ErrorProdukt: If the name is empty.
+    ErrorProduct: If the name is empty.
     """
     try:
         name = str(name)
         if len(name) < 1:
-            raise ErrorProdukt("Name can`t be empty")
+            raise ErrorProduct("Name can`t be empty")
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
-    except ErrorProdukt as e:
+    except ErrorProduct as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # ��огируем ошибку
@@ -158,15 +158,15 @@ def check_Id(id, produkts):
     Returns:
     bool: True if the ID is valid and does not exist in the produkts list, False otherwise.
     Raises:
-    ErrorProdukt: If the ID is empty, contains non-digit characters, or does not exist in the produkts list.
+    ErrorProduct: If the ID is empty, contains non-digit characters, or does not exist in the produkts list.
     """
     try:
         id = str(id)
         if len(id) < 1:
-            raise ErrorProdukt("ID can`t be empty")
+            raise ErrorProduct("ID can`t be empty")
         for i in id:
             if not i.isdigit():
-                raise ErrorProdukt("ID must contain only digits")
+                raise ErrorProduct("ID must contain only digits")
         flag = False
         for i in produkts:
             print(i.get_ID(), int(id))
@@ -174,10 +174,10 @@ def check_Id(id, produkts):
                 flag = True
                 break
         if not flag:
-            raise ErrorProdukt("ID must be in produkts")
+            raise ErrorProduct("ID must be in produkts")
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
-    except ErrorProdukt as e:
+    except ErrorProduct as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # ��огируем ошибку
@@ -201,17 +201,17 @@ def check_all(name, mora, price, produkts):
     bool: True if the input data is valid and the name does not exist in the produkts list, False otherwise.
 
     Raises:
-    ErrorProdukt: If the mora, price, or name are invalid, or if the name already exists in the produkts list.
+    ErrorProduct: If the mora, price, or name are invalid, or if the name already exists in the produkts list.
     """
     try:
         if chek_mora(mora) and check_price(price) and check_name(name):
             for prod in produkts:
                 if prod.get_name() == name:
-                    raise ErrorProdukt(
+                    raise ErrorProduct(
                         "This element (" + name + ") has already been added"
                     )
             Logger.log_info(file_name, "NO errors found during status validation.")
             return True
-    except ErrorProdukt as e:
+    except ErrorProduct as e:
         Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False

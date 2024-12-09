@@ -442,7 +442,7 @@ def make_array():
     cursor.close()
 
 
-def do_pro_klient(flag, window_pro_klient):
+def do_pro_client(flag, window_pro_klient):
     """
     Connects to the database, retrieves all records from the 'Klient' table, and creates a list of Pro_Klient objects.
     Depending on the flag value, it either opens a new window with a table of pro clients or logs an error.

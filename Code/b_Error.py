@@ -8,8 +8,8 @@ file_name = "File Error of New Klient"
 
 
 # Класс для обработки ошибок нового клиента
-# The `ErrorNewKlient` class in Python defines a custom exception with an error message attribute that is displayed when the exception is raised.
-class ErrorNewKlient(Exception):
+# The `ErrorNewClient` class in Python defines a custom exception with an error message attribute that is displayed when the exception is raised.
+class ErrorNewClient(Exception):
     """Custom exception for handling errors related to new clients.
 
     This class extends the built-in Exception class to provide a specific error type for issues encountered when creating or managing new clients. It allows for the inclusion of a custom error message and provides a string representation of the error.
@@ -68,29 +68,29 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         # Validate the name
         if len(names) < 3:
             message = "Name must contain at least 3 words."
-            raise ErrorNewKlient(message)
+            raise ErrorNewClient(message)
         else:
             for i in names:
                 if i[0].islower():
                     message = (
                         "Each word in the name must start with an uppercase letter."
                     )
-                    raise ErrorNewKlient(message)
+                    raise ErrorNewClient(message)
                 else:
                     for j in i:
                         if not j.isalpha():
                             message = "Name must contain only alphabetic characters."
-                            raise ErrorNewKlient(message)
+                            raise ErrorNewClient(message)
         # Validate the phone number
         if len(phone) != 11:
             message = "Phone number must be exactly 11 digits long."
-            raise ErrorNewKlient(
+            raise ErrorNewClient(
                 message
             )  # Raise an error if there are issues with the phone number
 
         elif phone[0] == "0":
             message = "Phone number must not start with zero."
-            raise ErrorNewKlient(
+            raise ErrorNewClient(
                 message
             )  # Raise an error if there are issues with the phone number
 
@@ -98,7 +98,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
             for j in phone:
                 if not j.isdigit():
                     message = "Phone number must contain only digits."
-                    raise ErrorNewKlient(
+                    raise ErrorNewClient(
                         message
                     )  # Raise an error if there are issues with the phone number
         # Validate the email address
@@ -106,13 +106,13 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
             message = (
                 'Email must contain at least 5 characters, e.g., "example@domain.com".'
             )
-            raise ErrorNewKlient(
+            raise ErrorNewClient(
                 message
             )  # Raise an error if there are issues with the email address
 
         elif email.count("@") != 1:
             message = "Email must contain exactly one '@' symbol."
-            raise ErrorNewKlient(
+            raise ErrorNewClient(
                 message
             )  # Raise an error if there are issues with the email address
 
@@ -127,24 +127,24 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
                 or i >= len(email) - 3
                 or i == 0
             ):
-                raise ErrorNewKlient(
+                raise ErrorNewClient(
                     message
                 )  # Raise an error if there are issues with the email address
 
         for k in klients:
             if int(phone) == k.get_phone():
                 message = "This phone is already in table"
-                raise ErrorNewKlient(message)
+                raise ErrorNewClient(message)
 
             if email == k.get_email():
                 message = "This email is already in table"
-                raise ErrorNewKlient(message)
+                raise ErrorNewClient(message)
 
         Logger.log_info(
             file_name, "No errors found during validation."
         )  # Log successful validation
         return True
-    except ErrorNewKlient as e:
+    except ErrorNewClient as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during validation."
         )  # Log the error
@@ -162,7 +162,7 @@ def delete_from_table(id):
     Returns:
     bool: True if the validation is successful and the client is deleted from the table, False otherwise.
     Raises:
-    ErrorNewKlient: If the ID is not valid, an exception is raised with an appropriate error message.
+    ErrorNewClient: If the ID is not valid, an exception is raised with an appropriate error message.
     """
     try:
         id = id.get()  # Получаем ID
@@ -173,20 +173,20 @@ def delete_from_table(id):
             for j in id:
                 if not j.isdigit():
                     message = "ID must contain only digits."  # Исправлено на более информативное сообщение
-                    raise ErrorNewKlient(message)
+                    raise ErrorNewClient(message)
             if int(id) < 0:
                 message = "ID must be greater than or equal to 0."  # Исправлено на более информативное сообщение
-                raise ErrorNewKlient(message)
+                raise ErrorNewClient(message)
         else:
             message = (
                 "ID cannot be empty."  # Исправлено на более информативное сообщение
             )
-            raise ErrorNewKlient(message)
+            raise ErrorNewClient(message)
         Logger.log_info(
             file_name, "No errors found during ID validation."
         )  # Логируем успешную проверку
         return True
-    except ErrorNewKlient as e:
+    except ErrorNewClient as e:
         Logger.log_error(
             file_name, str(e), "An error occurred during ID validation."
         )  # Логируем ошибку

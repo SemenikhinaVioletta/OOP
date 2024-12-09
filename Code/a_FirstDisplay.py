@@ -1,212 +1,286 @@
-import a_Window as Win
-import b_Error as new_Error
-import c_Error as pro_Error
-import d_Error as prod_Error
+import a_Window as WindowModule
+import b_Error as NewClientError
+import c_Error as ProClientError
+import d_Error as ProductError
 from f_Class_status_klient import make_status
-from c_proKlient import do_pro_klient
-from b_newKlient import do_new_klient
-from d_Produkt import do_produkt
+from c_proKlient import do_pro_client
+from b_newKlient import do_new_client
+from d_Produkt import do_product
 from a_Log import Logger
 from a_Global_per import windows
 
-file_name = "File FirstDisplay"
-window = Win.Window("PC for management", "600x400")
-logger = Logger(file_name, [], "Application started")
 
-
-# Переход к функциям открывающим возможность работы с данными
-def selected(event):
-    selection = combobox.get()
-    logger.log_info(file_name, f"Selected option: {selection}")  # Log selection
-    if selection == "New Klients":
-        logger.log_info(file_name, "Starting new klient process")  # Log process start
-        method_New_Klient(selection)
-    elif selection == "Pro Klients":
-        logger.log_info(file_name, "Starting Pro Klients process")  # Log process start
-        method_pro_klient(selection)
-    elif selection == "Produkts":
-        logger.log_info(file_name, "Starting Produkts process")  # Log process start
-        method_produkts(selection)
-    elif selection == "Kontrakts":
-        # logger.log_info(file_name, "Starting Kontrakts process")  # Log process start
-        # method_Kontrakts()
-        logger.log_info(file_name, "No method available for selection")  # Log no method
-    else:
-        logger.log_info(file_name, "No method available for selection")  # Log no method
-
+file_name = "File FirstDisplay"  # Имя файла для логирования
+window = WindowModule.Window("PC for management", "600x400")  # Создаем главное окно
+logger = Logger(file_name, [], "Application started")  # Инициализируем логгер
 
 # --------------------------------------------------------------------------------------------------------------------------------
-# Работа с новым клиентом
 
 
-def method_New_Klient(messeg):
+def on_selection(event):
     """
-    The function `method_New_Klient` creates a GUI window with options to open a table or create a report for a given message.
-
-    @param messeg It looks like the `method_New_Klient` function is creating a GUI interface with two buttons for opening a table and making a report. The `messeg` parameter seems to be a message that is displayed in the GUI interface.
-    """
-    logger.log_info(
-        file_name, f"Entering method_New_Klient with message: {messeg}"
-    )  # Log method entry
-    lable = Win.Label(frame, text="For " + messeg + " you can:")
-    lable.grid(row=3, column=1, padx=10)
-
-    new_window = Win.Button(
-        frame,
-        text="Open table",
-        command=lambda: start_new_klient(1),
-    )
-    new_window.grid(row=3, column=2, padx=10)
-    """
-    new_otchet = Win.Button(
-        frame,
-        text="Make Otchet",
-        command=lambda: start_new_klient(2),
-    )
-    new_otchet.grid(row=4, column=2, padx=10, pady=10)"""
-
-
-def start_new_klient(flag):
-    """
-    The function `start_new_klient` opens a new klient window with a specified flag and performs additional operations related to the new klient.
-
-    @param flag The `flag` parameter in the `start_new_klient` function is used to determine some behavior or configuration related to opening a new klient window. It is passed as an argument to the function and then used within the function to perform specific actions based on its value.
-    """
-    try:
-        if len(windows[2]) != 0:
-            raise new_Error.ErrorNewKlient("The window already open")
-        logger.log_info(
-            file_name, f"Opening new klient window with flag: {flag}"
-        )  # Log window opening
-        wind = Win.Window("New klient", "1000x300")
-        wind.make_protokol(lambda: Win.end(2))
-        windows[2].append(wind)
-        do_new_klient(flag, wind)
-    except new_Error.ErrorNewKlient as e:
-        logger.log_error(file_name, str(e), "A Error intoopen window")
-
-
-# --------------------------------------------------------------------------------------------------------------------------------
-# Работа с про клиентом
-
-
-def method_pro_klient(message):
-    logger.log_info(
-        file_name, f"Entering method_pro_Klient with message: {message}"
-    )  # Log method entry
-    lable = Win.Label(frame, text="For " + message + " you can:")
-    lable.grid(row=3, column=1, padx=10)
-
-    new_window = Win.Button(
-        frame,
-        text="Open table",
-        command=lambda: start_pro_klient(1),
-    )
-    new_window.grid(row=3, column=2, padx=10)
-
-
-def start_pro_klient(flag):
-    try:
-        if len(windows[1]) != 0:
-            raise pro_Error.ErrorProKlient("The window already open")
-        logger.log_info(
-            file_name, f"Opening new klient window with flag: {flag}"
-        )  # Log window opening
-        wind = Win.Window("Pro klient", "1500x300")
-        wind.make_protokol(lambda: Win.end(1))
-        windows[1].append(wind)
-        do_pro_klient(flag, wind)
-    except pro_Error.ErrorProKlient as e:
-        logger.log_error(file_name, str(e), "A Error intoopen window")
-
-
-# --------------------------------------------------------------------------------------------------------------------------------
-# Работа с Продуктами
-
-
-def method_produkts(message: str) -> None:
-    """
-    This function is responsible for displaying a GUI window with options to open a table for managing products.
-    It logs the entry into the method and displays a label and a button in the GUI window.
+    This function handles the selection event in the GUI application.
+    It retrieves the selected option from the Combobox, logs the selection,
+    and then calls the appropriate function based on the selected option.
 
     Parameters:
-    message (str): A message that is displayed in the GUI window to inform the user about the purpose of the function.
+    event (Event): The event object that triggered this function.
 
     Returns:
-    None: The function does not return any value.
+    None
+    """
+    selected_option = combobox.get()  # Получаем выбранный вариант
+    logger.log_info(file_name, f"Selected option: {selected_option}")
+
+    if selected_option == "New Clients":  
+        logger.log_info(file_name, "Starting new client process")
+        handle_new_client(selected_option)  
+    elif selected_option == "Pro Clients":  
+        logger.log_info(file_name, "Starting Pro Clients process")
+        handle_pro_client(selected_option)  
+    elif selected_option == "Products":  
+        logger.log_info(file_name, "Starting Products process")
+        handle_products(selected_option)  
+    elif selected_option == "Contracts":  
+        logger.log_info(file_name, "No method available for selection")
+    else:
+        logger.log_info(file_name, "No method available for selection")
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+
+
+def handle_new_client(message: str) -> None:
+    """
+    This function handles the process for new clients. It creates a label and a button
+    to display options for new clients and starts a new client window when the button is clicked.
+
+    Parameters:
+    message (str): A message indicating the type of clients (in this case, "New Clients").
+    Returns:
+    None
     """
     logger.log_info(
-        file_name, f"Entering method_produkts with message: {message}"
-    )  # Log method entry
-    lable = Win.Label(frame, text="For " + message + " you can:")
-    lable.grid(row=3, column=1, padx=10)
-
-    new_window = Win.Button(
-        frame,
+        file_name, f"Entering handle_new_client with message: {message}"
+    )  # Log the entry into the method
+    label = WindowModule.Label(
+        frame, text="For " + message + " you can:"
+    )  # Create a label
+    label.grid(row=3, column=1, padx=10)  # Place the label on the grid
+    new_window_button = WindowModule.Button(
+        frame,  # Create a button
         text="Open table",
-        command=lambda: start_produkts(1),
+        command=lambda: start_new_client(1),
     )
-    new_window.grid(row=3, column=2, padx=10)
+    new_window_button.grid(row=3, column=2, padx=10)  # Place the button on the grid
 
 
-def start_produkts(flag: int) -> None:
+def start_new_client(flag: int) -> None:
     """
-    This function opens a new window for managing products based on a given flag.
-    It also logs the opening of the window and handles any exceptions that may occur.
+    This function opens a new client window based on the provided flag.
+    It checks if a new client window is already open and raises an exception if it is.
+    If the window is not open, it logs the opening event, creates a new window,
+    sets the window protocol, adds the window to the list of windows,
+    and calls the function to handle new client operations.
 
     Parameters:
     flag (int): A flag indicating the type of operation to be performed.
-                 In this case, it is used to determine the behavior of the function.
 
     Returns:
-    None: The function does not return any value.
+    None
     """
     try:
-        if len(windows[3]) != 0:
-            raise prod_Error.ErrorProduct("The window already open")
+        if len(windows[2]) != 0:  # Check if the new client window is already open
+            raise NewClientError.ErrorNewClient(
+                "The window is already open"
+            )  # Raise an exception if the window is open
+
         logger.log_info(
-            file_name, f"Opening produkt window with flag: {flag}"
-        )  # Log window opening
-        wind = Win.Window("Produkt", "1000x300")
-        wind.make_protokol(lambda: Win.end(3))
-        windows[3].append(wind)
-        do_produkt(flag, wind)
-    except prod_Error.ErrorProdukt as e:
-        logger.log_error(file_name, str(e), "A Error intoopen window")
+            file_name, f"Opening new client window with flag: {flag}"
+        )  # Log the opening event
+
+        new_window = WindowModule.Window(
+            "New Client", "1000x300"
+        )  # Create a new window
+        new_window.make_protokol(lambda: WindowModule.end(2))  # Set the window protocol
+        windows[2].append(new_window)  # Add the window to the list of windows
+
+        do_new_client(
+            flag, new_window
+        )  # Call the function to handle new client operations
+
+    except NewClientError.ErrorNewClient as e:
+        logger.log_error(file_name, "Error opening window", str(e))  # Log the error
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
-# Старт приложение
-def start():
+
+
+def handle_pro_client(message: str) -> None:
     """
-    The `start()` function logs the application start and opens a window.
+    This function handles the process for professional clients. It creates a label and a button
+    to display options for professional clients and starts a professional client window when the button is clicked.
+
+    Parameters:
+    message (str): A message indicating the type of clients (in this case, "Pro Clients").
+
+    Returns:
+    None
     """
-    logger.log_info(file_name, "Starting application")  # Log application start
-    window.open()
+    logger.log_info(
+        file_name, f"Entering handle_pro_client with message: {message}"
+    )  # Log the entry into the method
+    label = WindowModule.Label(
+        frame, text="For " + message + " you can:"
+    )  # Create a label
+    label.grid(row=3, column=1, padx=10)  # Place the label on the grid
+    new_window_button = WindowModule.Button(
+        frame,  # Create a button
+        text="Open table",
+        command=lambda: start_pro_client(1),
+    )
+    new_window_button.grid(row=3, column=2, padx=10)  # Place the button on the grid
 
 
-# Делаем основное окно приложения
-window.make_protokol(lambda: Win.end(0))
-windows[0].append(window)
+def start_pro_client(flag):
+    """
+    This function opens a professional client window based on the provided flag.
+    It checks if a professional client window is already open and raises an exception if it is.
+    If the window is not open, it logs the opening event, creates a new window,
+    sets the window protocol, adds the window to the list of windows,
+    and calls the function to handle professional client operations.
 
-frame = Win.Frame(master=window, relief=Win.SUNKEN)
-frame.pack(expand=True)
+    Parameters:
+    flag (int): A flag indicating the type of operation to be performed.
 
-method_lbl = Win.Label(frame, text="Select the table you will work with")
-method_lbl.grid(row=1, column=1)
+    Returns:
+    None
+    """
+    try:
+        if (
+            len(windows[1]) != 0
+        ):  # Check if the professional client window is already open
+            raise ProClientError.ErrorProClient(
+                "The window is already open"
+            )  # Raise an exception if the window is open
 
-method = ["Pro Klients", "New Klients", "Kontrakts", "Produkts"]
-combobox = Win.Combobox(frame, values=method, width=30, state="readonly")
-combobox.grid(row=2, column=1, pady=10)
-combobox.set("Nothing selected")
-combobox.bind("<<ComboboxSelected>>", selected)
+        logger.log_info(
+            file_name, f"Opening pro client window with flag: {flag}"
+        )  # Log the opening event
 
-button_to_end = Win.Button(
+        new_window = WindowModule.Window(
+            "Pro Client", "1500x300"
+        )  # Create a new window
+        new_window.make_protokol(lambda: WindowModule.end(1))  # Set the window protocol
+        windows[1].append(new_window)  # Add the window to the list of windows
+
+        do_pro_client(
+            flag, new_window
+        )  # Call the function to handle professional client operations
+
+    except ProClientError.ErrorProClient as e:
+        logger.log_error(file_name, "Error opening window", str(e))  # Log the error
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+
+
+def handle_products(message: str) -> None:
+    """
+    This function handles the process for products. It creates a label and a button
+    to display options for products and starts a product window when the button is clicked.
+
+    Parameters:
+    message (str): A message indicating the type of products (in this case, "Products").
+
+    Returns:
+    None
+    """
+    logger.log_info(
+        file_name, f"Entering handle_products with message: {message}"
+    )  # Log the entry into the method
+    label = WindowModule.Label(
+        frame, text="For " + message + " you can:"
+    )  # Create a label
+    label.grid(row=3, column=1, padx=10)  # Place the label on the grid
+    new_window_button = WindowModule.Button(
+        frame,  # Create a button
+        text="Open table",
+        command=lambda: start_products(1),
+    )
+    new_window_button.grid(row=3, column=2, padx=10)  # Place the button on the grid
+
+
+def start_products(flag: int) -> None:
+    """
+    This function starts a product window based on the provided flag.
+    It checks if a product window is already open and raises an exception if it is.
+    If the window is not open, it logs the opening event, creates a new window,
+    sets the window protocol, adds the window to the list of windows,
+    and calls the function to handle product operations.
+
+    Parameters:
+    flag (int): A flag indicating the type of operation to be performed.
+
+    Returns:
+    None
+    """
+    try:
+        if len(windows[3]) != 0:
+            raise ProductError.ErrorProduct("The window is already open")
+        logger.log_info(file_name, f"Opening product window with flag: {flag}")
+        wind = WindowModule.Window("Product", "1000x300")
+        wind.make_protokol(lambda: WindowModule.end(3))
+        windows[3].append(wind)
+        do_product(flag, wind)
+    except ProductError.ErrorProduct as e:
+        logger.log_error(
+            file_name, "An error occurred while opening the window", str(e)
+        )
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+
+
+def start():  # Функция для запуска приложения
+    """
+    This module is responsible for the initial display setup of the application.
+
+    It includes the necessary components and configurations to create the first user interface that users will interact with. The module aims to facilitate the presentation of information and user inputs in a clear and organized manner.
+    """
+    logger.log_info(file_name, "Starting application")  # Логирование начала приложения
+    window.open()  # Открытие главного окна
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
+
+window.make_protokol(lambda: WindowModule.end(0))  # Протокол завершения приложения
+windows[0].append(window)  # Добавление главного окна в список окон
+frame = WindowModule.Frame(
+    master=window, relief=WindowModule.SUNKEN
+)  # Создание рамки для элементов интерфейса
+frame.pack(expand=True)  # Упаковка рамки
+method_label = WindowModule.Label(
+    frame, text="Select the table you will work with"
+)  # Метка для выбора таблицы
+method_label.grid(row=1, column=1)  # Размещение метки в сетке
+methods = [
+    "Pro Clients",
+    "New Clients",
+    "Contracts",
+    "Products",
+] 
+combobox = WindowModule.Combobox(
+    frame, values=methods, width=30, state="readonly"
+)  # Комбобокс для выбора метода
+combobox.grid(row=2, column=1, pady=10)  # Размещение комбобокса в сетке
+combobox.set("Nothing selected")  # Установка начального значения
+combobox.bind("<<ComboboxSelected>>", on_selection)  # Привязка события выбора
+button_to_end = WindowModule.Button(
     frame,
     text="End all",
-    command=lambda: Win.end(0),
-)
-button_to_end.grid(row=5, column=1, pady=10)
-
-make_status()
-start()
+    command=lambda: WindowModule.end(0),
+)  # Кнопка для завершения приложения
+button_to_end.grid(row=5, column=1, pady=10)  # Размещение кнопки в сетке
+make_status()  # Создание статуса
+start()  # Запуск приложения

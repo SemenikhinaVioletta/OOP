@@ -483,7 +483,7 @@ def make_array():
     cursor.close()
 
 
-def do_new_klient(flag, window_new_klient):
+def do_new_client(flag, window_new_klient):
     """
     This function manages the creation of a new client window based on the provided flag.
     If the flag is 1, it calls the "new_Klient_Tabel" function to create a new client window.

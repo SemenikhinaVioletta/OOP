@@ -391,7 +391,7 @@ def make_array():
     cursor.close()
 
 
-def do_produkt(flag, window_produkt):
+def do_product(flag, window_produkt):
     """
     This function initializes the product management interface based on the provided flag.
 

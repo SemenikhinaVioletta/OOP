@@ -407,7 +407,7 @@ class Pro_Klient(New.New_Klient):
             Logger(file_name, "Error while adding klient to database", error)
         finally:
             conn.close()
-
+#--------------------------------------------------------------------------------------------------------------------------------
     def __del__(self):
         """
         Destructor method for the Pro_Klient class.
