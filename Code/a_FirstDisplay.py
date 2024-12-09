@@ -171,7 +171,7 @@ def start_produkts(flag: int) -> None:
         wind.make_protokol(lambda: Win.end(3))
         windows[3].append(wind)
         do_produkt(flag, wind)
-    except prod_Error.ErrorProduct as e:
+    except prod_Error.ErrorProdukt as e:
         logger.log_error(file_name, str(e), "A Error intoopen window")
 
 
