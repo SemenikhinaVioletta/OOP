@@ -21,7 +21,6 @@ class Logger:
         self.setup_logging()
         self.log_message()
 
-
     def setup_logging(self):
         """
         Initialize the logging configuration.
@@ -39,7 +38,6 @@ class Logger:
             format="%(asctime)s - %(levelname)s - %(filename)s - %(message)s",
             level=logging.INFO,
         )
-
 
     def log_message(self):
         """
@@ -59,11 +57,13 @@ class Logger:
         - None
         """
         if len(self.errors) == 0:
-            logging.info(f"{self.name}: {self.message}")
+            if self.message[0] == "*":
+                logging.info(f"\t{self.name} {self.message[1:]}")
+            else:
+                logging.info(f"{self.name}: {self.message}")
         else:
             logging.error(f"{self.name}: {self.errors}: {self.message}")
             self.show_error_dialog()
-
 
     def show_error_dialog(self):
         """
@@ -81,15 +81,29 @@ class Logger:
         """
         messagebox.showerror(title="ERROR IN INPUT", message=self.message, parent=None)
 
-
     @staticmethod
-    def log_info(name, message):
-        if (message[0] == "*"):
-            logging.info(f"\t{name}: {message}")
-        
+    def log_info(name: str, message: str) -> None:
+        """
+        Logs an informational message with the given name and message.
+
+        This function logs an informational message using the Python logging module.
+        If the message starts with "*", it is formatted differently to visually distinguish it.
+
+        Parameters:
+        - name (str): The name to be included in the log message. This could be the name of the module, class, or function where the informational message is being logged.
+        - message (str): The detailed message to be logged. This could provide additional context or information.
+
+        Returns:
+        - None
+        """
+        if message[0] == "*":
+            logging.basicConfig(
+                format="\t\t\t\t%(filename)s - %(message)s",
+                level=logging.INFO,
+            )
+            logging.info(f"\t{name} {message[1:]}")
         else:
             logging.info(f"{name}: {message}")
-
 
     @staticmethod
     def log_error(name, error, message):
@@ -108,4 +122,3 @@ class Logger:
         - None
         """
         logging.error(f"{name}: {error}: {message}")
-
