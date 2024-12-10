@@ -37,17 +37,17 @@ class Contract_statues:
 def make_status():
     conn = bd.connect(database)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Status_klient")
+    cursor.execute("SELECT * FROM Status_Client")
     rows = cursor.fetchall()
     for line in rows:
-        stat_klient = Client_statuses(int(line[0]), str(line[1]))
-        client_statuses.append(stat_klient)
+        stat_Client = Client_statuses(int(line[0]), str(line[1]))
+        client_statuses.append(stat_Client)
     cursor.close()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Status_kontrakt")
+    cursor.execute("SELECT * FROM Status_Contract")
     rows = cursor.fetchall()
     for line in rows:
-        stat_kontrakt = Contract_statues(int(line[0]), str(line[1]))
-        contract_statuses.append(stat_kontrakt)
+        stat_Contract = Contract_statues(int(line[0]), str(line[1]))
+        contract_statuses.append(stat_Contract)
     cursor.close()
     conn.close()

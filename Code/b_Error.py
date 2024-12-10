@@ -3,7 +3,7 @@ from a_Global_Per import windows
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 from a_Log import Logger
 
-file_name = "File Error of New Klient"
+file_name = "File Error of New Client"
 
 
 class ErrorNewClient(Exception):
@@ -19,9 +19,9 @@ class ErrorNewClient(Exception):
             showerror(
                 title="ERROR IN INPUT", message=self.message, parent=windows[2][-1]
             )
-            return "Error New klient, message: {0}".format(self.message)
+            return "Error New Client, message: {0}".format(self.message)
         else:
-            return "Error New klient, raised"
+            return "Error New Client, raised"
 
 
 def chek_name(name):
@@ -111,14 +111,14 @@ def chek_mail(email):
         return False
 
 
-def add_new_to_table(name_entry, phone_entry, email_entry, klients):
+def add_new_to_table(name_entry, phone_entry, email_entry, Clients):
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
         email = str(email_entry.get())
         message = "Validation started"
         if chek_name(name) and chek_phone(phone) and chek_mail(email):
-            for k in klients:
+            for k in Clients:
                 if int(phone) == k.get_phone():
                     message = "This phone is already in table"
                     raise ErrorNewClient(message)
@@ -134,7 +134,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
         return False
 
 
-def delete_from_table(id, klients):
+def delete_from_table(id, Clients):
     try:
         id = id.get()
         message = "Validation started"
@@ -151,7 +151,7 @@ def delete_from_table(id, klients):
             raise ErrorNewClient(message)
 
         flag = False
-        for i in klients:
+        for i in Clients:
             if int(id) == i.get_ID():
                 flag = True
                 break

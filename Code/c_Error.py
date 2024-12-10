@@ -2,12 +2,12 @@ from a_Log import Logger
 from a_Global_Per import client_statuses, windows
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 
-file_name = "File Error of Pro Klient"
+file_name = "File Error of Pro Client"
 
 
 class ErrorProClient(Exception):
     """
-    Custom exception class for handling errors in the Pro Klient application.
+    Custom exception class for handling errors in the Pro Client application.
 
     Attributes:
     message (str): The error message associated with the exception.
@@ -40,9 +40,9 @@ class ErrorProClient(Exception):
             showerror(
                 title="ERROR IN INPUT", message=self.message, parent=windows[1][-1]
             )  # Показываем сообщение об ошибке
-            return "Error Pro klient, message: {0}".format(self.message)
+            return "Error Pro Client, message: {0}".format(self.message)
         else:
-            return "Error Pro klient, raised"
+            return "Error Pro Client, raised"
 
 
 def chek_name(name_entry):
@@ -203,7 +203,7 @@ def chek_mora(mora_entry):
         return False
 
 
-def chek_kontrakt(kontrakt_entry):
+def chek_Contract(Contract_entry):
     """
     Validates the contract number of a client.
 
@@ -212,20 +212,20 @@ def chek_kontrakt(kontrakt_entry):
     If the contract number is valid, it logs a success message and returns True.
 
     Parameters:
-    kontrakt_entry (tkinter.Entry): The entry widget for the client's contract number. The contract number is obtained from the 'get' method of the tkinter.Entry object.
+    Contract_entry (tkinter.Entry): The entry widget for the client's contract number. The contract number is obtained from the 'get' method of the tkinter.Entry object.
 
     Returns:
     bool: True if the contract number is valid, False otherwise. Raises an ErrorProClient exception if the contract number is not valid.
     """
-    kontrakt = str(kontrakt_entry.get())
+    Contract = str(Contract_entry.get())
     message = "Validation started."  # Сообщение о начале валидации
-    kontrakt = kontrakt.split()
+    Contract = Contract.split()
     try:
-        if len(kontrakt) == 1:
-            kontrakt = kontrakt[0]
-            for i in kontrakt:
+        if len(Contract) == 1:
+            Contract = Contract[0]
+            for i in Contract:
                 if not i.isdigit():
-                    message = "kontrakt must contain only digits and > 0"  # Исправлено на более информативное сообщение
+                    message = "Contract must contain only digits and > 0"  # Исправлено на более информативное сообщение
                     raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
@@ -235,7 +235,7 @@ def chek_kontrakt(kontrakt_entry):
         return False  # Логируем ошибку
 
 
-def chek_id(id, klients):
+def chek_id(id, Clients):
     """
     Validates the ID of a client.
 
@@ -266,16 +266,16 @@ def chek_id(id, klients):
                 "ID cannot be empty."  # Исправлено на более информативное сообщение
             )
             raise ErrorProClient(message)
-        
+
         flag = False
-        for i in klients:
+        for i in Clients:
             if int(id) == i.get_ID():
                 flag = True
                 break
         if not flag:
             message = "Client with this ID does not exist."  # Исправлено на более информативное сообщение
             raise ErrorProClient(message)
-                
+
         Logger.log_info(file_name, "No errors found during ID validation.")
         return True
     except ErrorProClient as e:
@@ -286,21 +286,13 @@ def chek_id(id, klients):
 
 
 def chek_status(status):
-    """
-    Validates the status of a client.
-
-    This function checks if the provided status is one of the valid options (1, 2, or 3).
-    If the status is not valid, it raises an ErrorProClient exception with an appropriate error message.
-    If the status is valid, it logs a success message and returns True.
-
-    Parameters:
-    status (int): The status to be validated.
-
-    Returns:
-    bool: True if the status is valid, False otherwise. Raises an ErrorProClient exception if the status is not valid.
-    """
     try:
-        message = "Validation started."  # Сообщение о начале валидации
+        message = "Validation started."
+        status = str(status)
+        if not status[0].isdigit():
+            message = "Status must be a digit."
+            raise ErrorProClient(message)
+        status == int(status)
         if status != 1 or status != 2 or status != 3:
             message = "Unknown this status"
             raise ErrorProClient(message)
@@ -315,7 +307,7 @@ def chek_status(status):
 
 
 # Функция для добавления нового клиента в таблицу
-def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients, flag):
+def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, Clients, status, flag):
     """
     This function validates and checks if a new client's data is unique in the table.
 
@@ -324,7 +316,7 @@ def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients, 
     phone_entry (tkinter.Entry): The entry widget for the client's phone number.
     email_entry (tkinter.Entry): The entry widget for the client's email.
     mora_entry (tkinter.Entry): The entry widget for the client's mora.
-    klients (list): A list of existing client objects.
+    Clients (list): A list of existing client objects.
     flag (int): A flag indicating whether the client is being added (0) or updated (1).
 
     Returns:
@@ -333,14 +325,16 @@ def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, klients, 
     try:
         if (
             chek_name(name_entry)
-            or chek_phone(phone_entry)
-            or chek_email(email_entry)
-            or chek_mora(mora_entry)
+            and chek_phone(phone_entry)
+            and chek_email(email_entry)
+            and chek_mora(mora_entry)
+            and chek_status(status)
+            
         ):
             phone = int(phone_entry.get())
             email = str(email_entry.get())
             if flag == 0:
-                for k in klients:
+                for k in Clients:
                     if int(phone) == k.get_phone():
                         message = "This phone is already in table"
                         raise ErrorProClient(message)

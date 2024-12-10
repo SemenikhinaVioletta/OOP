@@ -140,11 +140,11 @@ class Pro_Client(New.New_Client):
                 self.make_short(client_name)
                 self.name = client_name
                 cur.execute(
-                    """UPDATE Klient SET Name_klient = ? WHERE Id_klient = ?""",
+                    """UPDATE Client SET Name_Client = ? WHERE Id_Client = ?""",
                     (self.get_full_name(), self.get_ID()),
                 )
                 cur.execute(
-                    """UPDATE Klient SET Short_name = ? WHERE Id_klient = ?""",
+                    """UPDATE Client SET Short_name = ? WHERE Id_Client = ?""",
                     (self.get_short_name(), self.get_ID()),
                 )
             if self.get_phone() != client_phone:
@@ -156,13 +156,13 @@ class Pro_Client(New.New_Client):
                         raise Error.ErrorProClient(message)
                 self.phone = client_phone
                 cur.execute(
-                    """UPDATE Klient SET Phone = ? WHERE Id_klient = ?""",
+                    """UPDATE Client SET Phone = ? WHERE Id_Client = ?""",
                     (self.get_phone(), self.get_ID()),
                 )
             if self.get_status() != client_status:
                 self.status = client_status
                 cur.execute(
-                    """UPDATE Klient SET Status = ? WHERE Id_klient = ?""",
+                    """UPDATE Client SET Status = ? WHERE Id_Client = ?""",
                     (client_status, self.get_ID()),
                 )
             if self.get_email() != client_email:
@@ -174,7 +174,7 @@ class Pro_Client(New.New_Client):
                         raise Error.ErrorProClient(message)
                 self.email = client_email
                 cur.execute(
-                    """UPDATE Klient SET Mail = ? WHERE Id_klient = ?""",
+                    """UPDATE Client SET Mail = ? WHERE Id_Client = ?""",
                     (self.get_email(), self.get_ID()),
                 )
             self.mora = client_mora

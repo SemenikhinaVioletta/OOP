@@ -3,7 +3,7 @@ import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
 from f_Class_Status_Client import make_status
-from c_proKlient import do_pro_client
+from c_proClient import do_pro_client
 from b_newClient import do_new_client
 from d_Produkt import do_product
 from a_Log import Logger
@@ -27,22 +27,23 @@ def on_selection(event):
     None
     """
     selected_option = combobox.get()
-    Logger.log_info(file_name, f"Method on_selection - Selected option: {selected_option}\n")
+    Logger.log_info(
+        file_name, f"Method on_selection - selected option: {selected_option}\n"
+    )
 
     if selected_option == "New clients":
-        Logger.log_info(file_name, f"*Starting New client process...")
+        Logger.log_info(file_name, f"Starting New client process...")
         handle_new_client(selected_option)
     elif selected_option == "Pro clients":
-        Logger.log_info(file_name, "*Starting Pro clients process...")
+        Logger.log_info(file_name, "Starting Pro clients process...")
         handle_pro_client(selected_option)
     elif selected_option == "Products":
-        Logger.log_info(file_name, "*Starting Products process...")
+        Logger.log_info(file_name, "Starting Products process...")
         handle_products(selected_option)
     elif selected_option == "Contracts":
-        Logger.log_info(file_name, "*No method available for selection")
+        Logger.log_info(file_name, "No method available for selection")
     else:
-        Logger.log_info(file_name, "*No method available for selection")
-
+        Logger.log_info(file_name, "No method available for selection")
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +69,6 @@ def handle_new_client(message: str) -> None:
         command=lambda: start_new_client(1),
     )
     new_window_button.grid(row=3, column=2, padx=10)
-
 
 
 def start_new_client(flag: int) -> None:
@@ -99,7 +99,6 @@ def start_new_client(flag: int) -> None:
         Logger.log_error(file_name, "Error while opening window", str(e))
 
 
-
 # --------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -123,7 +122,6 @@ def handle_pro_client(message: str) -> None:
         command=lambda: start_pro_client(1),
     )
     new_window_button.grid(row=3, column=2, padx=10)
-
 
 
 def start_pro_client(flag):
@@ -159,7 +157,6 @@ def start_pro_client(flag):
         Logger.log_error(file_name, "Error opening window", str(e))
 
 
-
 # --------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -183,7 +180,6 @@ def handle_products(message: str) -> None:
         command=lambda: start_products(1),
     )
     new_window_button.grid(row=3, column=2, padx=10)
-
 
 
 def start_products(flag: int) -> None:
@@ -215,7 +211,6 @@ def start_products(flag: int) -> None:
         Logger.log_error(
             file_name, "An error occurred while opening the window", str(e)
         )
-
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
