@@ -157,29 +157,6 @@ def start_pro_client(flag):
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
-
-def handle_products(message: str) -> None:
-    """
-    This function handles the process for products. It creates a label and a button
-    to display options for products and starts a product window when the button is clicked.
-
-    Parameters:
-    message (str): A message indicating the type of products (in this case, "Products").
-
-    Returns:
-    None
-    """
-    Logger.log_info(file_name, f"Entering handle_products with message: {message}")
-    label = WindowModule.Label(frame, text="For " + message + " you can:")
-    label.grid(row=3, column=1, padx=10)
-    new_window_button = WindowModule.Button(
-        frame,
-        text="Open table",
-        command=lambda: start_products(1),
-    )
-    new_window_button.grid(row=3, column=2, padx=10)
-
-
 def start_products(flag: int) -> None:
     """
     This function starts a product window based on the provided flag.

@@ -28,8 +28,9 @@ class Window(Tk):
         self.title(name)
         self.geometry(geom)
         self.name = name
-        Logger.log_info(file_name, "Class Window - Method __init__ - make window: " + name)
-
+        Logger.log_info(
+            file_name, "Class Window - Method __init__ - make window: " + name
+        )
 
     # --------------------------------------------------------------------------------------------------------------------------------
     # Дополнительные функции

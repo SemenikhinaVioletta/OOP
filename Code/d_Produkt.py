@@ -10,8 +10,20 @@ logger = Logger(file_name, [], "Application started")
 
 
 def produkt_Table(window_produkt):
+    """
+    Initializes the product management interface.
 
-    # Функция для добавления нового клиента
+    This function creates a user interface for managing products, allowing users to add, rename, 
+    delete, and order products. It sets up the necessary buttons and their associated actions, 
+    as well as displaying the current product table.
+
+    Args:
+        window_produkt (Window): The parent window for the product management interface.
+
+    Returns:
+        None
+    """
+
     def take_this(name_entry, coast_entry, number_entry):
         """
         Creates a product management table within a given window.
@@ -38,6 +50,23 @@ def produkt_Table(window_produkt):
             make_Table()
 
     def make_this(produkt, get_order):
+        """
+        Processes an order for a product based on the user input.
+
+        This function validates the order quantity and, if valid, updates the product's stock 
+        quantity accordingly. It refreshes the product list and updates the displayed product 
+        table to reflect the changes made.
+
+        Args:
+            produkt (Product): The product object for which the order is being processed.
+            get_order (Entry): The entry widget containing the quantity of the product to order.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If the order quantity is invalid.
+        """
         try:
             if Error.check_order(get_order.get()):
                 get_number = produkt.get_number() + int(get_order.get())
@@ -48,8 +77,26 @@ def produkt_Table(window_produkt):
         except Error.ErrorProduct:
             pass
 
-    # Функция для изменения данных существующего клиента
     def do_this(produkt, name_entry, mora_entry, number_entry):
+        """
+        Updates the details of a product based on user-provided input.
+
+        This function validates the provided product information and, if valid, updates the product's 
+        details in the database. It then refreshes the product list and updates the displayed product 
+        table to reflect the changes made.
+
+        Args:
+            produkt (Product): The product object to be updated.
+            name_entry (Entry): The entry widget for the product's name.
+            mora_entry (Entry): The entry widget for the product's cost.
+            number_entry (Entry): The entry widget for the product's quantity in stock.
+
+        Returns:
+            None
+
+        Raises:
+            Error: If the product details are invalid or cannot be updated.
+        """
         if Error.check_all(
             name_entry.get(), mora_entry.get(), number_entry.get(), produkts
         ):
@@ -63,10 +110,27 @@ def produkt_Table(window_produkt):
             make_array()
             make_Table()
 
-    # Функция для получения текста для изменения клиента
     def get_text(id, frame_for, wind):
-        if Error.check_Id(id.get(), produkts):
-            try:
+        """
+        Retrieves and displays the details of a product based on the provided ID.
+
+        This function validates the product ID and, if found, populates the input fields with the 
+        product's current details, allowing the user to update the information. It raises an error 
+        if the product ID is not found and handles the closing of the window in case of an error.
+
+        Args:
+            id (Entry): The entry widget containing the product ID to be retrieved.
+            frame_for (Frame): The frame where the product details and input fields will be displayed.
+            wind (Window): The window that contains the frame.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If the product ID is not found in the list of products.
+        """
+        try:
+            if Error.check_Id(id.get(), produkts):
                 flag = 0
                 id = int(id.get())
                 for produkt in produkts:
@@ -110,11 +174,27 @@ def produkt_Table(window_produkt):
                 if flag == 0:
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorProduct(message)
-            except Error.ErrorProduct:
-                wind.close_window(3)
+        except Error.ErrorProduct:
+            wind.close_window(3)
 
-    # Функция для добавления нового клиента
     def add_produkt():
+        """
+        Opens a new window for adding a product.
+
+        This function checks the number of open windows and, if appropriate, creates a new window 
+        for entering the details of a new product, including name, cost, and quantity in stock. 
+        It provides input fields and buttons for user interaction, while managing errors related 
+        to window limits.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If there are too many open windows.
+        """
         try:
             if len(windows[3]) < 2:
                 wind = Win.Window("Add Produkt", "600x300")
@@ -159,8 +239,23 @@ def produkt_Table(window_produkt):
         except Error.ErrorProduct as e:
             Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    # Функция для удаления клиента
     def id_for_delite(id):
+        """
+        Deletes a product based on the provided ID after user confirmation.
+
+        This function checks if the product ID exists in the list of products and prompts the user 
+        for confirmation before deleting the product. If confirmed, it removes the product from the 
+        database and updates the displayed product table.
+
+        Args:
+            id (Entry): The entry widget containing the product ID to be deleted.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If the product ID is not valid.
+        """
         if Error.check_Id(id.get(), produkts):
             id = int(id.get())
             for produkt in produkts:
@@ -177,8 +272,23 @@ def produkt_Table(window_produkt):
                         make_Table()
                     break
 
-    # Функция для создания окна удаления клиента
     def delete_element():
+        """
+        Opens a new window for deleting a product.
+
+        This function checks the number of open windows and, if appropriate, creates a new window 
+        for entering the ID of the product to be deleted. It provides input fields and buttons for 
+        user interaction, while managing errors related to window limits.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If there are too many open windows.
+        """
         try:
             if len(windows[3]) < 2:
                 wind = Win.Window("Delete  produkt", "500x300")
@@ -207,8 +317,26 @@ def produkt_Table(window_produkt):
             Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     def get_number(ID_entry, frame_for, wind):
-        if Error.check_Id(ID_entry.get(), produkts):
-            try:
+        """
+        Retrieves and displays the details of a product based on the provided ID.
+
+        This function validates the product ID and, if found, displays the product's current 
+        stock number and allows the user to enter a new cost for the product. It raises an error 
+        if the product ID is not found and handles the closing of the window in case of an error.
+
+        Args:
+            ID_entry (Entry): The entry widget containing the product ID to be retrieved.
+            frame_for (Frame): The frame where the product details and input fields will be displayed.
+            wind (Window): The window that contains the frame.
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If the product ID is not found in the list of products.
+        """
+        try:
+            if Error.check_Id(ID_entry.get(), produkts):
                 flag = 0
                 id = int(ID_entry.get())
                 for produkt in produkts:
@@ -241,11 +369,26 @@ def produkt_Table(window_produkt):
                 if flag == 0:
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorProduct(message)
-            except Error.ErrorProduct:
-                wind.close_window(3)
+        except Error.ErrorProduct:
+            wind.close_window(3)
 
-    # Функция для переименования клиента
     def rename():
+        """
+        Opens a new window for renaming a product.
+
+        This function checks the number of open windows and, if appropriate, creates a new window 
+        for entering the ID of the product to be renamed. It provides input fields and buttons for 
+        user interaction, while managing errors related to window limits.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If there are too many open windows.
+        """
         try:
             if len(windows[3]) < 2:
                 wind = Win.Window("Rename New produkt", "600x300")
@@ -277,6 +420,22 @@ def produkt_Table(window_produkt):
             Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     def order():
+        """
+        Opens a new window for ordering a product.
+
+        This function checks the number of open windows and, if appropriate, creates a new window 
+        for entering the ID of the product to be ordered. It provides input fields and buttons for 
+        user interaction, while managing errors related to window limits.
+
+        Args:
+            None
+
+        Returns:
+            None
+
+        Raises:
+            Error.ErrorProduct: If there are too many open windows.
+        """
         try:
             if len(windows[3]) < 2:
                 wind = Win.Window("Jrder produkt", "600x300")
@@ -307,8 +466,20 @@ def produkt_Table(window_produkt):
         except Error.ErrorProduct as e:
             Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    # Функция для создания таблицы клиентов
     def make_Table():
+        """
+        Creates and displays a table for product information.
+
+        This function initializes a Treeview widget to present product details such as ID, name, 
+        cost per copy, and the number of copies in stock. It populates the table with data from 
+        the list of products and adds a vertical scrollbar for navigation.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
         columns = ("ID", "Name", "Cost of one copy", "Copies in stock")
         table_produkt = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_produkt.grid(row=1, column=1, sticky="nsew", rowspan=10)
@@ -343,6 +514,19 @@ def produkt_Table(window_produkt):
 
 
 def make_array():
+    """
+    This function retrieves all product data from the database and creates a list of Produkt objects.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Side Effects:
+    - Populates the global list 'produkts' with Produkt objects.
+    - Closes the database cursor.
+    """
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Produkts")
@@ -354,6 +538,16 @@ def make_array():
 
 
 def do_product(flag, window_produkt):
+    """
+    This function manages the creation of a product management table within a given window.
+
+    Parameters:
+    flag (int): A flag indicating the action to be performed. If flag is 1, the function will create a product management table. If flag is not 1, an error will be logged.
+    window_produkt (Window): The parent window in which the product management table will be created.
+
+    Returns:
+    None
+    """
     global produkts
     produkts = []
     make_array()

@@ -7,14 +7,17 @@ file_name = "File Error of Pro Client"
 
 class ErrorProClient(Exception):
     """
-    Custom exception class for handling errors in the Pro Client application.
+    Exception raised for errors related to professional clients.
 
-    Attributes:
-    message (str): The error message associated with the exception.
+    This exception can be initialized with an optional error message, which can be displayed
+    in an error dialog. It provides a string representation that includes the error message
+    if available, or indicates that the exception was raised without a specific message.
 
-    Methods:
-    __init__(self, *args): Constructor that initializes the error message.
-    __str__(self) -> str: String representation of the exception, showing the error message.
+    Args:
+        *args: Variable length argument list. If provided, the first argument is used as the error message.
+
+    Returns:
+        None
     """
 
     def __init__(self, *args):
@@ -31,15 +34,18 @@ class ErrorProClient(Exception):
 
     def __str__(self) -> str:
         """
-        Returns a string representation of the ErrorProClient exception, showing the error message.
+        Returns a string representation of the ErrorProClient exception.
+
+        If the exception has a message, it displays an error message box with the title "ERROR IN INPUT" and the provided message.
+        The error message box is parented to the last window in the 'windows' list.
 
         Returns:
-        str: A string representation of the exception, including the error message.
+        str: A string representation of the exception, showing the error message if available, otherwise indicating that the exception was raised.
         """
         if self.message:
             showerror(
                 title="ERROR IN INPUT", message=self.message, parent=windows[1][-1]
-            )  # Показываем сообщение об ошибке
+            )
             return "Error Pro Client, message: {0}".format(self.message)
         else:
             return "Error Pro Client, raised"
@@ -49,9 +55,10 @@ def chek_name(name_entry):
     """
     Validates the name of a client.
 
-    This function checks if the provided name is at least 3 words long, each word starts with an uppercase letter,
-    and contains only alphabetic characters. If the name is not valid, it raises an ErrorProClient exception with an appropriate error message.
-    If the name is valid, it logs a success message and returns True.
+    This function checks if the provided name is valid according to the following criteria:
+    - The name must contain at least 3 words.
+    - Each word in the name must start with an uppercase letter.
+    - The name must contain only alphabetic characters.
 
     Parameters:
     name_entry (tkinter.Entry): The entry widget for the client's name. The name is obtained from the 'get' method of the tkinter.Entry object.
@@ -59,30 +66,30 @@ def chek_name(name_entry):
     Returns:
     bool: True if the name is valid, False otherwise. Raises an ErrorProClient exception if the name is not valid.
     """
-    name = str(name_entry.get())  # Получаем имя
-    message = "Validation started."  # Сообщение о начал
-    names = name.split()  # Разделяем имя на части
+    name = str(name_entry.get())
+    message = "Validation started."
+    names = name.split()
     try:
         if len(names) < 3:
-            message = "Name must contain at least 3 words."  # Исправлено на более информативное сообщение
+            message = "Name must contain at least 3 words."
             raise ErrorProClient(message)
         else:
             for i in names:
                 if i[0].islower():
-                    message = "Each word in the name must start with an uppercase letter."  # Исправлено на более информативное сообщение
+                    message = (
+                        "Each word in the name must start with an uppercase letter."
+                    )
                     raise ErrorProClient(message)
                 else:
                     for j in i:
                         if not j.isalpha():
-                            message = "Name must contain only alphabetic characters."  # Исправлено на более информативное сообщение
+                            message = "Name must contain only alphabetic characters."
                             raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during validation."
-        )  # Логируем ошибку
+        Logger.log_error(file_name, str(e), "An error occurred during validation.")
         return False
 
 
@@ -90,9 +97,10 @@ def chek_phone(phone_entry):
     """
     Validates the phone number of a client.
 
-    This function checks if the provided phone number is exactly 11 digits long, does not start with zero,
-    and contains only digits. If the phone number is not valid, it raises an ErrorProClient exception with an appropriate error message.
-    If the phone number is valid, it logs a success message and returns True.
+    This function checks if the provided phone number is valid according to the following criteria:
+    - The phone number must be exactly 11 digits long.
+    - The phone number must not start with zero.
+    - The phone number must contain only digits.
 
     Parameters:
     phone_entry (tkinter.Entry): The entry widget for the client's phone number. The phone number is obtained from the 'get' method of the tkinter.Entry object.
@@ -101,26 +109,24 @@ def chek_phone(phone_entry):
     bool: True if the phone number is valid, False otherwise. Raises an ErrorProClient exception if the phone number is not valid.
     """
     phone = str(phone_entry.get())
-    message = "Validation started."  # Сообщение о начал
+    message = "Validation started."
     try:
         if len(phone) != 11:
-            message = "Phone number must be exactly 11 digits long."  # Исправлено на более информативное сообщение
+            message = "Phone number must be exactly 11 digits long."
             raise ErrorProClient(message)
         elif phone[0] == "0":
-            message = "Phone number must not start with zero."  # Исправлено на более информативное сообщение
+            message = "Phone number must not start with zero."
             raise ErrorProClient(message)
         else:
             for j in phone:
                 if not j.isdigit():
-                    message = "Phone number must contain only digits."  # Исправлено на более информативное сообщение
+                    message = "Phone number must contain only digits."
                     raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during validation."
-        )  # Логируем ошибку
+        Logger.log_error(file_name, str(e), "An error occurred during validation.")
         return False
 
 
@@ -128,10 +134,12 @@ def chek_email(email_entry):
     """
     Validates the email of a client.
 
-    This function checks if the provided email is not empty, contains at least 5 characters, exactly one '@' symbol,
-    exactly one '.' symbol after the '@' symbol, and does not start or end with a '.' or '@' symbol.
-    If the email is not valid, it raises an ErrorProClient exception with an appropriate error message.
-    If the email is valid, it logs a success message and returns True.
+    This function checks if the provided email is valid according to the following criteria:
+    - The email must contain at least 5 characters.
+    - The email must contain exactly one '@' symbol.
+    - The email must contain exactly one '.' symbol after the '@' symbol.
+    - The '.' symbol cannot be the first or last character in the email.
+    - The email must not have consecutive '.' symbols or '@' symbols.
 
     Parameters:
     email_entry (tkinter.Entry): The entry widget for the client's email. The email is obtained from the 'get' method of the tkinter.Entry object.
@@ -139,14 +147,16 @@ def chek_email(email_entry):
     Returns:
     bool: True if the email is valid, False otherwise. Raises an ErrorProClient exception if the email is not valid.
     """
-    email = str(email_entry.get())  # Получаем email
-    message = "Validation started."  # Сообщение о начале валидации
+    email = str(email_entry.get())
+    message = "Validation started."
     try:
         if len(email) < 5:
-            message = 'Email must contain at least 5 characters, e.g., "example@domain.com".'  # Исправлено на более информативное сообщение
+            message = (
+                'Email must contain at least 5 characters, e.g., "example@domain.com".'
+            )
             raise ErrorProClient(message)
         elif email.count("@") != 1:
-            message = "Email must contain exactly one '@' symbol."  # Исправлено на более информативное сообщение
+            message = "Email must contain exactly one '@' symbol."
             raise ErrorProClient(message)
         else:
             i = 0
@@ -159,15 +169,15 @@ def chek_email(email_entry):
                 or i >= len(email) - 3
                 or i == 0
             ):
-                message = "Email must contain exactly one '.' symbol after the '@' symbol."  # Исправлено на более информативное сообщение
+                message = (
+                    "Email must contain exactly one '.' symbol after the '@' symbol."
+                )
                 raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during validation."
-        )  # Логируем ошибку
+        Logger.log_error(file_name, str(e), "An error occurred during validation.")
         return False
 
 
@@ -185,21 +195,19 @@ def chek_mora(mora_entry):
     Returns:
     bool: True if the mora is valid, False otherwise. Raises an ErrorProClient exception if the mora is not valid.
     """
-    mora = str(mora_entry.get())  # Получаем email
-    message = "Validation started."  # Сообщение о начале валидации
+    mora = str(mora_entry.get())
+    message = "Validation started."
     try:
         if len(mora) != 0:
             for i in mora:
                 if not i.isdigit():
-                    message = "Mora must contain only digits and > 0"  # Исправлено на более информативное сообщение
+                    message = "Mora must contain only digits and > 0"
                     raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during validation."
-        )  # Логируем ошибку
+        Logger.log_error(file_name, str(e), "An error occurred during validation.")
         return False
 
 
@@ -207,7 +215,7 @@ def chek_Contract(Contract_entry):
     """
     Validates the contract number of a client.
 
-    This function checks if the provided contract number is not empty, contains only digits, and is greater than 0.
+    This function checks if the provided contract number is not empty, contains only digits, and is valid.
     If the contract number is not valid, it raises an ErrorProClient exception with an appropriate error message.
     If the contract number is valid, it logs a success message and returns True.
 
@@ -218,21 +226,21 @@ def chek_Contract(Contract_entry):
     bool: True if the contract number is valid, False otherwise. Raises an ErrorProClient exception if the contract number is not valid.
     """
     Contract = str(Contract_entry.get())
-    message = "Validation started."  # Сообщение о начале валидации
+    message = "Validation started."
     Contract = Contract.split()
     try:
         if len(Contract) == 1:
             Contract = Contract[0]
             for i in Contract:
                 if not i.isdigit():
-                    message = "Contract must contain only digits and > 0"  # Исправлено на более информативное сообщение
+                    message = "Contract must contain only digits and > 0"
                     raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during validation.")
         return True
 
     except ErrorProClient as e:
         Logger.log_error(file_name, str(e), "An error occurred during validation.")
-        return False  # Логируем ошибку
+        return False
 
 
 def chek_id(id, Clients):
@@ -251,20 +259,15 @@ def chek_id(id, Clients):
     """
     try:
         id = id.get()
-        message = (
-            "No errors found during ID validation."  # Сообщение о начале валидации
-        )
+        message = "No errors found during ID validation."
 
-        # Проверка ID
         if len(id) != 0:
             for j in id:
                 if not j.isdigit():
-                    message = "ID must contain only digits."  # Исправлено на более информативное сообщение
+                    message = "ID must contain only digits."
                     raise ErrorProClient(message)
         else:
-            message = (
-                "ID cannot be empty."  # Исправлено на более информативное сообщение
-            )
+            message = "ID cannot be empty."
             raise ErrorProClient(message)
 
         flag = False
@@ -273,27 +276,38 @@ def chek_id(id, Clients):
                 flag = True
                 break
         if not flag:
-            message = "Client with this ID does not exist."  # Исправлено на более информативное сообщение
+            message = "Client with this ID does not exist."
             raise ErrorProClient(message)
 
         Logger.log_info(file_name, "No errors found during ID validation.")
         return True
     except ErrorProClient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during ID validation."
-        )  # Логируем ошибку
+        Logger.log_error(file_name, str(e), "An error occurred during ID validation.")
         return False
 
 
 def chek_status(status):
+    """
+    Validates the status of a client.
+
+    This function checks if the provided status is a single digit, and if it is one of the valid status codes (1, 2, or 3).
+    If the status is not valid, it raises an ErrorProClient exception with an appropriate error message.
+    If the status is valid, it logs a success message and returns True.
+
+    Parameters:
+    status (int or str): The status to be validated. If it is a string, it will be converted to an integer.
+
+    Returns:
+    bool: True if the status is valid, False otherwise. Raises an ErrorProClient exception if the status is not valid.
+    """
     try:
         message = "Validation started."
         status = str(status)
         if not status[0].isdigit():
             message = "Status must be a digit."
             raise ErrorProClient(message)
-        status == int(status)
-        if status != 1 or status != 2 or status != 3:
+        status = int(status)
+        if status not in [1, 2, 3]:
             message = "Unknown this status"
             raise ErrorProClient(message)
         Logger.log_info(file_name, "NO errors found during status validation.")
@@ -306,8 +320,9 @@ def chek_status(status):
         return False
 
 
-# Функция для добавления нового клиента в таблицу
-def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, Clients, status, flag):
+def add_pro_to_table(
+    name_entry, phone_entry, email_entry, mora_entry, Clients, status, flag
+):
     """
     This function validates and checks if a new client's data is unique in the table.
 
@@ -329,7 +344,6 @@ def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, Clients, 
             and chek_email(email_entry)
             and chek_mora(mora_entry)
             and chek_status(status)
-            
         ):
             phone = int(phone_entry.get())
             email = str(email_entry.get())
@@ -346,7 +360,5 @@ def add_pro_to_table(name_entry, phone_entry, email_entry, mora_entry, Clients, 
             Logger.log_info(file_name, "NO errors found during status validation.")
             return True
     except ErrorProClient as e:
-        Logger.log_error(
-            file_name, str(e), "An error occurred during ID validation."
-        )  # Логируем ошибку
+        Logger.log_error(file_name, str(e), "An error occurred during ID validation.")
         return False

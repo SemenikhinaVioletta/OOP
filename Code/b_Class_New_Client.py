@@ -44,22 +44,26 @@ class New_Client:
 
     def rename_newClient(self, name, phone, email, Clients):
         """
-        Updates the name, phone, and email of the Client in the database.
+        Updates the name, phone, and email of the current Client in the database and locally.
 
-        This method checks if the new name, phone, or email are unique among all Clients in the database.
-        If any of the new values are not unique, it raises an ErrorNewClient exception.
-        If all values are unique, it updates the corresponding fields in the database and updates the Client object.
+        This method connects to the SQLite database, checks if the new name, phone, or email are unique among all Clients,
+        and updates the corresponding fields in the 'Client_new' table.
+        If the new details are the same as the current details, no update is performed.
+        If any error occurs during the database operation, it logs the error using the Logger class.
+        Finally, it ensures that the database connection is closed.
 
         Parameters:
-        name (str): The new name of the Client.
-        phone (int): The new phone number of the Client.
-        email (str): The new email address of the Client.
+        name (str): The new name for the Client.
+        phone (int): The new phone number for the Client.
+        email (str): The new email address for the Client.
+        Clients (list): A list of all Client objects.
 
         Returns:
         None
 
         Raises:
-        ErrorNewClient: If any of the new values (name, phone, or email) are not unique among all Clients.
+        Error.ErrorNewClient: If the new name, phone, or email are not unique among all Clients.
+        bd.Error: If any error occurs while working with the SQLite database.
         """
         try:
             conn = bd.connect(database)
@@ -108,31 +112,127 @@ class New_Client:
         finally:
             conn.close()
 
+
     def get(self):
+        """
+        Retrieves the client's details as a tuple.
+
+        This method returns the client's ID, name, phone number, and email in a structured format. 
+        Each detail is converted to the appropriate type for consistency and ease of use.
+
+        Args:
+            self: The instance of the class.
+
+        Returns:
+            tuple: A tuple containing the client's ID (int), name (str), phone number (int), and email (str).
+        """
         return int(self.ID), str(self.name), int(self.phone), str(self.email)
 
     def get_name(self):
+        """
+        Retrieves the name of the current Client.
+
+        This method retrieves the name of the Client object and returns it as a string.
+
+        Parameters:
+        None
+
+        Returns:
+        str: The name of the current Client.
+        """
         return str(self.name)
 
+
     def get_phone(self):
+        """
+        Retrieves the phone number of the current Client.
+
+        This method retrieves the phone number of the Client object and logs the retrieval using the Logger class.
+
+        Parameters:
+        None
+
+        Returns:
+        int: The phone number of the current Client.
+        """
         Logger.log_info(file_name, "Fetching Client phone: " + f"Phone: {self.phone}")
         return int(self.phone)
 
+
     def get_email(self):
+        """
+        Retrieves the email address of the current Client.
+
+        This method retrieves the email address of the Client object and logs the retrieval using the Logger class.
+
+        Parameters:
+        None
+
+        Returns:
+        str: The email address of the current Client.
+        """
         Logger.log_info(file_name, "Fetching Client email: " + f"Email: {self.email}")
         return str(self.email)
 
+
     def clear_array(self, Clients):
+        """
+        Removes the current Client object from the provided list of Clients.
+
+        This method checks if the current Client object exists in the provided list of Clients.
+        If the Client object is found, it is removed from the list.
+        If the Client object is not found, a ValueError is raised with a descriptive error message.
+
+        Parameters:
+        Clients (list): A list of Client objects.
+
+        Returns:
+        None
+
+        Raises:
+        ValueError: If the current Client object is not found in the provided list of Clients.
+        """
         if self in Clients:
             Clients.remove(self)
         else:
             raise ValueError("Client object not found in 'Clients' list")
 
+
     def get_ID(self):
+        """
+        Retrieves the unique identifier of the current Client.
+
+        This method retrieves the unique identifier (ID) of the current Client object.
+        It logs the ID retrieval using the Logger class with an informational message.
+
+        Parameters:
+        None
+
+        Returns:
+        int: The unique identifier of the current Client.
+        """
         Logger.log_info(file_name, "Fetching Client ID: " + f"ID: {str(self.ID)}")
         return int(self.ID)
 
+
     def enter_Client_to_bd(self):
+        """
+        Adds the current Client's information to the SQLite database.
+
+        This method establishes a connection to the SQLite database, retrieves the current Client's name, phone, and email,
+        and then inserts a new record into the 'Client_new' table with the provided data.
+        If any error occurs during the database operation, it logs the error using the Logger class.
+        Finally, it ensures that the database connection is closed.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+
+        Raises:
+        bd.Error: If any error occurs while working with the SQLite database.
+        """
         try:
             conn = bd.connect(database)
             cursor = conn.cursor()
@@ -154,7 +254,25 @@ class New_Client:
             cursor.close()
             conn.close()
 
+
     def delete_Client_from_bd(self):
+        """
+        Deletes the current Client from the database.
+
+        This method establishes a connection to the SQLite database, retrieves the unique identifier of the current Client,
+        and then deletes the corresponding record from the 'Client_new' table.
+        If any error occurs during the database operation, it logs the error using the Logger class.
+        Finally, it ensures that the database connection is closed.
+
+        Parameters:
+        None
+
+        Returns:
+        None
+
+        Raises:
+        bd.Error: If any error occurs while working with the SQLite database.
+        """
         try:
             sqlite_connection = bd.connect(database)
             cursor = sqlite_connection.cursor()
@@ -172,3 +290,4 @@ class New_Client:
         finally:
             if sqlite_connection:
                 sqlite_connection.close()
+

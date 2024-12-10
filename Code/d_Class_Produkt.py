@@ -4,7 +4,6 @@ from a_Log import Logger
 from a_Global_Per import database, windows
 
 
-
 file_name = "File Class_Produkt"
 logger = Logger(file_name, [], "Application started")
 
@@ -141,8 +140,20 @@ class Produkt:
         else:
             raise ValueError('produkt object not found in "produkts" list')
 
-
     def order(self, order):
+        """
+        Updates the 'In_sclad' field of the product with the given ID in the SQLite database.
+
+        Parameters:
+        order (int): The new value for the 'In_sclad' field.
+
+        Returns:
+        None
+
+        Raises:
+        Error.ErrorProduct: If an error occurs while renaming the product.
+        bd.Error: If an error occurs while interacting with the SQLite database.
+        """
         try:
             conn = bd.connect(database)
             cur = conn.cursor()
@@ -259,8 +270,8 @@ class Produkt:
         Deletes the current product instance from the SQLite database.
 
         This method establishes a connection to the SQLite database, retrieves the ID of the current product,
-        and deletes the corresponding record from the "Produkts" table. It logs the successful deletion of the product
-        from the database.
+        and deletes the corresponding record from the "Produkts" table. It logs the successful deletion
+        of the product from the database.
 
         Parameters:
         self (Produkt): The instance of the class.
@@ -288,4 +299,3 @@ class Produkt:
         finally:
             if sqlite_connection:
                 sqlite_connection.close()
-
