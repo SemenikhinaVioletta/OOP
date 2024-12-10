@@ -9,26 +9,10 @@ from c_Error import chek_mora
 import c_Class_Pro_Client as Pro
 
 file_name = "File newClient"
-logger = Logger(file_name, "Application started", [])
-
 
 
 def new_Client_Tabel(window_new_Client):
-    """
-    The `new_Client_Tabel` function in Python defines a set of sub-functions for adding, renaming, and deleting clients, as well as creating a GUI interface for managing client data in a table.
-
-    @param window_new_Client `window_new_Client` is a parameter that represents the window or GUI element where the functions for adding, renaming, and deleting clients will be displayed and interacted with. It serves as the main window for managing client information and operations within the application.
-    """
-
-    # Функция для добавления нового клиента
     def take_this(name_entry, phone_entry, email_entry):
-        """
-        The function `take_this` adds a new entry to a table and creates a new client object based on the provided name, phone, and email entries.
-
-        @param name_entry The `name_entry` parameter likely refers to an entry field where the user can input their name. This function seems to be taking the name, phone number, and email address entered by the user, adding them to a table, creating a new client object, and then entering that client into a database
-        @param phone_entry The `phone_entry` parameter in the `take_this` function seems to be a variable that holds the phone number entered by the user. It is likely used as part of adding a new entry to a table or database. The function appears to check if adding a new entry to the table is successful
-        @param email_entry The `email_entry` parameter in the `take_this` function is a variable that holds the email information entered by the user. It is used as one of the inputs to the `add_new_to_table` function and is also passed as a parameter to create a new `New_Client` object
-        """
         if add_new_to_table(name_entry, phone_entry, email_entry, Clients):
             Client = New.New_Client(
                 Clients[-1].get_ID() + 1,
@@ -41,16 +25,7 @@ def new_Client_Tabel(window_new_Client):
             make_array()
             make_Table()
 
-    # Функция для изменения данных существующего клиента
     def do_this(Client, name_entry, phone_entry, email_entry):
-        """
-        The function `do_this` adds a new entry to a table and renames a client if successful.
-
-        @param Client It looks like the `do_this` function takes four parameters: `Client`, `name_entry`, `phone_entry`, and `email_entry`.
-        @param name_entry The `name_entry` parameter seems to be a reference to an entry widget where the user can input a name. This input is then used to add a new entry to a table and also to rename a client in the `Client` object.
-        @param phone_entry The `phone_entry` parameter in the `do_this` function seems to be a variable that holds the phone number entered by the user. It is likely a field or input where the user can input their phone number.
-        @param email_entry The `email_entry` parameter in the `do_this` function seems to be a reference to an entry field where the user can input their email address. This parameter is likely used to retrieve the email address entered by the user and pass it to the `add_new_to_table` function for processing.
-        """
         if add_new_to_table(name_entry, phone_entry, email_entry, Clients):
             Client.rename_newClient(
                 str(name_entry.get()),
@@ -61,45 +36,25 @@ def new_Client_Tabel(window_new_Client):
             Clients.clear()
             make_array()
             make_Table()
-    
+
     def make_this(Client, mora_entry, status_entry):
-        """Creates a new professional client entry in the database.
-
-        This function checks for the existence of a client based on their phone number and email address. 
-        If the client does not already exist, it creates a new professional client and adds them to the database.
-
-        Args:
-            Client (Pro_Client): The client instance containing personal information.
-            mora_entry (Entry): The entry field for the client's debt amount.
-            status_entry (int): The status of the client represented as an integer.
-
-        Returns:
-            None
-
-        Raises:
-            Error.ErrorNewClient: If a client with the same phone number or email already exists.
-            bd.Error: If an error occurs while interacting with the SQLite database.
-        """
         basa = bd.connect(database)
         cur = basa.cursor()
         try:
-            # Проверка существования клиента по телефону
             cur.execute(
-                """SELECT EXISTS(SELECT 1 FROM Client WHERE Phone = ?)""", (Client.get_phone(),)
+                """SELECT EXISTS(SELECT 1 FROM Client WHERE Phone = ?)""",
+                (Client.get_phone(),),
             )
-            info_phone = cur.fetchone()[0]  # Получаем результат запроса
-
-            # Проверка существования клиента по электронной почте
+            info_phone = cur.fetchone()[0]
             cur.execute(
-                """SELECT EXISTS(SELECT 1 FROM Client WHERE Mail = ?)""", (Client.get_email(),)
+                """SELECT EXISTS(SELECT 1 FROM Client WHERE Mail = ?)""",
+                (Client.get_email(),),
             )
-            info_email = cur.fetchone()[0]  # Получаем результат запроса
-
+            info_email = cur.fetchone()[0]
             if info_email:
                 raise Error.ErrorNewClient("There is already a client with this email")
             if info_phone:
                 raise Error.ErrorNewClient("There is already a client with this phone")
-
             if chek_mora(mora_entry):
                 mora_entry = str(mora_entry.get())
                 if len(mora_entry) == 0:
@@ -112,24 +67,16 @@ def new_Client_Tabel(window_new_Client):
                 id_for_delite(id)
                 make_Table()
         except Error.ErrorNewClient as e:
-            logger.log_error(file_name, "Error with already", str(e))
+            Logger.log_error(file_name, "Error with already", str(e))
         except bd.Error as error:
             Logger(file_name, "Error while adding client to database", error)
         finally:
             cur.close()
             basa.close()
 
-    # Функция для получения текста для изменения клиента
     def get_text(id, frame_for, wind):
-        """
-        The function `get_text` updates client information in a GUI window based on user input.
-
-        @param id The `id` parameter in the `get_text` function seems to be used as an identifier for a client. It is likely used to search for a specific client in a list of clients (`Clients`). The function then allows the user to update information (name, phone number, email) for
-        @param frame_for `frame_for` is a tkinter frame where labels, entries, and buttons are being placed for user input and interaction in a graphical user interface (GUI) application.
-        @param wind The `wind` parameter in the `get_text` function seems to be an instance of a window or GUI class that is used to create and manage the graphical user interface elements. It is likely used to display labels, entry fields, buttons, and handle user interactions within the window or frame specified by
-        """
-        if Error.delete_from_table(id, Clients):
-            try:
+        try:
+            if Error.delete_from_table(id, Clients):
                 flag = 0
                 id = int(id.get())
                 for Client in Clients:
@@ -173,22 +120,14 @@ def new_Client_Tabel(window_new_Client):
                 if flag == 0:
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorNewClient(message)
-            except Error.ErrorNewClient:
-                wind.close_window(2)
+        except Error.ErrorNewClient:
+            wind.close_window(2)
 
-    # Функция для удаления клиента
     def id_for_delite(id):
-        """
-        This function checks if a record with a specific ID exists in a table, prompts for confirmation before deleting it, and then removes the record from the table.
-
-        @param id The `id` parameter in the `id_for_delite` function seems to represent the unique identifier of a client in a system. It is used to identify and delete a specific client from a table or database.
-        @param window The `window` parameter in the `id_for_delite` function seems to represent a window object or a reference to the window that needs to be closed after the operation is completed. The `window.close_window(2)` method is likely used to close this window once the deletion process is finished.
-        """
         if delete_from_table(id, Clients):
             id = int(id.get())
             for Client in Clients:
                 if Client.get_ID() == id:
-                    # Подтверждение удаления клиента
                     confirm = Error.askyesno(
                         "Confirm Delete",
                         f"Are you sure you want to delete the client with ID: {id}, Name: {Client.get_name()}?",
@@ -201,20 +140,6 @@ def new_Client_Tabel(window_new_Client):
                     break
 
     def id_for_pro(id, frame_for):
-        """Retrieves and displays client information based on the provided ID.
-
-        This function checks if a client exists in the database using the given ID. If found, it displays the client's name, phone number, and email address, and provides input fields for updating the client's debt and status.
-
-        Args:
-            id (Entry): The entry field containing the client's ID.
-            frame_for (Frame): The frame in which the client information will be displayed.
-
-        Returns:
-            None
-
-        Raises:
-            Error.ErrorNewClient: If the client with the specified ID is not found.
-        """
         if Error.delete_from_table(id, Clients):
             try:
                 flag = 0
@@ -265,13 +190,9 @@ def new_Client_Tabel(window_new_Client):
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorNewClient(message)
             except Error.ErrorNewClient as e:
-                logger.log_error(file_name, str(e), "Error creating to pro")
+                Logger.log_error(file_name, str(e), "Error creating to pro")
 
-    # Функция для создания окна удаления клиента
     def delete_element():
-        """
-        This Python function creates a window for deleting a client by entering their ID.
-        """
         try:
             if len(windows[1]) < 2:
                 wind = Win.Window("Delete New Client", "500x300")
@@ -297,13 +218,9 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    # Функция для добавления нового клиента
     def add_new():
-        """
-        The `add_new` function creates a window for adding a new client with fields for name, phone number, and email, along with save and back buttons.
-        """
         try:
             if len(windows[1]) < 2:
                 wind = Win.Window("Add New Client", "600x300")
@@ -326,7 +243,8 @@ def new_Client_Tabel(window_new_Client):
                 phone_text.grid(row=2, column=1, pady=5)
                 phone_entry.grid(row=2, column=2, pady=5, padx=5)
                 email_text = Win.Label(
-                    frame_for, text='Enter email for new client in format:\n"email@domain.com"'
+                    frame_for,
+                    text='Enter email for new client in format:\n"email@domain.com"',
                 )
                 email_entry = Win.Entry(frame_for)
                 email_text.grid(row=3, column=1, pady=5)
@@ -346,13 +264,9 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    # Функция для переименования клиента
     def rename():
-        """
-        The `rename` function creates a window for renaming a client and includes elements for entering the client"s ID and performing actions related to renaming.
-        """
         try:
             if len(windows[1]) < 2:
                 wind = Win.Window("Rename New Client", "600x300")
@@ -381,22 +295,9 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     def do_pro():
-        """Opens a new window for creating a professional client.
-
-        This function checks if there are fewer than two open windows. If so, it creates a new window where the user can enter the ID of a client to convert to a professional client, along with options to find the client or go back.
-
-        Args:
-            None
-
-        Returns:
-            None
-
-        Raises:
-            Error.ErrorNewClient: If there are already two or more open windows.
-        """
         try:
             if len(windows[1]) < 2:
                 wind = Win.Window("Make Pro Client", "600x500")
@@ -425,13 +326,9 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    # Функция для создания таблицы клиентов
     def make_Table():
-        """
-        The function `make_Table` creates a table with specified columns and headings, populating it with data from a list of clients and adding a vertical scrollbar.
-        """
         columns = ("ID", "Name", "Phone", "Mail")
         table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_new_Client.grid(row=1, column=1, sticky="nsew", rowspan=10)
@@ -466,16 +363,6 @@ def new_Client_Tabel(window_new_Client):
 
 
 def make_array():
-    """
-    This function connects to the SQLite database and retrieves all records from the "Client_new" table.
-    It then creates a new "New_Client" object for each record and appends it to the "Clients" list.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-    """
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Client_new")
@@ -487,26 +374,12 @@ def make_array():
 
 
 def do_new_client(flag, window_new_Client):
-    """
-    This function manages the creation of a new client window based on the provided flag.
-    If the flag is 1, it calls the "new_Client_Tabel" function to create a new client window.
-    If the flag is not 1, it logs an error message using the "Logger" function.
-
-    Parameters:
-    flag (int): A flag indicating the action to be performed. If flag is 1, a new client window is created.
-                If flag is not 1, an error is logged.
-    window_new_Client (Window): The window object for creating a new client.
-
-    Returns:
-    None
-    """
     global Clients
     Clients = []
     make_array()
     if flag == 1:
         new_Client_Tabel(window_new_Client)
     else:
-        # Логирование ошибки
         Logger(
             file_name, "Error in creating new client", "Invalid flag in do_new_Client"
         )

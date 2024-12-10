@@ -4,7 +4,6 @@ from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 from a_Log import Logger
 
 file_name = "File Error of New Klient"
-logger = Logger(file_name, "Application started", [])
 
 
 class ErrorNewClient(Exception):

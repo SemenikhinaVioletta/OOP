@@ -4,8 +4,6 @@ from a_Global_Per import database
 from a_Log import Logger
 
 file_name = "File Class_New_Client"
-logger = Logger(file_name, "Application started", [])
-
 
 
 class New_Client:

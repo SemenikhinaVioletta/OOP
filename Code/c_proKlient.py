@@ -7,7 +7,6 @@ from a_Log import Logger
 
 
 file_name = "File proKlient"
-logger = Logger(file_name, "Application started", [])
 
 
 def pro_client_Tabel(window_new_klient):
@@ -89,7 +88,7 @@ def pro_client_Tabel(window_new_klient):
                     "Please close other windows for work with pro klient"
                 )
         except Error.ErrorProClient as e:
-            logger.log_error(file_name, "Error with opend windows.", str(e))
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     # Функция для добавления нового клиента
     def add_new():
@@ -159,7 +158,7 @@ def pro_client_Tabel(window_new_klient):
                     "Please close other windows for work with pro klient"
                 )
         except Error.ErrorProClient as e:
-            logger.log_error(file_name, "Error with opend windows.", str(e))
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     # Функция для создания таблицы клиентов
     def make_Table():
@@ -253,7 +252,7 @@ def pro_client_Tabel(window_new_klient):
                     message = f"klient with ID = {id} not found!"
                     raise Error.ErrorProClient(message)
             except Error.ErrorProClient as e:
-                logger.log_error(file_name, "A Error into ID.", str(e))
+                Logger.log_error(file_name, "A Error into ID.", str(e))
 
     # Функция для переименования клиента
     def rename():
@@ -285,7 +284,7 @@ def pro_client_Tabel(window_new_klient):
                     "Please close other windows for work with pro klient"
                 )
         except Error.ErrorProClient as e:
-            logger.log_error(file_name, "Error with opend windows.", str(e))
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)
     frame.pack(expand=True)

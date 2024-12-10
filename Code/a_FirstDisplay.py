@@ -12,7 +12,6 @@ from a_Global_Per import windows
 
 file_name = "File FirstDisplay"
 window = WindowModule.Window("PC for management", "600x400")
-logger = Logger(file_name, "Application started", [])
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
@@ -99,7 +98,7 @@ def start_new_client(flag: int) -> None:
         do_new_client(flag, new_window)
 
     except NewClientError.ErrorNewClient as e:
-        logger.log_error(file_name, "Error while opening window", str(e))
+        Logger.log_error(file_name, "Error while opening window", str(e))
 
 
 
@@ -159,7 +158,7 @@ def start_pro_client(flag):
         do_pro_client(flag, new_window)
 
     except ProClientError.ErrorProClient as e:
-        logger.log_error(file_name, "Error opening window", str(e))
+        Logger.log_error(file_name, "Error opening window", str(e))
 
 
 
@@ -215,7 +214,7 @@ def start_products(flag: int) -> None:
         windows[3].append(wind)
         do_product(flag, wind)
     except ProductError.ErrorProduct as e:
-        logger.log_error(
+        Logger.log_error(
             file_name, "An error occurred while opening the window", str(e)
         )
 
