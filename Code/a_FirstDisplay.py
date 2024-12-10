@@ -2,17 +2,17 @@ import a_Window as WindowModule
 import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
-from Code.f_Class_status_Client import make_status
+from f_Class_Status_Client import make_status
 from c_proKlient import do_pro_client
-from Code.b_newClient import do_new_client
+from b_newClient import do_new_client
 from d_Produkt import do_product
 from a_Log import Logger
-from a_Global_per import windows
+from a_Global_Per import windows
 
 
 file_name = "File FirstDisplay"
 window = WindowModule.Window("PC for management", "600x400")
-logger = Logger(file_name, [], "Application started")
+logger = Logger(file_name, "Application started", [])
 
 # --------------------------------------------------------------------------------------------------------------------------------
 

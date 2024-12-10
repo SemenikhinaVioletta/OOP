@@ -1,7 +1,7 @@
 import d_Error as Error
 import sqlite3 as bd
 from a_Log import Logger
-from a_Global_per import basadate, windows
+from a_Global_Per import database, windows
 
 
 
@@ -144,7 +144,7 @@ class Produkt:
 
     def order(self, order):
         try:
-            conn = bd.connect(basadate)
+            conn = bd.connect(database)
             cur = conn.cursor()
             cur.execute(
                 """UPDATE Produkts SET In_sclad = ? WHERE Id_produkt = ?""",
@@ -183,7 +183,7 @@ class Produkt:
         Error.ErrorProduct: If the new name already exists in the database.
         """
         try:
-            conn = bd.connect(basadate)
+            conn = bd.connect(database)
             cur = conn.cursor()
             if self.get_name() != name:
                 for produkt in produkts:
@@ -234,7 +234,7 @@ class Produkt:
         bd.Error: If an error occurs while interacting with the SQLite database.
         """
         try:
-            conn = bd.connect(basadate)
+            conn = bd.connect(database)
             cursor = conn.cursor()
             logger.log_info(file_name, "Connected to SQLite")
             cursor.execute("SELECT * FROM Produkts")
@@ -272,7 +272,7 @@ class Produkt:
         bd.Error: If an error occurs while interacting with the SQLite database.
         """
         try:
-            sqlite_connection = bd.connect(basadate)
+            sqlite_connection = bd.connect(database)
             cursor = sqlite_connection.cursor()
             logger.log_info(file_name, "Connected to SQLite")
             cursor.execute(

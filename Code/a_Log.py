@@ -31,5 +31,5 @@ class Logger:
         logging.info(f"{name}: {message}")
 
     @staticmethod
-    def log_error(name, message):
-        logging.error(f"{name}: {message}")
+    def log_error(name, error, message):
+        logging.error(f"{name}: {error}: {message}")
