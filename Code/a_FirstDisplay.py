@@ -18,10 +18,12 @@ window = WindowModule.Window("PC for management", "600x400")
 
 def on_selection(event):
     """
-    This function handles the user's selection from the combobox and initiates the corresponding process.
+    This function handles the user's selection from the Combobox component.
+    It logs the selected option, creates a Label and a Button based on the selection,
+    and configures the Button's command to open the corresponding window.
 
     Parameters:
-    event (Event): The event object representing the user's interaction with the combobox.
+    event (Event): The event object that triggered this function.
 
     Returns:
     None
@@ -30,45 +32,63 @@ def on_selection(event):
     Logger.log_info(
         file_name, f"Method on_selection - selected option: {selected_option}\n"
     )
-
-    if selected_option == "New clients":
-        Logger.log_info(file_name, f"Starting New client process...")
-        handle_new_client(selected_option)
-    elif selected_option == "Pro clients":
-        Logger.log_info(file_name, "Starting Pro clients process...")
-        handle_pro_client(selected_option)
-    elif selected_option == "Products":
-        Logger.log_info(file_name, "Starting Products process...")
-        handle_products(selected_option)
-    elif selected_option == "Contracts":
-        Logger.log_info(file_name, "No method available for selection")
-    else:
-        Logger.log_info(file_name, "No method available for selection")
-
-
-# --------------------------------------------------------------------------------------------------------------------------------
-
-
-def handle_new_client(message: str) -> None:
-    """
-    This function handles the process for new clients. It creates a label and a button
-    to display options for new clients and starts a new client window when the button is clicked.
-
-    Parameters:
-    message (str): A message indicating the type of clients (in this case, "New clients").
-
-    Returns:
-    None
-    """
-    Logger.log_info(file_name, f"Entering handle_new_client with message: {message}")
-    label = WindowModule.Label(frame, text="For " + message + " you can:")
-    label.grid(row=3, column=1, padx=10)
+    label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
     new_window_button = WindowModule.Button(
         frame,
         text="Open table",
-        command=lambda: start_new_client(1),
     )
-    new_window_button.grid(row=3, column=2, padx=10)
+
+    if selected_option == "New clients":
+        Logger.log_info(file_name, f"Starting New client process...")
+        Logger.log_info(
+            file_name, f"Entering handle_new_client with message: {selected_option}"
+        )
+        new_window_button = WindowModule.Button(
+            frame, text="Open table", command=lambda: start_new_client(1)
+        )
+        label.grid(row=3, column=1, padx=10)
+        new_window_button.grid(row=3, column=2, padx=10)
+    elif selected_option == "Pro clients":
+        Logger.log_info(file_name, "Starting Pro clients process...")
+        Logger.log_info(
+            file_name, f"Entering handle_new_client with message: {selected_option}"
+        )
+        new_window_button = WindowModule.Button(
+            frame, text="Open table", command=lambda: start_pro_client(1)
+        )
+        label.grid(row=3, column=1, padx=10)
+        new_window_button.grid(row=3, column=2, padx=10)
+    elif selected_option == "Products":
+        Logger.log_info(file_name, "Starting Products process...")
+        Logger.log_info(
+            file_name, f"Entering handle_new_client with message: {selected_option}"
+        )
+        new_window_button = WindowModule.Button(
+            frame, text="Open table", command=lambda: start_products(1)
+        )
+        label.grid(row=3, column=1, padx=10)
+        new_window_button.grid(row=3, column=2, padx=10)
+    elif selected_option == "Contracts":
+        Logger.log_info(file_name, "No method available for selection")
+        Logger.log_info(
+            file_name, f"Entering handle_new_client with message: {selected_option}"
+        )
+        new_window_button = WindowModule.Button(
+            frame, text="Open table", state=["disabled"]
+        )
+        label.grid(row=3, column=1, padx=10)
+        new_window_button.grid(row=3, column=2, padx=10)
+    else:
+        Logger.log_info(file_name, "No method available for selection")
+        Logger.log_info(
+            file_name, f"Entering handle_new_client with message: {selected_option}"
+        )
+        new_window_button = WindowModule.Button(
+            frame, text="Open table", state=["disabled"]
+        )
+
+
+# --------------------------------------------------------------------------------------------------------------------------------
 
 
 def start_new_client(flag: int) -> None:
@@ -100,28 +120,6 @@ def start_new_client(flag: int) -> None:
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
-
-
-def handle_pro_client(message: str) -> None:
-    """
-    This function handles the process for pro clients. It creates a label and a button
-    to display options for pro clients and starts a pro client window when the button is clicked.
-
-    Parameters:
-    message (str): A message indicating the type of pro clients (in this case, "Pro clients").
-
-    Returns:
-    None
-    """
-    Logger.log_info(file_name, f"Entering handle_pro_client with message: {message}")
-    label = WindowModule.Label(frame, text="For " + message + " you can:")
-    label.grid(row=3, column=1, padx=10)
-    new_window_button = WindowModule.Button(
-        frame,
-        text="Open table",
-        command=lambda: start_pro_client(1),
-    )
-    new_window_button.grid(row=3, column=2, padx=10)
 
 
 def start_pro_client(flag):
