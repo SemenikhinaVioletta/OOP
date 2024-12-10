@@ -129,7 +129,7 @@ class New_Client:
             raise ValueError("Client object not found in 'Clients' list")
 
     def get_ID(self):
-        Logger.log_info(file_name, "Fetching Client ID: " + f"ID: {self.ID}")
+        Logger.log_info(file_name, "Fetching Client ID: " + f"ID: {str(self.ID)}")
         return int(self.ID)
 
     def enter_Client_to_bd(self):

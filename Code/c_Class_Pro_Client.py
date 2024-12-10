@@ -17,12 +17,12 @@ class Pro_Client(New.New_Client):
         self.contract = []
         self.set_contract(contract)
         if client is not None:
-            self.client_id = client.client_id
+            self.ID = client.ID
             self.client_name = client.client_name
             self.phone = client.phone
             self.email = client.email
         else:
-            self.client_id = client_id
+            self.ID = client_id
             self.client_name = client_name
             self.phone = phone
             self.email = email
@@ -40,7 +40,7 @@ class Pro_Client(New.New_Client):
                 self.contract.append(i)
 
     def get_client_id(self):
-        return int(self.client_id)
+        return int(self.ID)
 
     def get_full_name(self):
         return str(self.client_name)
@@ -162,7 +162,7 @@ class Pro_Client(New.New_Client):
             if self.get_status() != client_status:
                 self.status = client_status
                 cur.execute(
-                    """UPDATE Client SET Status = ? WHERE Id_Client = ?""",
+                    """UPDATE Client SET Satus = ? WHERE Id_Client = ?""",
                     (client_status, self.get_ID()),
                 )
             if self.get_email() != client_email:
