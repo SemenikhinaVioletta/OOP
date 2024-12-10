@@ -27,7 +27,6 @@ class ErrorNewClient(Exception):
 
 def chek_name(name):
     try:
-
         names = name.split()
         if len(names) < 3:
             message = "Name must contain at least 3 words"
@@ -114,17 +113,6 @@ def chek_mail(email):
 
 
 def add_new_to_table(name_entry, phone_entry, email_entry, klients):
-    """
-    This function validates and adds a new client to a table.
-
-    Parameters:
-    name_entry (tkinter.Entry): The entry widget for the client's name.
-    phone_entry (tkinter.Entry): The entry widget for the client's phone number.
-    email_entry (tkinter.Entry): The entry widget for the client's email address.
-
-    Returns:
-    bool: True if the validation is successful and the client is added to the table, False otherwise.
-    """
     try:
         name = str(name_entry.get())
         phone = str(phone_entry.get())
@@ -148,17 +136,6 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
 
 
 def delete_from_table(id, klients):
-    """
-    This function validates and deletes a client from a table based on the provided ID.
-
-    Parameters:
-    id (tkinter.StringVar): The string variable containing the ID of the client to be deleted.
-
-    Returns:
-    bool: True if the validation is successful and the client is deleted from the table, False otherwise.
-    Raises:
-    ErrorNewClient: If the ID is not valid, an exception is raised with an appropriate error message.
-    """
     try:
         id = id.get()
         message = "Validation started"

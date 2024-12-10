@@ -111,138 +111,41 @@ class New_Client:
             conn.close()
 
     def get(self):
-        """
-        Fetch Client data from the object.
-
-        This method retrieves the ID, name, phone, and email of the Client.
-        It logs the fetched data using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        tuple: A tuple containing the ID, name, phone, and email of the Client.
-        """
-        logger.log_info(
-            file_name,
-            "Fetching Client data: "
-            + f"ID: {self.ID}, Name: {self.name}, Phone: {self.phone}, Email: {self.email}",
-        )
         return int(self.ID), str(self.name), int(self.phone), str(self.email)
 
     def get_name(self):
-        """
-        Retrieves the name of the Client.
-
-        This method retrieves the name of the Client from the object's internal state.
-        It logs the fetched name using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        str: The name of the Client.
-        """
-        logger.log_info(file_name, "Fetching Client name: " + f"Name: {self.name}")
         return str(self.name)
 
     def get_phone(self):
-        """
-        Retrieves the phone number of the Client.
-
-        This method retrieves the phone number of the Client from the object's internal state.
-        It logs the fetched phone number using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        int: The phone number of the Client.
-        """
-        logger.log_info(file_name, "Fetching Client phone: " + f"Phone: {self.phone}")
+        Logger.log_info(file_name, "Fetching Client phone: " + f"Phone: {self.phone}")
         return int(self.phone)
 
     def get_email(self):
-        """
-        Retrieves the email address of the Client.
-
-        This method retrieves the email address of the Client from the object's internal state.
-        It logs the fetched email address using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        str: The email address of the Client.
-        """
-        logger.log_info(file_name, "Fetching Client email: " + f"Email: {self.email}")
+        Logger.log_info(file_name, "Fetching Client email: " + f"Email: {self.email}")
         return str(self.email)
 
     def clear_array(self, Clients):
-        """
-        Removes the current Client object from the 'Clients' list.
-
-        This method is used to remove the current Client object from the 'Clients' list.
-        It is typically called when the Client object is no longer needed or when the Client
-        is being deleted from the system.
-
-        Parameters:
-        None
-
-        Returns:
-        None
-
-        Raises:
-        ValueError: If the Client object is not found in the 'Clients' list.
-        """
         if self in Clients:
             Clients.remove(self)
         else:
             raise ValueError("Client object not found in 'Clients' list")
 
     def get_ID(self):
-        """
-        Retrieves the unique identifier of the Client.
-
-        This method retrieves the ID of the Client from the object's internal state.
-        It logs the fetched ID using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        int: The unique identifier of the Client.
-        """
-        logger.log_info(file_name, "Fetching Client ID: " + f"ID: {self.ID}")
+        Logger.log_info(file_name, "Fetching Client ID: " + f"ID: {self.ID}")
         return int(self.ID)
 
     def enter_Client_to_bd(self):
-        """
-        Inserts the Client's data into the SQLite database.
-
-        This method establishes a connection to the SQLite database, retrieves the Client's data,
-        and inserts it into the 'Client_new' table. It also logs relevant information using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        None
-
-        Raises:
-        bd.Error: If an error occurs while interacting with the SQLite database.
-        """
         try:
             conn = bd.connect(database)
             cursor = conn.cursor()
-            logger.log_info(file_name, "Connected to SQLite")
+            Logger.log_info(file_name, "Connected to SQLite")
             cursor.execute("SELECT * FROM Status_Client")
             cursor.execute(
                 """INSERT INTO Client_new (Name, Phone, Mail) VALUES(?, ?, ?)""",
                 (self.get_name(), self.get_phone(), self.get_email()),
             )
             conn.commit()
-            logger.log_info(
+            Logger.log_info(
                 file_name,
                 "Client added to database: "
                 + f"Name: {self.get_name()}, Phone: {self.get_phone()}, Email: {self.get_email()}",
@@ -254,32 +157,16 @@ class New_Client:
             conn.close()
 
     def delete_Client_from_bd(self):
-        """
-        Deletes the Client from the SQLite database.
-
-        This method establishes a connection to the SQLite database, retrieves the Client's ID,
-        and deletes the corresponding record from the 'Client_new' table. It also logs relevant information
-        using the logger object.
-
-        Parameters:
-        None
-
-        Returns:
-        None
-
-        Raises:
-        bd.Error: If an error occurs while interacting with the SQLite database.
-        """
         try:
             sqlite_connection = bd.connect(database)
             cursor = sqlite_connection.cursor()
-            logger.log_info(file_name, "Connected to SQLite")
+            Logger.log_info(file_name, "Connected to SQLite")
             cursor.execute(
                 """DELETE FROM Client_new where Id_Client = ?""",
                 (self.get_ID(),),
             )
             sqlite_connection.commit()
-            logger.log_info(
+            Logger.log_info(
                 file_name, "Client deleted from database: " + f"ID: {self.get_ID()}"
             )
         except bd.Error as error:

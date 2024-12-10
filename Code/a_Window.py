@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
 from a_Log import Logger
-from a_Global_per import windows
+from a_Global_Per import windows
 
 file_name = "File Window"
 
@@ -14,9 +14,12 @@ class Window(Tk):
         """
         Initialize a new instance of the Window class.
 
+        This method creates a new window with the given name and geometry.
+        It also sets the title of the window and logs an informational event.
+
         Parameters:
-        name (str): The title of the window.
-        geom (str): The geometry of the window in the format "widthxheight+x+y".
+        name (str): The name of the window.
+        geom (str): The geometry of the window, specified as a string in the format "widthxheight+x+y".
 
         Returns:
         None
@@ -25,7 +28,8 @@ class Window(Tk):
         self.title(name)
         self.geometry(geom)
         self.name = name
-        Logger(file_name, "", "Class Window - Method __init__ - make window: " + name)
+        Logger.log_info(file_name, "Class Window - Method __init__ - make window: " + name)
+
 
     # --------------------------------------------------------------------------------------------------------------------------------
     # Дополнительные функции

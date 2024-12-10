@@ -28,21 +28,21 @@ def on_selection(event):
     None
     """
     selected_option = combobox.get()
-    logger.log_info(file_name, f"Selected option: {selected_option}")
+    Logger.log_info(file_name, f"Method on_selection - Selected option: {selected_option}\n")
 
     if selected_option == "New clients":
-        logger.log_info(file_name, f"Starting New client process...")
+        Logger.log_info(file_name, f"*Starting New client process...")
         handle_new_client(selected_option)
     elif selected_option == "Pro clients":
-        logger.log_info(file_name, "Starting Pro clients process...")
+        Logger.log_info(file_name, "*Starting Pro clients process...")
         handle_pro_client(selected_option)
     elif selected_option == "Products":
-        logger.log_info(file_name, "Starting Products process...")
+        Logger.log_info(file_name, "*Starting Products process...")
         handle_products(selected_option)
     elif selected_option == "Contracts":
-        logger.log_info(file_name, "No method available for selection")
+        Logger.log_info(file_name, "*No method available for selection")
     else:
-        logger.log_info(file_name, "No method available for selection")
+        Logger.log_info(file_name, "*No method available for selection")
 
 
 
@@ -60,7 +60,7 @@ def handle_new_client(message: str) -> None:
     Returns:
     None
     """
-    logger.log_info(file_name, f"Entering handle_new_client with message: {message}")
+    Logger.log_info(file_name, f"Entering handle_new_client with message: {message}")
     label = WindowModule.Label(frame, text="For " + message + " you can:")
     label.grid(row=3, column=1, padx=10)
     new_window_button = WindowModule.Button(
@@ -90,7 +90,7 @@ def start_new_client(flag: int) -> None:
         if len(windows[2]) != 0:
             raise NewClientError.ErrorNewClient("This window is already open.")
 
-        logger.log_info(file_name, f"Opening new client window with flag: {flag}")
+        Logger.log_info(file_name, f"Opening new client window with flag: {flag}")
 
         new_window = WindowModule.Window("New Client", "1000x300")
         new_window.make_protokol(lambda: WindowModule.end(2))
@@ -117,7 +117,7 @@ def handle_pro_client(message: str) -> None:
     Returns:
     None
     """
-    logger.log_info(file_name, f"Entering handle_pro_client with message: {message}")
+    Logger.log_info(file_name, f"Entering handle_pro_client with message: {message}")
     label = WindowModule.Label(frame, text="For " + message + " you can:")
     label.grid(row=3, column=1, padx=10)
     new_window_button = WindowModule.Button(
@@ -150,7 +150,7 @@ def start_pro_client(flag):
         if len(windows[1]) != 0:
             raise ProClientError.ErrorProClient("This window is already open.")
 
-        logger.log_info(file_name, f"Opening pro client window with flag: {flag}")
+        Logger.log_info(file_name, f"Opening pro client window with flag: {flag}")
 
         new_window = WindowModule.Window("Pro Client", "1500x300")
         new_window.make_protokol(lambda: WindowModule.end(1))
@@ -177,7 +177,7 @@ def handle_products(message: str) -> None:
     Returns:
     None
     """
-    logger.log_info(file_name, f"Entering handle_products with message: {message}")
+    Logger.log_info(file_name, f"Entering handle_products with message: {message}")
     label = WindowModule.Label(frame, text="For " + message + " you can:")
     label.grid(row=3, column=1, padx=10)
     new_window_button = WindowModule.Button(
@@ -209,7 +209,7 @@ def start_products(flag: int) -> None:
     try:
         if len(windows[3]) != 0:
             raise ProductError.ErrorProduct("This window is already open.")
-        logger.log_info(file_name, f"Opening product window with flag: {flag}")
+        Logger.log_info(file_name, f"Opening product window with flag: {flag}")
         wind = WindowModule.Window("Product", "1000x300")
         wind.make_protokol(lambda: WindowModule.end(3))
         windows[3].append(wind)
@@ -230,7 +230,7 @@ def start():
 
     It includes the necessary components and configurations to create the first user interface that users will interact with. The module aims to facilitate the presentation of information and user inputs in a clear and organized manner.
     """
-    logger.log_info(file_name, "Starting application...")
+    Logger.log_info(file_name, "Starting application...")
     window.open()
 
 

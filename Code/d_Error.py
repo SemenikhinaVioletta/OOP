@@ -1,6 +1,6 @@
 import a_Log
 from a_Log import Logger
-from a_Global_per import windows
+from a_Global_Per import windows
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 
 

@@ -53,7 +53,7 @@ class Produkt:
         Returns:
         tuple: A tuple containing the ID, name, mora, and number of the client.
         """
-        logger.log_info(
+        Logger.log_info(
             file_name,
             "Fetching produkt data: "
             + f"ID: {self.ID}, Name: {self.name}, mora: {self.mora}, number: {self.number}",
@@ -73,7 +73,7 @@ class Produkt:
         Returns:
         str: The name of the client.
         """
-        logger.log_info(file_name, "Fetching produkt name: " + f"Name: {self.name}")
+        Logger.log_info(file_name, "Fetching produkt name: " + f"Name: {self.name}")
         return str(self.name)
 
     def get_mora(self) -> int:
@@ -89,7 +89,7 @@ class Produkt:
         Returns:
         int: The mora value of the client.
         """
-        logger.log_info(file_name, "Fetching produkt mora: " + f"mora: {self.mora}")
+        Logger.log_info(file_name, "Fetching produkt mora: " + f"mora: {self.mora}")
         return int(self.mora)
 
     def get_number(self) -> int:
@@ -105,7 +105,7 @@ class Produkt:
         Returns:
         int: The number value of the client.
         """
-        logger.log_info(
+        Logger.log_info(
             file_name, "Fetching produkt number: " + f"number: {self.number}"
         )
         return int(self.number)
@@ -121,7 +121,7 @@ class Produkt:
         Returns:
             int: The produkt ID as an integer.
         """
-        logger.log_info(file_name, "Fetching produkt ID: " + f"ID: {self.ID}")
+        Logger.log_info(file_name, "Fetching produkt ID: " + f"ID: {self.ID}")
         return int(self.ID)
 
     def clear_array(self, produkts):
@@ -151,7 +151,7 @@ class Produkt:
                 (order, self.get_ID()),
             )
             conn.commit()
-            logger.log_info(
+            Logger.log_info(
                 file_name,
                 "Updated order of produkt with ID: " + f"{self.get_ID()}, to: {order}",
             )
@@ -236,14 +236,14 @@ class Produkt:
         try:
             conn = bd.connect(database)
             cursor = conn.cursor()
-            logger.log_info(file_name, "Connected to SQLite")
+            Logger.log_info(file_name, "Connected to SQLite")
             cursor.execute("SELECT * FROM Produkts")
             cursor.execute(
                 """INSERT INTO Produkts (Name, Mora, In_sclad) VALUES(?, ?, ?)""",
                 (self.get_name(), self.get_mora(), self.get_number()),
             )
             conn.commit()
-            logger.log_info(
+            Logger.log_info(
                 file_name,
                 "produkt added to database: "
                 + f"Name: {self.get_name()}, mora: {self.get_mora()}, number: {self.get_number()}",
@@ -274,13 +274,13 @@ class Produkt:
         try:
             sqlite_connection = bd.connect(database)
             cursor = sqlite_connection.cursor()
-            logger.log_info(file_name, "Connected to SQLite")
+            Logger.log_info(file_name, "Connected to SQLite")
             cursor.execute(
                 """DELETE FROM Produkts where Id_produkt = ?""",
                 (self.get_ID(),),
             )
             sqlite_connection.commit()
-            logger.log_info(
+            Logger.log_info(
                 file_name, "produkt deleted from database: " + f"ID: {self.get_ID()}"
             )
         except bd.Error as error:

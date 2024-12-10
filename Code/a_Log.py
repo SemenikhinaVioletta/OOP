@@ -84,20 +84,11 @@ class Logger:
 
     @staticmethod
     def log_info(name, message):
-        """
-        Logs an informational message with the given name and message.
-
-        This function logs an informational message using the Python logging module.
-        The message is formatted as "{name}: {message}".
-
-        Parameters:
-        - name (str): The name to be included in the log message.
-        - message (str): The message to be logged.
-
-        Returns:
-        - None
-        """
-        logging.info(f"{name}: {message}")
+        if (message[0] == "*"):
+            logging.info(f"\t{name}: {message}")
+        
+        else:
+            logging.info(f"{name}: {message}")
 
 
     @staticmethod
