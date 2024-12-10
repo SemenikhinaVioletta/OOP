@@ -18,16 +18,16 @@ class Pro_Client(New.New_Client):
         self.set_contract(contract)
         if client is not None:
             self.ID = client.ID
-            self.client_name = client.client_name
+            self.name = client.client_name
             self.phone = client.phone
             self.email = client.email
         else:
             self.ID = client_id
-            self.client_name = client_name
+            self.name = client_name
             self.phone = phone
             self.email = email
         self.short_name = ""
-        self.make_short(self.client_name)
+        self.make_short(self.name)
 
     def make_short(self, client_name):
         names = client_name.split()
@@ -43,7 +43,7 @@ class Pro_Client(New.New_Client):
         return int(self.ID)
 
     def get_full_name(self):
-        return str(self.client_name)
+        return str(self.name)
 
     def get_short_name(self):
         return str(self.short_name)
