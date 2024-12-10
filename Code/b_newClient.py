@@ -106,13 +106,13 @@ def new_Client_Tabel(window_new_Client):
                     mora_entry = "0"
                 mora_entry = int(mora_entry)
                 pro = Pro.Pro_Client(0, "", mora_entry, "", 0, "", status_entry, Client)
-                pro.enter_Client_to_pro_bd()
+                pro.enter_client_to_db()
                 id = Win.Entry()
                 id.insert(0, str(Client.get_ID()))
                 id_for_delite(id)
                 make_Table()
         except Error.ErrorNewClient as e:
-            logger.log_error(file_name, str(e), "Error with already")
+            logger.log_error(file_name, "Error with already", str(e))
         except bd.Error as error:
             Logger(file_name, "Error while adding client to database", error)
         finally:

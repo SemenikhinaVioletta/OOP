@@ -19,12 +19,10 @@ logger = Logger(file_name, "Application started", [])
 
 def on_selection(event):
     """
-    This function handles the selection event in the GUI application.
-    It retrieves the selected option from the Combobox, logs the selection,
-    and then calls the appropriate function based on the selected option.
+    This function handles the user's selection from the combobox and initiates the corresponding process.
 
     Parameters:
-    event (Event): The event object that triggered this function.
+    event (Event): The event object representing the user's interaction with the combobox.
 
     Returns:
     None
@@ -32,19 +30,20 @@ def on_selection(event):
     selected_option = combobox.get()
     logger.log_info(file_name, f"Selected option: {selected_option}")
 
-    if selected_option == "New Clients":
-        logger.log_info(file_name, "Starting new client process")
+    if selected_option == "New clients":
+        logger.log_info(file_name, f"Starting New client process...")
         handle_new_client(selected_option)
-    elif selected_option == "Pro Clients":
-        logger.log_info(file_name, "Starting Pro Clients process")
+    elif selected_option == "Pro clients":
+        logger.log_info(file_name, "Starting Pro clients process...")
         handle_pro_client(selected_option)
     elif selected_option == "Products":
-        logger.log_info(file_name, "Starting Products process")
+        logger.log_info(file_name, "Starting Products process...")
         handle_products(selected_option)
     elif selected_option == "Contracts":
         logger.log_info(file_name, "No method available for selection")
     else:
         logger.log_info(file_name, "No method available for selection")
+
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -56,7 +55,8 @@ def handle_new_client(message: str) -> None:
     to display options for new clients and starts a new client window when the button is clicked.
 
     Parameters:
-    message (str): A message indicating the type of clients (in this case, "New Clients").
+    message (str): A message indicating the type of clients (in this case, "New clients").
+
     Returns:
     None
     """
@@ -69,6 +69,7 @@ def handle_new_client(message: str) -> None:
         command=lambda: start_new_client(1),
     )
     new_window_button.grid(row=3, column=2, padx=10)
+
 
 
 def start_new_client(flag: int) -> None:
@@ -87,7 +88,7 @@ def start_new_client(flag: int) -> None:
     """
     try:
         if len(windows[2]) != 0:
-            raise NewClientError.ErrorNewClient("The window is already open")
+            raise NewClientError.ErrorNewClient("This window is already open.")
 
         logger.log_info(file_name, f"Opening new client window with flag: {flag}")
 
@@ -98,7 +99,8 @@ def start_new_client(flag: int) -> None:
         do_new_client(flag, new_window)
 
     except NewClientError.ErrorNewClient as e:
-        logger.log_error(file_name, "Error opening window", str(e))
+        logger.log_error(file_name, "Error while opening window", str(e))
+
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -106,11 +108,11 @@ def start_new_client(flag: int) -> None:
 
 def handle_pro_client(message: str) -> None:
     """
-    This function handles the process for professional clients. It creates a label and a button
-    to display options for professional clients and starts a professional client window when the button is clicked.
+    This function handles the process for pro clients. It creates a label and a button
+    to display options for pro clients and starts a pro client window when the button is clicked.
 
     Parameters:
-    message (str): A message indicating the type of clients (in this case, "Pro Clients").
+    message (str): A message indicating the type of pro clients (in this case, "Pro clients").
 
     Returns:
     None
@@ -126,23 +128,27 @@ def handle_pro_client(message: str) -> None:
     new_window_button.grid(row=3, column=2, padx=10)
 
 
+
 def start_pro_client(flag):
     """
-    This function opens a professional client window based on the provided flag.
-    It checks if a professional client window is already open and raises an exception if it is.
+    This function starts a pro client window based on the provided flag.
+    It checks if a pro client window is already open and raises an exception if it is.
     If the window is not open, it logs the opening event, creates a new window,
     sets the window protocol, adds the window to the list of windows,
-    and calls the function to handle professional client operations.
+    and calls the function to handle pro client operations.
 
     Parameters:
     flag (int): A flag indicating the type of operation to be performed.
 
     Returns:
     None
+
+    Raises:
+    ProClientError.ErrorProClient: If a pro client window is already open.
     """
     try:
         if len(windows[1]) != 0:
-            raise ProClientError.ErrorProClient("The window is already open")
+            raise ProClientError.ErrorProClient("This window is already open.")
 
         logger.log_info(file_name, f"Opening pro client window with flag: {flag}")
 
@@ -154,6 +160,7 @@ def start_pro_client(flag):
 
     except ProClientError.ErrorProClient as e:
         logger.log_error(file_name, "Error opening window", str(e))
+
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
@@ -181,6 +188,7 @@ def handle_products(message: str) -> None:
     new_window_button.grid(row=3, column=2, padx=10)
 
 
+
 def start_products(flag: int) -> None:
     """
     This function starts a product window based on the provided flag.
@@ -194,10 +202,13 @@ def start_products(flag: int) -> None:
 
     Returns:
     None
+
+    Raises:
+    ProductError.ErrorProduct: If a product window is already open.
     """
     try:
         if len(windows[3]) != 0:
-            raise ProductError.ErrorProduct("The window is already open")
+            raise ProductError.ErrorProduct("This window is already open.")
         logger.log_info(file_name, f"Opening product window with flag: {flag}")
         wind = WindowModule.Window("Product", "1000x300")
         wind.make_protokol(lambda: WindowModule.end(3))
@@ -209,6 +220,7 @@ def start_products(flag: int) -> None:
         )
 
 
+
 # --------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -218,7 +230,7 @@ def start():
 
     It includes the necessary components and configurations to create the first user interface that users will interact with. The module aims to facilitate the presentation of information and user inputs in a clear and organized manner.
     """
-    logger.log_info(file_name, "Starting application")
+    logger.log_info(file_name, "Starting application...")
     window.open()
 
 
@@ -228,11 +240,11 @@ window.make_protokol(lambda: WindowModule.end(0))
 windows[0].append(window)
 frame = WindowModule.Frame(master=window, relief=WindowModule.SUNKEN)
 frame.pack(expand=True)
-method_label = WindowModule.Label(frame, text="Select the table you will work with")
+method_label = WindowModule.Label(frame, text="Select the table you will work with:")
 method_label.grid(row=1, column=1)
 methods = [
-    "Pro Clients",
-    "New Clients",
+    "Pro clients",
+    "New clients",
     "Contracts",
     "Products",
 ]
