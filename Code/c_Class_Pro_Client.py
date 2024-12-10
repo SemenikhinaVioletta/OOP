@@ -162,7 +162,7 @@ class Pro_Client(New.New_Client):
             if self.get_status() != client_status:
                 self.status = client_status
                 cur.execute(
-                    """UPDATE Client SET Satus = ? WHERE Id_Client = ?""",
+                    """UPDATE Client SET Status = ? WHERE Id_Client = ?""",
                     (client_status, self.get_ID()),
                 )
             if self.get_email() != client_email:
