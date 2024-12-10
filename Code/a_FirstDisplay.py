@@ -88,9 +88,7 @@ def start_new_client(flag: int) -> None:
     try:
         if len(windows[2]) != 0:
             raise NewClientError.ErrorNewClient("This window is already open.")
-
         Logger.log_info(file_name, f"Opening new client window with flag: {flag}")
-
         new_window = WindowModule.Window("New Client", "1000x300")
         new_window.make_protokol(lambda: WindowModule.end(2))
         windows[2].append(new_window)
