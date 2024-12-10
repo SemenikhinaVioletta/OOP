@@ -142,6 +142,26 @@ class Produkt:
             raise ValueError('produkt object not found in "produkts" list')
 
 
+    def order(self, order):
+        try:
+            conn = bd.connect(basadate)
+            cur = conn.cursor()
+            cur.execute(
+                """UPDATE Produkts SET In_sclad = ? WHERE Id_produkt = ?""",
+                (order, self.get_ID()),
+            )
+            conn.commit()
+            logger.log_info(
+                file_name,
+                "Updated order of produkt with ID: " + f"{self.get_ID()}, to: {order}",
+            )
+        except Error.ErrorProduct as e:
+            Logger(file_name, "Error renaming from Method rename_produkt", str(e))
+        except bd.Error as error:
+            Logger(file_name, "Error while working with SQLite", error)
+        finally:
+            conn.close()
+
     def rename_produkt(self, name, mora, number, produkts):
         """
         Updates the name, mora, and number of the product in the database and in the instance attributes.
@@ -160,7 +180,7 @@ class Produkt:
         None
 
         Raises:
-        Error.ErrorProdukt: If the new name already exists in the database.
+        Error.ErrorProduct: If the new name already exists in the database.
         """
         try:
             conn = bd.connect(basadate)
@@ -171,7 +191,7 @@ class Produkt:
                         message = (
                             "This element (" + self.get_name() + ") has already been"
                         )
-                        raise Error.ErrorProdukt(message)
+                        raise Error.ErrorProduct(message)
                 self.name = name
                 cur.execute(
                     """UPDATE Produkts SET Name = ? WHERE Id_produkt = ?""",
@@ -190,8 +210,10 @@ class Produkt:
                     (self.get_number(), self.get_ID()),
                 )
             conn.commit()
-        except Error.ErrorProdukt as e:
+        except Error.ErrorProduct as e:
             Logger(file_name, "Error renaming from Method rename_produkt", str(e))
+        except bd.Error as error:
+            Logger(file_name, "Error while working with SQLite", error)
         finally:
             conn.close()
 

@@ -146,6 +146,23 @@ def check_name(name):
         )  # ��огируем ошибку
         return False
 
+def check_order(order):
+    try:
+        order = str(order)
+        if len(order) < 1:
+            raise ErrorProduct("Order can`t be empty")
+        for i in order:
+            if not i.isdigit():
+                raise ErrorProduct("Order must contain only digits")
+        if int(order) <= 0:
+            raise ErrorProduct("Order must be a positive number")
+        Logger.log_info(file_name, "NO errors found during status validation.")
+        return True
+    except ErrorProduct as e:
+        Logger.log_error(
+            file_name, str(e), "An error occurred during validation."
+        ) 
+        return False
 
 def check_Id(id, produkts):
     """
