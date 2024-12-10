@@ -1,12 +1,12 @@
 import a_Window as Win
 import sqlite3 as bd
-import b_Class_New_klient as New
+import Code.b_Class_New_Client as New
 import b_Error as Error
 from b_Error import add_new_to_table, delete_from_table
 from a_Log import Logger
 from a_Global_per import windows, basadate, make_combox
 from c_Error import chek_mora
-import c_Class_Pro_Klient as Pro
+import Code.c_Class_Pro_Client as Pro
 
 file_name = "File newKlient"
 
