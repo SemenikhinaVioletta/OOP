@@ -35,7 +35,8 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
             )
             klient.enter_klient_to_bd()
-            klients.append(klient)
+            klients.clear()
+            make_array()
             make_Table()
 
     # Функция для изменения данных существующего клиента
@@ -55,7 +56,7 @@ def new_Klient_Tabel(window_new_klient):
                 str(email_entry.get()),
                 klients,
             )
-            klients = []
+            klients.clear()
             make_array()
             make_Table()
     
@@ -74,7 +75,7 @@ def new_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorNewKlient: If a client with the same phone number or email already exists.
+            Error.ErrorNewClient: If a client with the same phone number or email already exists.
             bd.Error: If an error occurs while interacting with the SQLite database.
         """
         basa = bd.connect(basadate)
@@ -93,9 +94,9 @@ def new_Klient_Tabel(window_new_klient):
             info_email = cur.fetchone()[0]  # Получаем результат запроса
 
             if info_email:
-                raise Error.ErrorNewKlient("There is already a client with this email")
+                raise Error.ErrorNewClient("There is already a client with this email")
             if info_phone:
-                raise Error.ErrorNewKlient("There is already a client with this phone")
+                raise Error.ErrorNewClient("There is already a client with this phone")
 
             if chek_mora(mora_entry):
                 mora_entry = str(mora_entry.get())
@@ -108,7 +109,7 @@ def new_Klient_Tabel(window_new_klient):
                 id.insert(0, str(klient.get_ID()))
                 id_for_delite(id)
                 make_Table()
-        except Error.ErrorNewKlient as e:
+        except Error.ErrorNewClient as e:
             Logger.log_error(file_name, str(e), "Error with already")
         except bd.Error as error:
             Logger(file_name, "Error while adding client to database", error)
@@ -125,7 +126,7 @@ def new_Klient_Tabel(window_new_klient):
         @param frame_for `frame_for` is a tkinter frame where labels, entries, and buttons are being placed for user input and interaction in a graphical user interface (GUI) application.
         @param wind The `wind` parameter in the `get_text` function seems to be an instance of a window or GUI class that is used to create and manage the graphical user interface elements. It is likely used to display labels, entry fields, buttons, and handle user interactions within the window or frame specified by
         """
-        if Error.delete_from_table(id):
+        if Error.delete_from_table(id, klients):
             try:
                 flag = 0
                 id = int(id.get())
@@ -169,8 +170,8 @@ def new_Klient_Tabel(window_new_klient):
                         break
                 if flag == 0:
                     message = f"Client with ID = {id} not found!"
-                    raise Error.ErrorNewKlient(message)
-            except Error.ErrorNewKlient:
+                    raise Error.ErrorNewClient(message)
+            except Error.ErrorNewClient:
                 wind.close_window(2)
 
     # Функция для удаления клиента
@@ -181,7 +182,7 @@ def new_Klient_Tabel(window_new_klient):
         @param id The `id` parameter in the `id_for_delite` function seems to represent the unique identifier of a client in a system. It is used to identify and delete a specific client from a table or database.
         @param window The `window` parameter in the `id_for_delite` function seems to represent a window object or a reference to the window that needs to be closed after the operation is completed. The `window.close_window(2)` method is likely used to close this window once the deletion process is finished.
         """
-        if delete_from_table(id):
+        if delete_from_table(id, klients):
             id = int(id.get())
             for klient in klients:
                 if klient.get_ID() == id:
@@ -210,9 +211,9 @@ def new_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorNewKlient: If the client with the specified ID is not found.
+            Error.ErrorNewClient: If the client with the specified ID is not found.
         """
-        if Error.delete_from_table(id):
+        if Error.delete_from_table(id, klients):
             try:
                 flag = 0
                 id = int(id.get())
@@ -260,8 +261,8 @@ def new_Klient_Tabel(window_new_klient):
                         break
                 if flag == 0:
                     message = f"Client with ID = {id} not found!"
-                    raise Error.ErrorNewKlient(message)
-            except Error.ErrorNewKlient as e:
+                    raise Error.ErrorNewClient(message)
+            except Error.ErrorNewClient as e:
                 Logger.log_error(file_name, str(e), "Error creating to pro")
 
     # Функция для создания окна удаления клиента
@@ -290,10 +291,10 @@ def new_Klient_Tabel(window_new_klient):
                 button_for_delite.grid(row=2, column=2, padx=5)
                 Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
             else:
-                raise Error.ErrorNewKlient(
+                raise Error.ErrorNewClient(
                     "Please close other windows for work with new klient"
                 )
-        except Error.ErrorNewKlient as e:
+        except Error.ErrorNewClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для добавления нового клиента
@@ -339,10 +340,10 @@ def new_Klient_Tabel(window_new_klient):
                 )
                 delete_button.grid(row=4, column=2, pady=5, padx=5)
             else:
-                raise Error.ErrorNewKlient(
+                raise Error.ErrorNewClient(
                     "Please close other windows for work with new klient"
                 )
-        except Error.ErrorNewKlient as e:
+        except Error.ErrorNewClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для переименования клиента
@@ -374,10 +375,10 @@ def new_Klient_Tabel(window_new_klient):
                 )
                 delete_button.grid(row=5, column=2, pady=5, padx=5)
             else:
-                raise Error.ErrorNewKlient(
+                raise Error.ErrorNewClient(
                     "Please close other windows for work with new klient"
                 )
-        except Error.ErrorNewKlient as e:
+        except Error.ErrorNewClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     def do_pro():
@@ -392,7 +393,7 @@ def new_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorNewKlient: If there are already two or more open windows.
+            Error.ErrorNewClient: If there are already two or more open windows.
         """
         try:
             if len(windows[1]) < 2:
@@ -418,10 +419,10 @@ def new_Klient_Tabel(window_new_klient):
                 )
                 delete_button.grid(row=7, column=2, pady=5, padx=5)
             else:
-                raise Error.ErrorNewKlient(
+                raise Error.ErrorNewClient(
                     "Please close other windows for work with new klient"
                 )
-        except Error.ErrorNewKlient as e:
+        except Error.ErrorNewClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для создания таблицы клиентов

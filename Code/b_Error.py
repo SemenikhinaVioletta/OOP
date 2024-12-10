@@ -81,6 +81,14 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
                         if not j.isalpha():
                             message = "Name must contain only alphabetic characters."
                             raise ErrorNewClient(message)
+
+        if len(phone) > 0:
+            while phone[0] == " ":
+                phone = phone[1:]
+            while phone[-1] == " ":
+                phone = phone[:-1]
+            while " " in phone:
+                phone = phone.replace(" ", "")
         # Validate the phone number
         if len(phone) != 11:
             message = "Phone number must be exactly 11 digits long."
@@ -102,6 +110,11 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
                         message
                     )  # Raise an error if there are issues with the phone number
         # Validate the email address
+
+        if len(email) > 0:
+            while " " in email:
+                email = email.replace(" ", "")
+
         if len(email) < 5:
             message = (
                 'Email must contain at least 5 characters, e.g., "example@domain.com".'
@@ -152,7 +165,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, klients):
 
 
 # Функция для удаления клиента из таблицы
-def delete_from_table(id):
+def delete_from_table(id, klients):
     """
     This function validates and deletes a client from a table based on the provided ID.
 
@@ -182,6 +195,18 @@ def delete_from_table(id):
                 "ID cannot be empty."  # Исправлено на более информативное сообщение
             )
             raise ErrorNewClient(message)
+
+        flag = False
+        for i in klients:
+            if int(id) == i.get_ID():
+                flag = True
+                break
+        if not flag:
+            message = "No client with this ID found in table."
+            raise ErrorNewClient(
+                message
+            )  # Если клиента с таким ID нет в таблице, вызываем исключение
+
         Logger.log_info(
             file_name, "No errors found during ID validation."
         )  # Логируем успешную проверку

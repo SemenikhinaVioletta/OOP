@@ -235,7 +235,7 @@ def chek_kontrakt(kontrakt_entry):
         return False  # Логируем ошибку
 
 
-def chek_id(id):
+def chek_id(id, klients):
     """
     Validates the ID of a client.
 
@@ -266,7 +266,16 @@ def chek_id(id):
                 "ID cannot be empty."  # Исправлено на более информативное сообщение
             )
             raise ErrorProClient(message)
-
+        
+        flag = False
+        for i in klients:
+            if int(id) == i.get_ID():
+                flag = True
+                break
+        if not flag:
+            message = "Client with this ID does not exist."  # Исправлено на более информативное сообщение
+            raise ErrorProClient(message)
+                
         Logger.log_info(file_name, "No errors found during ID validation.")
         return True
     except ErrorProClient as e:

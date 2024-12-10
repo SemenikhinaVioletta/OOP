@@ -89,7 +89,7 @@ def pro_Klient_Tabel(window_new_klient):
         Raises:
             None
         """
-        if Error.chek_id(id):
+        if Error.chek_id(id, pro_klient):
             id = int(id.get())
             for klient in pro_klient:
                 if klient.get_ID() == id:
@@ -118,7 +118,7 @@ def pro_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorProKlient: If there are already two or more open windows.
+            Error.ErrorProClient: If there are already two or more open windows.
         """
         try:
             if len(windows[2]) < 2:
@@ -141,10 +141,10 @@ def pro_Klient_Tabel(window_new_klient):
                 button_for_delite.grid(row=2, column=2, padx=5)
                 Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
             else:
-                raise Error.ErrorProKlient(
+                raise Error.ErrorProClient(
                     "Please close other windows for work with pro klient"
                 )
-        except Error.ErrorProKlient as e:
+        except Error.ErrorProClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для добавления нового клиента
@@ -160,7 +160,7 @@ def pro_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorProKlient: If there are already two or more open windows.
+            Error.ErrorProClient: If there are already two or more open windows.
         """
         try:
             if len(windows[2]) < 2:
@@ -224,10 +224,10 @@ def pro_Klient_Tabel(window_new_klient):
                 )
                 delete_button.grid(row=6, column=2, pady=5, padx=5)
             else:
-                raise Error.ErrorProKlient(
+                raise Error.ErrorProClient(
                     "Please close other windows for work with pro klient"
                 )
-        except Error.ErrorProKlient as e:
+        except Error.ErrorProClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     # Функция для создания таблицы клиентов
@@ -272,9 +272,9 @@ def pro_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorProKlient: If the client with the specified ID is not found.
+            Error.ErrorProClient: If the client with the specified ID is not found.
         """
-        if Error.chek_id(id):
+        if Error.chek_id(id, pro_klient):
             try:
                 flag = 0
                 id = int(id.get())
@@ -342,8 +342,8 @@ def pro_Klient_Tabel(window_new_klient):
                         break
                 if flag == 0:
                     message = f"klient with ID = {id} not found!"
-                    raise Error.ErrorProKlient(message)
-            except Error.ErrorProKlient as e:
+                    raise Error.ErrorProClient(message)
+            except Error.ErrorProClient as e:
                 Logger.log_error(file_name, str(e), "A Error into ID.")
 
     # Функция для переименования клиента
@@ -359,7 +359,7 @@ def pro_Klient_Tabel(window_new_klient):
             None
 
         Raises:
-            Error.ErrorProKlient: If there are already two or more open windows.
+            Error.ErrorProClient: If there are already two or more open windows.
         """
         try:
             if len(windows[2]) < 2:
@@ -385,10 +385,10 @@ def pro_Klient_Tabel(window_new_klient):
                 )
                 delete_button.grid(row=6, column=2, pady=5, padx=5)
             else:
-                raise Error.ErrorProKlient(
+                raise Error.ErrorProClient(
                     "Please close other windows for work with pro klient"
                 )
-        except Error.ErrorProKlient as e:
+        except Error.ErrorProClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
     frame = Win.Frame(master=window_new_klient, relief=Win.SUNKEN)

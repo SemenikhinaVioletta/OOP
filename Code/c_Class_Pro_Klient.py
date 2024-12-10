@@ -349,7 +349,7 @@ class Pro_Klient(New.New_Klient):
         - None
 
         Raises:
-        - Error.ErrorProKlient: If the new name, phone, or email are already associated with other klients.
+        - Error.ErrorProClient: If the new name, phone, or email are already associated with other klients.
         - bd.Error: If an error occurs while interacting with the SQLite database.
         """
         try:
@@ -361,11 +361,16 @@ class Pro_Klient(New.New_Klient):
                         message = (
                             "This element (" + self.get_name() + ") has already been"
                         )
-                        raise Error.ErrorProKlient(message)
+                        raise Error.ErrorProClient(message)
+                self.make_short(name)
                 self.name = name
                 cur.execute(
-                    """UPDATE Klient SET Name = ? WHERE Id_klient = ?""",
+                    """UPDATE Klient SET Name_klient = ? WHERE Id_klient = ?""",
                     (self.get_name(), self.get_ID()),
+                )
+                cur.execute(
+                    """UPDATE Klient SET Short_name = ? WHERE Id_klient = ?""",
+                    (self.get_short_name(), self.get_ID()),
                 )
             if self.get_phone() != phone:
                 for klient in klients:
@@ -375,7 +380,7 @@ class Pro_Klient(New.New_Klient):
                             + str(self.get_phone())
                             + ") has already been"
                         )
-                        raise Error.ErrorProKlient(message)
+                        raise Error.ErrorProClient(message)
                 self.phone = phone
                 cur.execute(
                     """UPDATE Klient SET Phone = ? WHERE Id_klient = ?""",
@@ -393,7 +398,7 @@ class Pro_Klient(New.New_Klient):
                         message = (
                             "This element (" + self.get_email() + ") has already been"
                         )
-                        raise Error.ErrorProKlient(message)
+                        raise Error.ErrorProClient(message)
                 self.email = email
                 cur.execute(
                     """UPDATE Klient SET Mail = ? WHERE Id_klient = ?""",
@@ -401,7 +406,7 @@ class Pro_Klient(New.New_Klient):
                 )
             self.mora = mora
             conn.commit()
-        except Error.ErrorProKlient as e:
+        except Error.ErrorProClient as e:
             Logger(file_name, "Error renaming from Method rename_newklient", str(e))
         except bd.Error as error:
             Logger(file_name, "Error while adding klient to database", error)
