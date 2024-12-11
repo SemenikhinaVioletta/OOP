@@ -13,8 +13,8 @@ def produkt_Table(window_produkt):
     """
     Initializes the product management interface.
 
-    This function creates a user interface for managing products, allowing users to add, rename, 
-    delete, and order products. It sets up the necessary buttons and their associated actions, 
+    This function creates a user interface for managing products, allowing users to add, rename,
+    delete, and order products. It sets up the necessary buttons and their associated actions,
     as well as displaying the current product table.
 
     Args:
@@ -47,14 +47,15 @@ def produkt_Table(window_produkt):
             )
             produkt.enter_produkt_to_bd()
             produkts.append(produkt)
-            make_Table()
+            frame.destroy()
+            produkt_Table(window_produkt)
 
     def make_this(produkt, get_order):
         """
         Processes an order for a product based on the user input.
 
-        This function validates the order quantity and, if valid, updates the product's stock 
-        quantity accordingly. It refreshes the product list and updates the displayed product 
+        This function validates the order quantity and, if valid, updates the product's stock
+        quantity accordingly. It refreshes the product list and updates the displayed product
         table to reflect the changes made.
 
         Args:
@@ -71,9 +72,8 @@ def produkt_Table(window_produkt):
             if Error.check_order(get_order.get()):
                 get_number = produkt.get_number() + int(get_order.get())
                 produkt.order(get_number)
-                produkts.clear()
-                make_array()
-                make_Table()
+                frame.destroy()
+                produkt_Table(window_produkt)
         except Error.ErrorProduct:
             pass
 
@@ -81,8 +81,8 @@ def produkt_Table(window_produkt):
         """
         Updates the details of a product based on user-provided input.
 
-        This function validates the provided product information and, if valid, updates the product's 
-        details in the database. It then refreshes the product list and updates the displayed product 
+        This function validates the provided product information and, if valid, updates the product's
+        details in the database. It then refreshes the product list and updates the displayed product
         table to reflect the changes made.
 
         Args:
@@ -106,16 +106,15 @@ def produkt_Table(window_produkt):
                 int(number_entry.get()),
                 produkts,
             )
-            produkts.clear()
-            make_array()
-            make_Table()
+            frame.destroy()
+            produkt_Table(window_produkt)
 
     def get_text(id, frame_for, wind):
         """
         Retrieves and displays the details of a product based on the provided ID.
 
-        This function validates the product ID and, if found, populates the input fields with the 
-        product's current details, allowing the user to update the information. It raises an error 
+        This function validates the product ID and, if found, populates the input fields with the
+        product's current details, allowing the user to update the information. It raises an error
         if the product ID is not found and handles the closing of the window in case of an error.
 
         Args:
@@ -181,9 +180,9 @@ def produkt_Table(window_produkt):
         """
         Opens a new window for adding a product.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the details of a new product, including name, cost, and quantity in stock. 
-        It provides input fields and buttons for user interaction, while managing errors related 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the details of a new product, including name, cost, and quantity in stock.
+        It provides input fields and buttons for user interaction, while managing errors related
         to window limits.
 
         Args:
@@ -243,8 +242,8 @@ def produkt_Table(window_produkt):
         """
         Deletes a product based on the provided ID after user confirmation.
 
-        This function checks if the product ID exists in the list of products and prompts the user 
-        for confirmation before deleting the product. If confirmed, it removes the product from the 
+        This function checks if the product ID exists in the list of products and prompts the user
+        for confirmation before deleting the product. If confirmed, it removes the product from the
         database and updates the displayed product table.
 
         Args:
@@ -269,15 +268,16 @@ def produkt_Table(window_produkt):
                     if confirm:
                         produkt.delete_produkt_from_bd()
                         produkts.remove(produkt)
-                        make_Table()
+                        frame.destroy()
+                        produkt_Table(window_produkt)
                     break
 
     def delete_element():
         """
         Opens a new window for deleting a product.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the ID of the product to be deleted. It provides input fields and buttons for 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the ID of the product to be deleted. It provides input fields and buttons for
         user interaction, while managing errors related to window limits.
 
         Args:
@@ -320,8 +320,8 @@ def produkt_Table(window_produkt):
         """
         Retrieves and displays the details of a product based on the provided ID.
 
-        This function validates the product ID and, if found, displays the product's current 
-        stock number and allows the user to enter a new cost for the product. It raises an error 
+        This function validates the product ID and, if found, displays the product's current
+        stock number and allows the user to enter a new cost for the product. It raises an error
         if the product ID is not found and handles the closing of the window in case of an error.
 
         Args:
@@ -376,8 +376,8 @@ def produkt_Table(window_produkt):
         """
         Opens a new window for renaming a product.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the ID of the product to be renamed. It provides input fields and buttons for 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the ID of the product to be renamed. It provides input fields and buttons for
         user interaction, while managing errors related to window limits.
 
         Args:
@@ -423,8 +423,8 @@ def produkt_Table(window_produkt):
         """
         Opens a new window for ordering a product.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the ID of the product to be ordered. It provides input fields and buttons for 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the ID of the product to be ordered. It provides input fields and buttons for
         user interaction, while managing errors related to window limits.
 
         Args:
@@ -466,34 +466,7 @@ def produkt_Table(window_produkt):
         except Error.ErrorProduct as e:
             Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    def make_Table():
-        """
-        Creates and displays a table for product information.
-
-        This function initializes a Treeview widget to present product details such as ID, name, 
-        cost per copy, and the number of copies in stock. It populates the table with data from 
-        the list of products and adds a vertical scrollbar for navigation.
-
-        Args:
-            None
-
-        Returns:
-            None
-        """
-        columns = ("ID", "Name", "Cost of one copy", "Copies in stock")
-        table_produkt = Win.ttk.Treeview(frame, columns=columns, show="headings")
-        table_produkt.grid(row=1, column=1, sticky="nsew", rowspan=10)
-        table_produkt.heading("ID", text="ID", anchor=Win.W)
-        table_produkt.heading("Name", text="Name", anchor=Win.W)
-        table_produkt.heading("Cost of one copy", text="Cost of one copy", anchor=Win.W)
-        table_produkt.heading("Copies in stock", text="Copies in stock", anchor=Win.W)
-        table_produkt.column("#1", stretch=Win.NO, width=50)
-        for produkt in produkts:
-            table_produkt.insert("", Win.END, values=produkt.get())
-        scrollbar = Win.ttk.Scrollbar(
-            frame, orient=Win.VERTICAL, command=table_produkt.yview
-        )
-
+    global frame
     frame = Win.Frame(master=window_produkt, relief=Win.SUNKEN)
     frame.pack(expand=True)
     add_prod = Win.Button(frame, text="Add Produkt", command=add_produkt)
@@ -510,6 +483,7 @@ def produkt_Table(window_produkt):
         command=(lambda: Win.end(3)),
     )
     close_table.grid(row=5, column=2, padx=10, pady=10)
+    make_array()
     make_Table()
 
 
@@ -527,6 +501,8 @@ def make_array():
     - Populates the global list 'produkts' with Produkt objects.
     - Closes the database cursor.
     """
+    global produkts
+    produkts = []
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Produkts")
@@ -535,6 +511,35 @@ def make_array():
         produkt = prod.Produkt(int(line[0]), str(line[1]), int(line[2]), int(line[3]))
         produkts.append(produkt)
     cursor.close()
+
+
+def make_Table():
+    """
+    Creates and displays a table for product information.
+
+    This function initializes a Treeview widget to present product details such as ID, name,
+    cost per copy, and the number of copies in stock. It populates the table with data from
+    the list of products and adds a vertical scrollbar for navigation.
+
+    Args:
+        None
+
+    Returns:
+    None
+    """
+    columns = ("ID", "Name", "Cost of one copy", "Copies in stock")
+    table_produkt = Win.ttk.Treeview(frame, columns=columns, show="headings")
+    table_produkt.grid(row=1, column=1, sticky="nsew", rowspan=10)
+    table_produkt.heading("ID", text="ID", anchor=Win.W)
+    table_produkt.heading("Name", text="Name", anchor=Win.W)
+    table_produkt.heading("Cost of one copy", text="Cost of one copy", anchor=Win.W)
+    table_produkt.heading("Copies in stock", text="Copies in stock", anchor=Win.W)
+    table_produkt.column("#1", stretch=Win.NO, width=50)
+    for produkt in produkts:
+        table_produkt.insert("", Win.END, values=produkt.get())
+    scrollbar = Win.ttk.Scrollbar(
+        frame, orient=Win.VERTICAL, command=table_produkt.yview
+    )
 
 
 def do_product(flag, window_produkt):
@@ -548,9 +553,6 @@ def do_product(flag, window_produkt):
     Returns:
     None
     """
-    global produkts
-    produkts = []
-    make_array()
     if flag == 1:
         produkt_Table(window_produkt)
     else:

@@ -2,10 +2,14 @@ import a_Window as WindowModule
 import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
+
+#import e_Error as ContractError
 from f_Class_Status_Client import make_status
 from c_proClient import do_pro_client
 from b_newClient import do_new_client
 from d_Produkt import do_product
+
+#from e_Contact import do_contact
 from a_Log import Logger
 from a_Global_Per import windows
 
@@ -32,17 +36,14 @@ def on_selection(event):
     Logger.log_info(
         file_name, f"Method on_selection - selected option: {selected_option}\n"
     )
-    label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
-    new_window_button = WindowModule.Button(
-        frame,
-        text="Open table",
-    )
-
+    frame.destroy()
+    set_frame()
     if selected_option == "New clients":
         Logger.log_info(file_name, f"Starting New client process...")
         Logger.log_info(
             file_name, f"Entering handle_new_client with message: {selected_option}"
         )
+        label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
         new_window_button = WindowModule.Button(
             frame, text="Open table", command=lambda: start_new_client(1)
         )
@@ -53,6 +54,7 @@ def on_selection(event):
         Logger.log_info(
             file_name, f"Entering handle_new_client with message: {selected_option}"
         )
+        label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
         new_window_button = WindowModule.Button(
             frame, text="Open table", command=lambda: start_pro_client(1)
         )
@@ -63,16 +65,19 @@ def on_selection(event):
         Logger.log_info(
             file_name, f"Entering handle_new_client with message: {selected_option}"
         )
+        label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
         new_window_button = WindowModule.Button(
             frame, text="Open table", command=lambda: start_products(1)
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
+        frame.deletecommand(label)
     elif selected_option == "Contracts":
         Logger.log_info(file_name, "No method available for selection")
         Logger.log_info(
             file_name, f"Entering handle_new_client with message: {selected_option}"
         )
+        label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
         new_window_button = WindowModule.Button(
             frame, text="Open table", state=["disabled"]
         )
@@ -83,6 +88,7 @@ def on_selection(event):
         Logger.log_info(
             file_name, f"Entering handle_new_client with message: {selected_option}"
         )
+        label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
         new_window_button = WindowModule.Button(
             frame, text="Open table", state=["disabled"]
         )
@@ -157,6 +163,7 @@ def start_pro_client(flag):
 
 # --------------------------------------------------------------------------------------------------------------------------------
 
+
 def start_products(flag: int) -> None:
     """
     This function starts a product window based on the provided flag.
@@ -189,6 +196,22 @@ def start_products(flag: int) -> None:
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
+"""
+def start_contract(flag):
+    try:
+        if len(windows[4]) != 0:
+            raise ProductError.ErrorProduct("This window is already open.")
+        Logger.log_info(file_name, f"Opening contract window with flag: {flag}")
+        wind = WindowModule.Window("Contracts", "1000x300")
+        wind.make_protokol(lambda: WindowModule.end(4))
+        windows[4].append(wind)
+        do_contract(flag, wind)
+    except ContractError.ErrorProduct as e:
+        Logger.log_error(
+            file_name, "An error occurred while opening the window", str(e)
+        )
+"""
+# --------------------------------------------------------------------------------------------------------------------------------
 
 
 def start():
@@ -201,29 +224,53 @@ def start():
     window.open()
 
 
+def set_frame():
+    """
+    This function sets up the main frame for the application's user interface.
+    It creates a frame, a label, a combobox, and a button, and configures their layout and behavior.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
+    global frame
+    frame = WindowModule.Frame(master=window, relief=WindowModule.SUNKEN)
+    frame.pack(expand=True)
+    method_label = WindowModule.Label(
+        frame, text="Select the table you will work with:"
+    )
+
+    methods = [
+        "Pro clients",
+        "New clients",
+        "Contracts",
+        "Products",
+    ]
+
+    global combobox
+    combobox = WindowModule.Combobox(frame, values=methods, width=30, state="readonly")
+    method_label.grid(row=1, column=1)
+
+    combobox.grid(row=2, column=1, pady=10)
+    combobox.set("Nothing selected")
+    combobox.bind("<<ComboboxSelected>>", on_selection)
+    button_to_end = WindowModule.Button(
+        frame,
+        text="End all",
+        command=lambda: WindowModule.end(0),
+    )
+    button_to_end.grid(row=5, column=1, pady=10)
+
+
+
 # --------------------------------------------------------------------------------------------------------------------------------
 
 window.make_protokol(lambda: WindowModule.end(0))
 windows[0].append(window)
-frame = WindowModule.Frame(master=window, relief=WindowModule.SUNKEN)
-frame.pack(expand=True)
-method_label = WindowModule.Label(frame, text="Select the table you will work with:")
-method_label.grid(row=1, column=1)
-methods = [
-    "Pro clients",
-    "New clients",
-    "Contracts",
-    "Products",
-]
-combobox = WindowModule.Combobox(frame, values=methods, width=30, state="readonly")
-combobox.grid(row=2, column=1, pady=10)
-combobox.set("Nothing selected")
-combobox.bind("<<ComboboxSelected>>", on_selection)
-button_to_end = WindowModule.Button(
-    frame,
-    text="End all",
-    command=lambda: WindowModule.end(0),
-)
-button_to_end.grid(row=5, column=1, pady=10)
+
+
+set_frame()
 make_status()
 start()

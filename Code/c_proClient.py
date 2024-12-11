@@ -9,12 +9,12 @@ from a_Log import Logger
 file_name = "File proClient"
 
 
-def pro_client_Tabel(window_new_Client):
+def pro_client_Table(window_new_Client):
     """
     Initializes the professional client management interface.
 
-    This function creates a user interface for managing professional clients, allowing users to 
-    add, rename, and delete client entries. It sets up the necessary buttons and their associated 
+    This function creates a user interface for managing professional clients, allowing users to
+    add, rename, and delete client entries. It sets up the necessary buttons and their associated
     actions, as well as displaying the current client table.
 
     Args:
@@ -23,13 +23,13 @@ def pro_client_Tabel(window_new_Client):
     Returns:
         None
     """
-    
+
     def take_this(name_entry, phone_entry, email_entry, mora_entry, status_entry):
         """
         Creates a new professional client entry based on user-provided details and adds it to the database.
 
-        This function validates the provided client information and, if valid, creates a new 
-        professional client object and saves it to the database. It handles the conversion of 
+        This function validates the provided client information and, if valid, creates a new
+        professional client object and saves it to the database. It handles the conversion of
         input values and ensures that the mora value defaults to zero if not provided.
 
         Args:
@@ -68,15 +68,16 @@ def pro_client_Tabel(window_new_Client):
 
             Client.enter_client_to_db()
             pro_client.append(Client)
-            make_Table()
+            frame.destroy()
+            pro_client_Table(window_new_Client)
 
     # Функция для изменения данных существующего клиента
     def do_this(Client, name_entry, phone_entry, email_entry, mora_entry, status_entry):
         """
         Updates a professional client's information and adds it to the client table.
 
-        This function validates the provided client details and, if valid, updates the client's 
-        information in the database. It then refreshes the displayed client table to reflect the 
+        This function validates the provided client details and, if valid, updates the client's
+        information in the database. It then refreshes the displayed client table to reflect the
         changes made.
 
         Args:
@@ -108,15 +109,16 @@ def pro_client_Tabel(window_new_Client):
             email = str(email_entry.get())
             status = int(status_entry)
             Client.rename_proClient(name, mora, phone, email, status, pro_client)
-            make_Table()
+            frame.destroy()
+            pro_client_Table(window_new_Client)
 
     # Функция для удаления клиента
     def id_for_delite(id):
         """
         Deletes a professional client based on the provided ID after user confirmation.
 
-        This function checks if the client ID exists in the list of professional clients and prompts 
-        the user for confirmation before deleting the client. If confirmed, it removes the client from 
+        This function checks if the client ID exists in the list of professional clients and prompts
+        the user for confirmation before deleting the client. If confirmed, it removes the client from
         the database and updates the displayed client table.
 
         Args:
@@ -141,7 +143,8 @@ def pro_client_Tabel(window_new_Client):
                     if confirm:
                         Client.delete_Client_from_bd()
                         pro_client.remove(Client)
-                        make_Table()
+                        frame.destroy()
+                        pro_client_Table(window_new_Client)
                     break
 
     # Функция для создания окна удаления клиента
@@ -149,8 +152,8 @@ def pro_client_Tabel(window_new_Client):
         """
         Opens a new window for deleting a professional client.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the ID of the client to be deleted. It provides input fields and buttons for 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the ID of the client to be deleted. It provides input fields and buttons for
         user interaction, while managing errors related to window limits.
 
         Args:
@@ -194,9 +197,9 @@ def pro_client_Tabel(window_new_Client):
         """
         Opens a new window for adding a professional client.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the details of a new professional client, including name, phone number, email, 
-        mora, and status. It provides input fields and buttons for user interaction, while managing 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the details of a new professional client, including name, phone number, email,
+        mora, and status. It provides input fields and buttons for user interaction, while managing
         errors related to window limits.
 
         Args:
@@ -276,43 +279,12 @@ def pro_client_Tabel(window_new_Client):
         except Error.ErrorProClient as e:
             Logger.log_error(file_name, "Error with opend windows.", str(e))
 
-    # Функция для создания таблицы клиентов
-    def make_Table():
-        """
-        Creates and displays a table for professional client information.
-
-        This function initializes a Treeview widget to present client details such as ID, name, 
-        mora, phone number, email, and status. It populates the table with data from the list of 
-        professional clients and adds a vertical scrollbar for navigation.
-
-        Args:
-            None
-
-        Returns:
-            None
-        """
-        columns = ("ID", "Name", "Mora", "Phone", "Mail", "Status")
-        table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
-        table_new_Client.grid(row=1, column=1, sticky="nsew", rowspan=10)
-        table_new_Client.heading("ID", text="ID", anchor=Win.W)
-        table_new_Client.heading("Name", text="Name", anchor=Win.W)
-        table_new_Client.heading("Mora", text="Mora", anchor=Win.W)
-        table_new_Client.heading("Phone", text="Phone", anchor=Win.W)
-        table_new_Client.heading("Mail", text="Mail", anchor=Win.W)
-        table_new_Client.heading("Status", text="Status", anchor=Win.W)
-        table_new_Client.column("#1", stretch=Win.NO, width=50)
-        for Client in pro_client:
-            table_new_Client.insert("", Win.END, values=Client.get())
-        scrollbar = Win.ttk.Scrollbar(
-            frame, orient=Win.VERTICAL, command=table_new_Client.yview
-        )
-
     def get_text(id, frame_for):
         """
         Retrieves and displays the information of a professional client based on the provided ID.
 
-        This function validates the client ID and, if found, populates the input fields with the 
-        client's current details, allowing the user to update the information. It raises an error 
+        This function validates the client ID and, if found, populates the input fields with the
+        client's current details, allowing the user to update the information. It raises an error
         if the client ID is not found and logs the error accordingly.
 
         Args:
@@ -403,8 +375,8 @@ def pro_client_Tabel(window_new_Client):
         """
         Opens a new window for renaming a professional client.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the ID of the client to be renamed. It provides input fields and buttons for 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the ID of the client to be renamed. It provides input fields and buttons for
         user interaction, while managing errors related to window limits.
 
         Args:
@@ -446,6 +418,7 @@ def pro_client_Tabel(window_new_Client):
         except Error.ErrorProClient as e:
             Logger.log_error(file_name, "Error with opend windows.", str(e))
 
+    global frame
     frame = Win.Frame(master=window_new_Client, relief=Win.SUNKEN)
     frame.pack(expand=True)
     add_new_Client = Win.Button(frame, text="Add Client", command=add_new)
@@ -460,6 +433,7 @@ def pro_client_Tabel(window_new_Client):
         command=(lambda: Win.end(1)),
     )
     close_table.grid(row=4, column=2, padx=10, pady=10)
+    make_array()
     make_Table()
 
 
@@ -479,6 +453,8 @@ def make_array():
     - Modifies the global variable 'pro_client' by appending Pro_Client objects to it.
     - Closes the database cursor after fetching all records.
     """
+    global pro_client
+    pro_client = []
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Client")
@@ -497,6 +473,39 @@ def make_array():
         pro_client.append(Client)
     cursor.close()
 
+    # Функция для создания таблицы клиентов
+
+
+def make_Table():
+    """
+    Creates and displays a table for professional client information.
+
+    This function initializes a Treeview widget to present client details such as ID, name,
+    mora, phone number, email, and status. It populates the table with data from the list of
+    professional clients and adds a vertical scrollbar for navigation.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    columns = ("ID", "Name", "Mora", "Phone", "Mail", "Status")
+    table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
+    table_new_Client.grid(row=1, column=1, sticky="nsew", rowspan=10)
+    table_new_Client.heading("ID", text="ID", anchor=Win.W)
+    table_new_Client.heading("Name", text="Name", anchor=Win.W)
+    table_new_Client.heading("Mora", text="Mora", anchor=Win.W)
+    table_new_Client.heading("Phone", text="Phone", anchor=Win.W)
+    table_new_Client.heading("Mail", text="Mail", anchor=Win.W)
+    table_new_Client.heading("Status", text="Status", anchor=Win.W)
+    table_new_Client.column("#1", stretch=Win.NO, width=50)
+    for Client in pro_client:
+        table_new_Client.insert("", Win.END, values=Client.get())
+    scrollbar = Win.ttk.Scrollbar(
+        frame, orient=Win.VERTICAL, command=table_new_Client.yview
+    )
+
 
 def do_pro_client(flag, window_pro_client):
     """
@@ -510,11 +519,9 @@ def do_pro_client(flag, window_pro_client):
     Returns:
     None
     """
-    global pro_client
-    pro_client = []
     make_array()
     if flag == 1:
-        pro_client_Tabel(window_pro_client)
+        pro_client_Table(window_pro_client)
     else:
         Logger(
             file_name, "Error in creating pro Client", "Invalid flag in do_new_Client"

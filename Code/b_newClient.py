@@ -15,8 +15,8 @@ def new_Client_Tabel(window_new_Client):
     """
     Creates a new client entry based on user-provided details and updates the database.
 
-    This function adds the new client information to the table and creates a new client object 
-    with the specified name, phone number, and email. It then saves the client to the database 
+    This function adds the new client information to the table and creates a new client object
+    with the specified name, phone number, and email. It then saves the client to the database
     and refreshes the client list and displayed table.
 
     Args:
@@ -27,6 +27,7 @@ def new_Client_Tabel(window_new_Client):
     Returns:
         None
     """
+
     def take_this(name_entry, phone_entry, email_entry):
         if add_new_to_table(name_entry, phone_entry, email_entry, Clients):
             Client = New.New_Client(
@@ -37,15 +38,15 @@ def new_Client_Tabel(window_new_Client):
             )
             Client.enter_Client_to_bd()
             Clients.clear()
-            make_array()
-            make_Table()
+            frame.destroy()
+            new_Client_Tabel(window_new_Client)
 
     def do_this(Client, name_entry, phone_entry, email_entry):
         """
         Updates a client's information with new details provided by the user.
 
-        This function adds the new client details to the table and renames the existing client 
-        with the updated information. It refreshes the client list and updates the displayed table 
+        This function adds the new client details to the table and renames the existing client
+        with the updated information. It refreshes the client list and updates the displayed table
         after the changes are made.
 
         Args:
@@ -65,15 +66,15 @@ def new_Client_Tabel(window_new_Client):
                 Clients,
             )
             Clients.clear()
-            make_array()
-            make_Table()
+            frame.destroy()
+            new_Client_Tabel(window_new_Client)
 
     def make_this(Client, mora_entry, status_entry):
         """
         Processes the promotion of a client to a pro client and updates the database.
 
-        This function checks for existing clients with the same phone number or email before 
-        promoting the specified client. If validation passes, it creates a new pro client entry 
+        This function checks for existing clients with the same phone number or email before
+        promoting the specified client. If validation passes, it creates a new pro client entry
         in the database and updates the displayed client table.
 
         Args:
@@ -114,7 +115,8 @@ def new_Client_Tabel(window_new_Client):
                 id = Win.Entry()
                 id.insert(0, str(Client.get_ID()))
                 id_for_delite(id)
-                make_Table()
+                frame.destroy()
+                new_Client_Tabel(window_new_Client)
         except Error.ErrorNewClient as e:
             Logger.log_error(file_name, "Error with already", str(e))
         except bd.Error as error:
@@ -127,8 +129,8 @@ def new_Client_Tabel(window_new_Client):
         """
         Displays input fields for updating a client's information based on the provided ID.
 
-        This function retrieves the client's current details and populates the input fields for 
-        the user to enter new values. It handles errors related to client ID validation and updates 
+        This function retrieves the client's current details and populates the input fields for
+        the user to enter new values. It handles errors related to client ID validation and updates
         the client information upon confirmation.
 
         Args:
@@ -194,8 +196,8 @@ def new_Client_Tabel(window_new_Client):
         """
         Deletes a client from the database based on the provided ID.
 
-        This function checks if the client ID exists in the Clients list and prompts the user for 
-        confirmation before deleting the client. If confirmed, it removes the client from the database 
+        This function checks if the client ID exists in the Clients list and prompts the user for
+        confirmation before deleting the client. If confirmed, it removes the client from the database
         and updates the displayed client table.
 
         Args:
@@ -216,15 +218,16 @@ def new_Client_Tabel(window_new_Client):
                     if confirm:
                         Client.delete_Client_from_bd()
                         Clients.remove(Client)
-                        make_Table()
+                        frame.destroy()
+                        new_Client_Tabel(window_new_Client)
                     break
 
     def id_for_pro(id, frame_for):
         """
         Processes the ID of a client to promote them to a pro client.
 
-        This function checks if the client ID exists in the Clients list and, if found, displays 
-        the client's details along with input fields for additional information required for promotion. 
+        This function checks if the client ID exists in the Clients list and, if found, displays
+        the client's details along with input fields for additional information required for promotion.
         It handles errors related to client ID validation and updates.
 
         Args:
@@ -293,8 +296,8 @@ def new_Client_Tabel(window_new_Client):
         """
         Opens a new window for deleting a client.
 
-        This function checks the number of open windows and, if appropriate, creates a new window 
-        for entering the ID of the client to be deleted. It provides input fields and buttons for 
+        This function checks the number of open windows and, if appropriate, creates a new window
+        for entering the ID of the client to be deleted. It provides input fields and buttons for
         user interaction, while managing errors related to window limits.
 
         Args:
@@ -489,33 +492,7 @@ def new_Client_Tabel(window_new_Client):
         except Error.ErrorNewClient as e:
             Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
 
-    def make_Table():
-        """
-        Creates and displays a table for new client information.
-
-        This function initializes a Treeview widget to present client details such as ID, name, phone, and email.
-        It populates the table with data from the Clients collection and adds a vertical scrollbar for navigation.
-
-        Args:
-            None
-
-        Returns:
-            None
-        """
-        columns = ("ID", "Name", "Phone", "Mail")
-        table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
-        table_new_Client.grid(row=1, column=1, sticky="nsew", rowspan=10)
-        table_new_Client.heading("ID", text="ID", anchor=Win.W)
-        table_new_Client.heading("Name", text="Name", anchor=Win.W)
-        table_new_Client.heading("Phone", text="Phone", anchor=Win.W)
-        table_new_Client.heading("Mail", text="Mail", anchor=Win.W)
-        table_new_Client.column("#1", stretch=Win.NO, width=50)
-        for Client in Clients:
-            table_new_Client.insert("", Win.END, values=Client.get())
-        scrollbar = Win.ttk.Scrollbar(
-            frame, orient=Win.VERTICAL, command=table_new_Client.yview
-        )
-
+    global frame
     frame = Win.Frame(master=window_new_Client, relief=Win.SUNKEN)
     frame.pack(expand=True)
     add_new_Client = Win.Button(frame, text="Add Client", command=add_new)
@@ -532,6 +509,7 @@ def new_Client_Tabel(window_new_Client):
         command=(lambda: Win.end(2)),
     )
     close_table.grid(row=5, column=2, padx=10, pady=10)
+    make_array()
     make_Table()
 
 
@@ -547,6 +525,8 @@ def make_array():
     Returns:
     None
     """
+    global Clients
+    Clients = []
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Client_new")
@@ -555,6 +535,34 @@ def make_array():
         Client = New.New_Client(int(line[0]), str(line[1]), int(line[2]), str(line[3]))
         Clients.append(Client)
     cursor.close()
+
+
+def make_Table():
+    """
+    Creates and displays a table for new client information.
+
+    This function initializes a Treeview widget to present client details such as ID, name, phone, and email.
+    It populates the table with data from the Clients collection and adds a vertical scrollbar for navigation.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    columns = ("ID", "Name", "Phone", "Mail")
+    table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
+    table_new_Client.grid(row=1, column=1, sticky="nsew", rowspan=10)
+    table_new_Client.heading("ID", text="ID", anchor=Win.W)
+    table_new_Client.heading("Name", text="Name", anchor=Win.W)
+    table_new_Client.heading("Phone", text="Phone", anchor=Win.W)
+    table_new_Client.heading("Mail", text="Mail", anchor=Win.W)
+    table_new_Client.column("#1", stretch=Win.NO, width=50)
+    for Client in Clients:
+        table_new_Client.insert("", Win.END, values=Client.get())
+    scrollbar = Win.ttk.Scrollbar(
+        frame, orient=Win.VERTICAL, command=table_new_Client.yview
+    )
 
 
 def do_new_client(flag, window_new_Client):
@@ -568,9 +576,6 @@ def do_new_client(flag, window_new_Client):
     Returns:
     None
     """
-    global Clients
-    Clients = []
-    make_array()
     if flag == 1:
         new_Client_Tabel(window_new_Client)
     else:
