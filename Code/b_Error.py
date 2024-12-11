@@ -170,16 +170,17 @@ def chek_mail(email):
                 if email[i] == "@":
                     break
             if (
-                email[i:].count("") != 1
+                email[i:].count(".") != 1
                 or email[i + 1] == ""
                 or i >= len(email) - 3
                 or i == 0
             ):
+                message = 'Email must contain at least one character after "@", e.g., "example@domain.com".'
                 raise ErrorNewClient(message)
         Logger.log_info(file_name, "No errors found during validation")
         return True
     except ErrorNewClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation")
+        Logger.log_error(file_name, "An error occurred during validation", str(e))
         return False
 
 
@@ -218,7 +219,7 @@ def add_new_to_table(name_entry, phone_entry, email_entry, Clients):
             Logger.log_info(file_name, "No errors found during validation")
             return True
     except ErrorNewClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation")
+        Logger.log_error(file_name, "An error occurred during validation", str(e))
         return False
 
 
@@ -264,5 +265,5 @@ def delete_from_table(id, Clients):
         Logger.log_info(file_name, "No errors found during ID validation")
         return True
     except ErrorNewClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during ID validation")
+        Logger.log_error(file_name, "An error occurred during ID validation", str(e))
         return False

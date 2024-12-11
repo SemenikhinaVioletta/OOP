@@ -130,7 +130,7 @@ def check_price(price):
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
     except ErrorProduct as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -155,7 +155,7 @@ def check_name(name):
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
     except ErrorProduct as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -188,7 +188,7 @@ def check_order(order):
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
     except ErrorProduct as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -225,7 +225,7 @@ def check_Id(id, produkts):
         Logger.log_info(file_name, "NO errors found during status validation.")
         return True
     except ErrorProduct as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 

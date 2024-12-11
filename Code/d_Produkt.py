@@ -236,7 +236,7 @@ def produkt_Table(window_produkt):
                     "Please close other windows for work with new produkt"
                 )
         except Error.ErrorProduct as e:
-            Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def id_for_delite(id):
         """
@@ -314,7 +314,7 @@ def produkt_Table(window_produkt):
                     "Please close other windows for work with new produkt"
                 )
         except Error.ErrorProduct as e:
-            Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def get_number(ID_entry, frame_for, wind):
         """
@@ -417,7 +417,7 @@ def produkt_Table(window_produkt):
                     "Please close other windows for work with new produkt"
                 )
         except Error.ErrorProduct as e:
-            Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def order():
         """
@@ -464,7 +464,7 @@ def produkt_Table(window_produkt):
                     "Please close other windows for work with new produkt"
                 )
         except Error.ErrorProduct as e:
-            Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     global frame
     frame = Win.Frame(master=window_produkt, relief=Win.SUNKEN)

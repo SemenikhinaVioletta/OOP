@@ -290,7 +290,7 @@ def new_Client_Tabel(window_new_Client):
                     message = f"Client with ID = {id} not found!"
                     raise Error.ErrorNewClient(message)
             except Error.ErrorNewClient as e:
-                Logger.log_error(file_name, str(e), "Error creating to pro")
+                Logger.log_error(file_name, "Error creating to pro", str(e))
 
     def delete_element():
         """
@@ -334,7 +334,7 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def add_new():
         """
@@ -396,7 +396,7 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def rename():
         """
@@ -443,7 +443,7 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def do_pro():
         """
@@ -490,7 +490,7 @@ def new_Client_Tabel(window_new_Client):
                     "Please close other windows for work with new Client"
                 )
         except Error.ErrorNewClient as e:
-            Error.Logger.log_error(file_name, str(e), "Error with opend windows.")
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     global frame
     frame = Win.Frame(master=window_new_Client, relief=Win.SUNKEN)

@@ -89,7 +89,7 @@ def chek_name(name_entry):
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -126,7 +126,7 @@ def chek_phone(phone_entry):
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -177,7 +177,7 @@ def chek_email(email_entry):
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -207,7 +207,7 @@ def chek_mora(mora_entry):
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -239,7 +239,7 @@ def chek_Contract(Contract_entry):
         return True
 
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during validation.")
+        Logger.log_error(file_name, "An error occurred during validation.", str(e))
         return False
 
 
@@ -282,7 +282,7 @@ def chek_id(id, Clients):
         Logger.log_info(file_name, "No errors found during ID validation.")
         return True
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during ID validation.")
+        Logger.log_error(file_name, "An error occurred during ID validation.", str(e))
         return False
 
 
@@ -315,7 +315,7 @@ def chek_status(status):
 
     except ErrorProClient as e:
         Logger.log_error(
-            file_name, str(e), "An error occurred during status validation."
+            file_name, "An error occurred during status validation.", str(e)
         )
         return False
 
@@ -360,5 +360,5 @@ def add_pro_to_table(
             Logger.log_info(file_name, "NO errors found during status validation.")
             return True
     except ErrorProClient as e:
-        Logger.log_error(file_name, str(e), "An error occurred during ID validation.")
+        Logger.log_error(file_name, "An error occurred during ID validation.", str(e))
         return False

@@ -50,7 +50,7 @@ class Pro_Client(New.New_Client):
         self.set_contract(contract)
         if client is not None:
             self.ID = client.ID
-            self.name = client.client_name
+            self.name = client.name
             self.phone = client.phone
             self.email = client.email
         else:
