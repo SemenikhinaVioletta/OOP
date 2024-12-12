@@ -71,7 +71,6 @@ def on_selection(event):
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
-        frame.deletecommand(label)
     elif selected_option == "Contracts":
         Logger.log_info(file_name, "No method available for selection")
         Logger.log_info(
