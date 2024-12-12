@@ -2,6 +2,7 @@ import a_Window as WindowModule
 import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
+
 # import e_Error as ContractError
 from a_Log import Logger
 from a_Global_Per import windows
@@ -81,7 +82,8 @@ def on_selection(event):
         new_window_button = WindowModule.Button(
             frame,
             text="Open table",
-            command=lambda: start_contract(1),  # state=["disabled"]
+            command=lambda: start_contract(1),
+            state=["disabled"],
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
