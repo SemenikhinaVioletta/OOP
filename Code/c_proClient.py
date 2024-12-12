@@ -144,7 +144,7 @@ def pro_client_Table(window_new_Client):
                         parent=windows[1][-1],
                     )
                     if confirm:
-                        Client.delete_Client_from_bd()
+                        Client.delete_client_from_db()
                         pro_client.remove(Client)
                         frame.destroy()
                         pro_client_Table(window_new_Client)

@@ -4,6 +4,7 @@ import sqlite3 as db
 import c_Error as Error
 from a_Log import Logger
 from a_Global_Per import database, client_statuses
+from e_Contract import contracts
 
 
 file_name = "File Class_Pro_Client"
@@ -124,10 +125,12 @@ class Pro_Client(New.New_Client):
 
         The function modifies the 'contract' attribute of the client instance.
         """
-        contracts = list(map(int, contract.split()))
-        for i in contracts:
-            if i not in self.contract:
-                self.contract.append(i)
+        Contracts = list(map(int, contract.split()))
+        for i in Contracts:
+            for id in contracts:
+                if str(id.get_ID()) == i:
+                    self.contract.append(id)
+                    break
 
     def get_client_id(self):
         """
@@ -323,10 +326,17 @@ class Pro_Client(New.New_Client):
             sqlite_connection = db.connect(database)
             cursor = sqlite_connection.cursor()
             cursor.execute(
-                """DELETE FROM Client WHERE Client_ID = ?""",
+                """DELETE FROM Client WHERE Id_Client = ?""",
                 (self.get_client_id(),),
             )
             sqlite_connection.commit()
+            for contract in contracts:
+                if contract.client.get_ID() == self.get_client_id():
+                    contract.client = None
+                    cursor.execute(
+                        """UPDATE Contracts SET ID_klient = ? WHERE ID_contract = ?""",
+                        (str(self.get_client_id()), str(contract.get_ID)),
+                    )
             logger.log_info(
                 file_name, f"Client deleted from database: ID: {self.get_client_id()}"
             )

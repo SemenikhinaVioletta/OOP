@@ -28,7 +28,7 @@ class Contract:
         Returns:
         None
         """
-        self.client = pro.Pro_Client(0, "N N N", 0, "", 0, "", 1, None)
+        self.client = pro.Pro_Client(0, "- - -", 0, "", 0, "", 1, None)
         self.set_clients(ID_klient)
         self.ID = ID
         self.set_status(status)
@@ -54,8 +54,8 @@ class Contract:
         None
         """
         p = products.split()
-        for produkt in produkts:
-            for id in p:
+        for id in p:
+            for produkt in produkts:
                 if str(id) == str(produkt.get_ID()):
                     self.products.append(produkt)
                     break
@@ -78,20 +78,20 @@ class Contract:
                 self.client = id
                 break
 
-    def get_client_id(self):
-        return self.client.get_ID()
-
-    def get_client_name(self):
-        return self.client.get_name()
-
     def set_status(self, status):
         for stat in contract_statuses:
             if stat.get_ID() == status:
                 self.status = stat
                 break
 
+    def set_mora(self):
+        self.mora = 0
+        for produkt in self.products:
+            self.mora += produkt.get_mora()
+
     def add_product(self, produkt):
         self.products.append(produkt)
+        self.mora += produkt.get_mora()
 
     def remove_product(self, produkt):
         self.products.remove(produkt)
@@ -101,6 +101,12 @@ class Contract:
 
     def get_status(self):
         return self.status.get_ID()
+
+    def get_client_id(self):
+        return self.client.get_ID()
+
+    def get_client_name(self):
+        return self.client.get_name()
 
     def get_produkts(self):
         produkts = ""
@@ -116,11 +122,6 @@ class Contract:
 
     def get_mora(self):
         return int(self.mora)
-
-    def set_mora(self):
-        self.mora = 0
-        for produkt in self.products:
-            self.mora += produkt.get_mora()
 
     def get_data_start(self):
         """

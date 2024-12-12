@@ -6,6 +6,7 @@ from a_Log import Logger
 from a_Global_Per import database, windows
 
 file_name = "File Contract"
+contracts = []
 
 
 def contract_Table(window_contract):
@@ -32,8 +33,7 @@ def contract_Table(window_contract):
     make_Table()
 
 def make_array():
-    global contracts
-    contracts = []
+    contracts.clear()
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Contracts")

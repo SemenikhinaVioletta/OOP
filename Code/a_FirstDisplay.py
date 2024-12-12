@@ -2,20 +2,17 @@ import a_Window as WindowModule
 import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
-
 # import e_Error as ContractError
-from f_Class_Status_Client import make_status
-from c_proClient import do_pro_client
-from b_newClient import do_new_client
-from d_Produkt import do_product
-
-from e_Contract import do_contract
 from a_Log import Logger
 from a_Global_Per import windows
-from d_Produkt import produkts
-from d_Produkt import make_array as make_products
-from c_proClient import pro_client
+from b_newClient import do_new_client
+from c_proClient import do_pro_client, pro_client
 from c_proClient import make_array as make_clients
+from d_Produkt import do_product, produkts
+from d_Produkt import make_array as make_products
+from e_Contract import do_contract
+from e_Contract import make_array as make_contrakts
+from f_Class_Status_Client import make_status
 
 
 file_name = "File FirstDisplay"
@@ -278,7 +275,8 @@ windows[0].append(window)
 
 
 set_frame()
+make_status()
 make_clients()
 make_products()
-make_status()
+make_contrakts()
 start()
