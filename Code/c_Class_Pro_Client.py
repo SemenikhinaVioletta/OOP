@@ -3,7 +3,7 @@ import f_Class_Status_Client as Status
 import sqlite3 as db
 import c_Error as Error
 from a_Log import Logger
-from a_Global_Per import database
+from a_Global_Per import database, client_statuses
 
 file_name = "File Class_Pro_Client"
 logger = Logger(file_name, [], "Application started")
@@ -44,7 +44,8 @@ class Pro_Client(New.New_Client):
         ID, name, phone, email, short_name, and calls the make_short method to create the shortened version of the client's
         full name.
         """
-        self.status = status
+        self.status = 0
+        self.set_status(status)
         self.mora = mora
         self.contract = []
         self.set_contract(contract)
@@ -60,6 +61,30 @@ class Pro_Client(New.New_Client):
             self.email = email
         self.short_name = ""
         self.make_short(self.name)
+
+    def set_status(self, status):
+        """
+        Sets the status of the client based on the provided status ID.
+
+        This method iterates through the list of client statuses and checks if the provided status ID matches
+        any of the status IDs in the list. If a match is found, the corresponding status object is assigned to
+        the 'status' attribute of the client instance.
+
+        Parameters:
+        status (int): The unique identifier of the client status.
+
+        Returns:
+        None
+
+        Raises:
+        ValueError: If the provided status ID does not match any of the status IDs in the list.
+        """
+        for stat in client_statuses:
+            if stat.get_ID() == status:
+                self.status = stat
+                break
+        else:
+            raise ValueError(f"Invalid status ID: {status}")
 
     def make_short(self, client_name):
         """
@@ -167,14 +192,16 @@ class Pro_Client(New.New_Client):
         """
         Returns the current status of the client.
 
+        The function retrieves the status of the client from the 'status' attribute and returns it as an integer.
+        The status is represented by an ID, where 0 indicates a certain status, 1 indicates another status, and so on.
         Parameters:
-        self (Pro_Client): The instance of the class.
+        self (Pro_Client): The instance of the class. This parameter represents the current instance of the Pro_Client class.
 
         Returns:
         int: The status of the client. The value represents the status, where 0 indicates a certain status,
              1 indicates another status, and so on.
         """
-        return int(self.status)
+        return int(self.status.get_ID())
 
     def get_mora(self):
         """
@@ -247,7 +274,7 @@ class Pro_Client(New.New_Client):
             logger.log_info(file_name, "Connected to SQLite")
             cursor.execute("SELECT * FROM Client")
             cursor.execute(
-                """INSERT INTO Client (Name_Client, Short_Name, Mora, Contract_ID, Phone, Email, Status) VALUES(?, ?, ?, ?, ?, ?, ?)""",
+                """INSERT INTO Client (Name_Client, Short_Name, Mora, Contract_ID, Phone, Mail, Status) VALUES(?, ?, ?, ?, ?, ?, ?)""",
                 (
                     self.get_full_name(),
                     self.get_short_name(),
@@ -255,7 +282,7 @@ class Pro_Client(New.New_Client):
                     self.get_contract_id(),
                     self.get_phone(),
                     self.get_email(),
-                    self.status,
+                    self.get_status(),
                 ),
             )
             conn.commit()
@@ -356,10 +383,10 @@ class Pro_Client(New.New_Client):
                     (self.get_phone(), self.get_ID()),
                 )
             if self.get_status() != client_status:
-                self.status = client_status
+                self.set_status(client_status)
                 cur.execute(
                     """UPDATE Client SET Status = ? WHERE Id_Client = ?""",
-                    (client_status, self.get_ID()),
+                    (self.set_status, self.get_ID()),
                 )
             if self.get_email() != client_email:
                 for client in clients:
