@@ -6,6 +6,9 @@ import sqlite3 as bd
 from a_Log import Logger
 
 
+pro_client = []
+
+
 file_name = "File proClient"
 
 
@@ -436,6 +439,8 @@ def pro_client_Table(window_new_Client):
     make_array()
     make_Table()
 
+    # Функция для создания таблицы клиентов
+
 
 def make_array():
     """
@@ -453,8 +458,7 @@ def make_array():
     - Modifies the global variable 'pro_client' by appending Pro_Client objects to it.
     - Closes the database cursor after fetching all records.
     """
-    global pro_client
-    pro_client = []
+    pro_client.clear()
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Client")
@@ -472,8 +476,6 @@ def make_array():
         )
         pro_client.append(Client)
     cursor.close()
-
-    # Функция для создания таблицы клиентов
 
 
 def make_Table():

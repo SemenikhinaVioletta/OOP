@@ -5,6 +5,7 @@ import c_Error as Error
 from a_Log import Logger
 from a_Global_Per import database, client_statuses
 
+
 file_name = "File Class_Pro_Client"
 logger = Logger(file_name, [], "Application started")
 
@@ -13,15 +14,17 @@ class Pro_Client(New.New_Client):
     """
     Represents a professional client, inheriting from the New_Client class.
 
-    This class extends the functionality of the New_Client class to include additional 
-    attributes and methods specific to professional clients. It allows for the management 
+    This class extends the functionality of the New_Client class to include additional
+    attributes and methods specific to professional clients. It allows for the management
     of pro client-specific data and behaviors.
 
     Args:
         New.New_Client: Inherits attributes and methods from the New_Client class.
     """
-    
-    def __init__(self, client_id, client_name, mora, contract, phone, email, status, client):
+
+    def __init__(
+        self, client_id, client_name, mora, contract, phone, email, status, client
+    ):
         """
         Initializes a new instance of the Pro_Client class.
 
@@ -83,8 +86,6 @@ class Pro_Client(New.New_Client):
             if stat.get_ID() == status:
                 self.status = stat
                 break
-        else:
-            raise ValueError(f"Invalid status ID: {status}")
 
     def make_short(self, client_name):
         """
@@ -97,11 +98,13 @@ class Pro_Client(New.New_Client):
         Parameters:
         client_name (str): The full name of the client. The name should be a string consisting of three space-separated
                            names (first name, middle name, and last name).
+                           Example: "John Smith Doe"
 
         Returns:
         None
 
         The function modifies the 'short_name' attribute of the client instance.
+        After calling this method, if the input client_name is "John Smith Doe", the 'short_name' attribute will be set to "J. S. D.".
         """
         names = client_name.split()
         self.short_name = names[0] + " " + names[1][0] + ". " + names[2][0] + "."
@@ -292,7 +295,9 @@ class Pro_Client(New.New_Client):
                 + f"Name: {self.get_full_name()}, Phone: {self.get_phone()}, Email: {self.get_email()}",
             )
         except db.Error as error:
-            logger.log_error(file_name, "Error while adding client to database: ", error)
+            logger.log_error(
+                file_name, "Error while adding client to database: ", error
+            )
         finally:
             cursor.close()
             conn.close()
@@ -331,7 +336,15 @@ class Pro_Client(New.New_Client):
             if sqlite_connection:
                 sqlite_connection.close()
 
-    def rename_client(self, client_name, client_phone, client_mora, client_email, client_status, clients):
+    def rename_client(
+        self,
+        client_name,
+        client_phone,
+        client_mora,
+        client_email,
+        client_status,
+        clients,
+    ):
         """
         This function renames a client in the database and updates its attributes.
 
@@ -357,7 +370,9 @@ class Pro_Client(New.New_Client):
                 for client in clients:
                     if client.get_full_name() == client_name:
                         message = (
-                            "This element (" + self.get_full_name() + ") has already been"
+                            "This element ("
+                            + self.get_full_name()
+                            + ") has already been"
                         )
                         raise Error.ErrorProClient(message)
                 self.make_short(client_name)
@@ -374,7 +389,9 @@ class Pro_Client(New.New_Client):
                 for client in clients:
                     if client.get_phone() == client_phone:
                         message = (
-                            "This element (" + str(self.get_phone()) + ") has already been"
+                            "This element ("
+                            + str(self.get_phone())
+                            + ") has already been"
                         )
                         raise Error.ErrorProClient(message)
                 self.phone = client_phone

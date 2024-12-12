@@ -6,6 +6,7 @@ from a_Log import Logger
 from a_Global_Per import database, windows
 
 file_name = "File Produkt"
+produkts = []
 logger = Logger(file_name, [], "Application started")
 
 
@@ -501,8 +502,7 @@ def make_array():
     - Populates the global list 'produkts' with Produkt objects.
     - Closes the database cursor.
     """
-    global produkts
-    produkts = []
+    produkts.clear()
     conn = bd.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM Produkts")

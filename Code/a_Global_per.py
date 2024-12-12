@@ -1,4 +1,6 @@
-import a_Window as Win
+from tkinter import *
+from tkinter import ttk
+from tkinter.ttk import Combobox
 import a_Log as Logger
 
 windows = [[], [], [], [], []]
@@ -28,7 +30,7 @@ def create_combobox(current_status, row_index, parent_frame):
         )
         if client.get_status() != current_status:
             available_methods.append(str(client.get_ID()))
-    combobox = Win.Combobox(
+    combobox = Combobox(
         parent_frame, values=available_methods, width=30, state="readonly"
     )
     combobox.grid(row=row_index, column=2, pady=5)

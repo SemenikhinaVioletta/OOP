@@ -3,15 +3,19 @@ import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
 
-#import e_Error as ContractError
+# import e_Error as ContractError
 from f_Class_Status_Client import make_status
 from c_proClient import do_pro_client
 from b_newClient import do_new_client
 from d_Produkt import do_product
 
-#from e_Contact import do_contact
+from e_Contract import do_contract
 from a_Log import Logger
 from a_Global_Per import windows
+from d_Produkt import produkts
+from d_Produkt import make_array as make_products
+from c_proClient import pro_client
+from c_proClient import make_array as make_clients
 
 
 file_name = "File FirstDisplay"
@@ -78,7 +82,9 @@ def on_selection(event):
         )
         label = WindowModule.Label(frame, text="For " + selected_option + " you can:")
         new_window_button = WindowModule.Button(
-            frame, text="Open table", state=["disabled"]
+            frame,
+            text="Open table",
+            command=lambda: start_contract(1),  # state=["disabled"]
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
@@ -195,7 +201,8 @@ def start_products(flag: int) -> None:
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
-"""
+
+
 def start_contract(flag):
     try:
         if len(windows[4]) != 0:
@@ -205,11 +212,12 @@ def start_contract(flag):
         wind.make_protokol(lambda: WindowModule.end(4))
         windows[4].append(wind)
         do_contract(flag, wind)
-    except ContractError.ErrorProduct as e:
+    except ProductError.ErrorProduct as e:
         Logger.log_error(
             file_name, "An error occurred while opening the window", str(e)
         )
-"""
+
+
 # --------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -263,7 +271,6 @@ def set_frame():
     button_to_end.grid(row=5, column=1, pady=10)
 
 
-
 # --------------------------------------------------------------------------------------------------------------------------------
 
 window.make_protokol(lambda: WindowModule.end(0))
@@ -271,5 +278,7 @@ windows[0].append(window)
 
 
 set_frame()
+make_clients()
+make_products()
 make_status()
 start()
