@@ -58,7 +58,11 @@ def new_Client_Tabel(window_new_Client):
         Returns:
             None
         """
-        if add_new_to_table(name_entry, phone_entry, email_entry, Clients):
+        if (
+            Error.chek_name(name_entry)
+            and Error.chek_phone(phone_entry)
+            and Error.chek_mail(email_entry)
+        ):
             Client.rename_newClient(
                 str(name_entry.get()),
                 int(phone_entry.get()),

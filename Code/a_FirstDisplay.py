@@ -83,7 +83,7 @@ def on_selection(event):
             frame,
             text="Open table",
             command=lambda: start_contract(1),
-            state=["disabled"],
+            #state=["disabled"],
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)

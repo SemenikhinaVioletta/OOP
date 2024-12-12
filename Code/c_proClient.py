@@ -74,7 +74,6 @@ def pro_client_Table(window_new_Client):
             frame.destroy()
             pro_client_Table(window_new_Client)
 
-    # Функция для изменения данных существующего клиента
     def do_this(Client, name_entry, phone_entry, email_entry, mora_entry, status_entry):
         """
         Updates a professional client's information and adds it to the client table.
@@ -115,7 +114,6 @@ def pro_client_Table(window_new_Client):
             frame.destroy()
             pro_client_Table(window_new_Client)
 
-    # Функция для удаления клиента
     def id_for_delite(id):
         """
         Deletes a professional client based on the provided ID after user confirmation.
@@ -137,7 +135,6 @@ def pro_client_Table(window_new_Client):
             id = int(id.get())
             for Client in pro_client:
                 if Client.get_ID() == id:
-                    # Подтверждение удаления клиента
                     confirm = Error.askyesno(
                         "Confirm Delete",
                         f"Are you sure you want to delete the Client with ID: {id}, Name: {Client.get_name()}?",
@@ -150,7 +147,6 @@ def pro_client_Table(window_new_Client):
                         pro_client_Table(window_new_Client)
                     break
 
-    # Функция для создания окна удаления клиента
     def delete_element():
         """
         Opens a new window for deleting a professional client.

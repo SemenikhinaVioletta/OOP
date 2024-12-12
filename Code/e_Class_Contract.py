@@ -29,7 +29,10 @@ class Contract:
         None
         """
         self.client = pro.Pro_Client(0, "- - -", 0, "", 0, "", 1, None)
-        self.set_clients(ID_klient)
+        if ID_klient == "":
+            ID_klient = 0
+        else:
+            self.set_clients(ID_klient)
         self.ID = ID
         self.set_status(status)
         self.data_start = data_start

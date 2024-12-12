@@ -70,7 +70,7 @@ class New_Client:
             cur = conn.cursor()
             if self.get_name() != name:
                 for Client in Clients:
-                    if Client.get_name() == name and Client.get_ID() != self.get_ID():
+                    if Client.get_name() == name:
                         message = (
                             "This element (" + self.get_name() + ") has already been"
                         )
@@ -82,7 +82,7 @@ class New_Client:
                 )
             if self.get_phone() != phone:
                 for Client in Clients:
-                    if Client.get_phone() == phone and Client.get_ID() != self.get_ID():
+                    if Client.get_phone() == phone:
                         message = (
                             "This element ("
                             + str(self.get_phone())
@@ -96,7 +96,7 @@ class New_Client:
                 )
             if self.get_email() != email:
                 for Client in Clients:
-                    if Client.get_email() == email and Client.get_ID() != self.get_ID():
+                    if Client.get_email() == email:
                         message = (
                             "This element (" + self.get_email() + ") has already been"
                         )
