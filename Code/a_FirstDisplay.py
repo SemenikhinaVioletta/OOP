@@ -39,7 +39,7 @@ def on_selection(event):
         file_name, f"Method on_selection - selected option: {selected_option}\n"
     )
     frame.destroy()
-    set_frame()
+    set_frame(selected_option)
     make_otchet_button = WindowModule.Button(
         frame, text="make report", command=lambda: make_othet(selected_option)
     )
@@ -53,7 +53,6 @@ def on_selection(event):
             frame, text="Open table", command=lambda: start_new_client(1)
         )
         label.grid(row=3, column=1, padx=10)
-        make_otchet_button.grid(row=4, column=2, padx=10, pady=10)
         new_window_button.grid(row=3, column=2, padx=10)
     elif selected_option == "Pro clients":
         Logger.log_info(file_name, "Starting Pro clients process...")
@@ -236,7 +235,7 @@ def start():
     window.open()
 
 
-def set_frame():
+def set_frame(message):
     """
     This function sets up the main frame for the application's user interface.
     It creates a frame, a label, a combobox, and a button, and configures their layout and behavior.
@@ -266,7 +265,7 @@ def set_frame():
     method_label.grid(row=1, column=1)
 
     combobox.grid(row=2, column=1, pady=10)
-    combobox.set("Nothing selected")
+    combobox.set(message)
     combobox.bind("<<ComboboxSelected>>", on_selection)
     button_to_end = WindowModule.Button(
         frame,
@@ -282,7 +281,7 @@ window.make_protokol(lambda: WindowModule.end(0))
 windows[0].append(window)
 
 
-set_frame()
+set_frame("Nothing selected")
 make_status()
 make_clients()
 make_products()

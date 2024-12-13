@@ -273,6 +273,36 @@ class Pro_Client(New.New_Client):
             self.status.get_status(),
         )
 
+    def get_all(self, flag):
+        """
+        Returns a tuple containing the client's ID, short name, mora status, phone number, email, and status.
+
+        Parameters:
+        self (Pro_Client): The instance of the class.
+
+        Returns:
+        tuple: A tuple containing the client's ID, short name, mora status, phone number, email, and status.
+        """
+        if flag == 0:
+            return (
+                self.get_client_id(),
+                self.get_short_name(),
+                self.get_mora(),
+                self.get_phone(),
+                self.get_email(),
+                self.status.get_status(),
+                len(self.get_contract_id().split()),
+            )
+        return (
+            self.get_client_id(),
+            self.get_short_name(),
+            self.get_mora(),
+            self.get_phone(),
+            self.get_email(),
+            self.status.get_status(),
+            self.get_contract_id(),
+        )
+
     def enter_client_to_db(self):
         """
         Inserts the client's information into the SQLite database.
