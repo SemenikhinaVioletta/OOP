@@ -24,7 +24,7 @@ def contract_Table(window_contract):
             for i in produkts:
                 if i.get_ID() == product:
                     i.rename_produkt(
-                        i.get_name(), i.get_mora(), i.get_number() - 1, produkts
+                        i.get_name(), i.get_mora(), i.get_number() - 1, produkts, 1
                     )
                     produkts_to_contract.append(i.get_ID())
                     break

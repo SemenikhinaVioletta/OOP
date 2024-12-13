@@ -44,7 +44,7 @@ def produkt_Table(window_produkt):
                 produkts[-1].get_ID() + 1,
                 str(name_entry.get()),
                 int(coast_entry.get()),
-                int(number_entry.get()),
+                int(number_entry.get()), 0
             )
             produkt.enter_produkt_to_bd()
             produkts.append(produkt)
@@ -105,7 +105,7 @@ def produkt_Table(window_produkt):
                 str(name_entry.get()),
                 int(mora_entry.get()),
                 int(number_entry.get()),
-                produkts,
+                produkts, 0
             )
             frame.destroy()
             produkt_Table(window_produkt)
@@ -508,7 +508,9 @@ def make_array():
     cursor.execute("SELECT * FROM Produkts")
     rows = cursor.fetchall()
     for line in rows:
-        produkt = prod.Produkt(int(line[0]), str(line[1]), int(line[2]), int(line[3]))
+        produkt = prod.Produkt(
+            int(line[0]), str(line[1]), int(line[2]), int(line[3]), int(line[4])
+        )
         produkts.append(produkt)
     cursor.close()
 

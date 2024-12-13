@@ -9,7 +9,7 @@ logger = Logger(file_name, [], "Application started")
 
 
 class Produkt:
-    def __init__(self, ID, name, mora, number):
+    def __init__(self, ID, name, mora, number, zakazali):
         """
         Initialize a new instance of the Produkts class.
 
@@ -26,6 +26,7 @@ class Produkt:
         self.mora = int(mora)
         self.number = int(number)
         self.ID = int(ID)
+        self.zakazano = int(zakazali)
 
     def __del__(self):
         """
@@ -173,7 +174,7 @@ class Produkt:
         finally:
             conn.close()
 
-    def rename_produkt(self, name, mora, number, produkts):
+    def rename_produkt(self, name, mora, number, produkts, zakazali):
         """
         Updates the name, mora, and number of the product in the database and in the instance attributes.
 
@@ -219,6 +220,10 @@ class Produkt:
                 cur.execute(
                     """UPDATE Produkts SET In_sclad = ? WHERE Id_produkt = ?""",
                     (self.get_number(), self.get_ID()),
+                )
+                cur.execute(
+                    """UPDATE Produkts SET Zakaz = ? WHERE Id_produkt = ?""",
+                    (self.zakazano + zakazali, self.get_ID()),
                 )
             conn.commit()
         except Error.ErrorProduct as e:
