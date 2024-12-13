@@ -18,17 +18,20 @@ produkts_to_contract = []
 def contract_Table(window_contract):
 
     def add_product_to_contract(product):
-        product = str(product).split()
-        product = int(product[0])
-        if Error.chek_product(product, produkts):
-            for i in produkts:
-                if i.get_ID() == product:
-                    i.rename_produkt(
-                        i.get_name(), i.get_mora(), i.get_number() - 1, produkts, 1
-                    )
-                    produkts_to_contract.append(i.get_ID())
-                    break
-
+        try:
+            product = str(product).split()
+            product = int(product[0])
+            if Error.chek_product(product, produkts):
+                for i in produkts:
+                    if produkts_to_contract.count(i.get_ID()) + 1 > i.get_number():
+                        message = "Not this product in magazines"
+                        raise Error.ErrorContract(message)
+                    if i.get_ID() == product:
+                        produkts_to_contract.append(i.get_ID())
+                        break
+        except Error.ErrorContract as e:
+            Logger.log_error(file_name, "Error in add product to contract", str(e))
+            
     def save(client, end_data):
         try:
             if Error.chek_date(Date, end_data):
@@ -36,7 +39,7 @@ def contract_Table(window_contract):
                 client = int(client[0])
                 for i in clients:
                     if i.get_ID() == client:
-                        if Error.chek_status(client):
+                        if Error.chek_status(i):
                             contract = cont.Contract(
                                 len(contracts) + 1,
                                 1,
@@ -59,6 +62,14 @@ def contract_Table(window_contract):
                                 i.get_contract_id(),
                                 clients,
                             )
+                            for id in produkts_to_contract:
+                                for product in produkts:
+                                    if product.get_ID() == id:
+                                        product.number -= 1
+                                        product.zakazano += 1
+                                        break
+                            for product in produkts:
+                                product.rename_produkt(product.get_name(), product.get_mora(), product.get_number(), produkts, product.get_zakazano())
                 produkts_to_contract.clear()
                 frame.destroy()
                 contract_Table(window_contract)

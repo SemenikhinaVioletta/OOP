@@ -2,12 +2,11 @@ import sqlite3 as db
 import c_Class_Pro_Client as pro
 import d_Class_Produkt as prod
 import datetime as t
-from datetime import date, datetime
+from datetime import date
 from a_Log import Logger
-from a_Global_Per import database, windows
+from a_Global_Per import database
 from d_Produkt import produkts
 from c_proClient import pro_client
-from datetime import date, datetime
 from f_Class_Status_Client import contract_statuses
 
 file_name = "File Class_Contract"
@@ -169,7 +168,7 @@ class Contract:
     def get(self):
         return (
             int(self.ID),
-            self.get_status(),
+            self.status.get_status(),
             self.get_client_name(),
             self.get_data_end(),
             self.get_mora(),

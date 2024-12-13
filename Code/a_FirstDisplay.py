@@ -2,8 +2,7 @@ import a_Window as WindowModule
 import b_Error as NewClientError
 import c_Error as ProClientError
 import d_Error as ProductError
-
-# import e_Error as ContractError
+import e_Error as ContractError
 from a_Log import Logger
 from a_Global_Per import windows
 from b_newClient import do_new_client
@@ -14,6 +13,7 @@ from d_Produkt import make_array as make_products
 from e_Contract import do_contract
 from e_Contract import make_array as make_contrakts
 from f_Class_Status_Client import make_status
+from f_Make_Report import make_othet
 
 
 file_name = "File FirstDisplay"
@@ -40,6 +40,9 @@ def on_selection(event):
     )
     frame.destroy()
     set_frame()
+    make_otchet_button = WindowModule.Button(
+        frame, text="make report", command=lambda: make_othet(selected_option)
+    )
     if selected_option == "New clients":
         Logger.log_info(file_name, f"Starting New client process...")
         Logger.log_info(
@@ -50,6 +53,7 @@ def on_selection(event):
             frame, text="Open table", command=lambda: start_new_client(1)
         )
         label.grid(row=3, column=1, padx=10)
+        make_otchet_button.grid(row=4, column=2, padx=10, pady=10)
         new_window_button.grid(row=3, column=2, padx=10)
     elif selected_option == "Pro clients":
         Logger.log_info(file_name, "Starting Pro clients process...")
@@ -62,6 +66,7 @@ def on_selection(event):
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
+        make_otchet_button.grid(row=4, column=2, padx=10, pady=10)
     elif selected_option == "Products":
         Logger.log_info(file_name, "Starting Products process...")
         Logger.log_info(
@@ -73,6 +78,7 @@ def on_selection(event):
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
+        make_otchet_button.grid(row=4, column=2, padx=10, pady=10)
     elif selected_option == "Contracts":
         Logger.log_info(file_name, "No method available for selection")
         Logger.log_info(
@@ -83,10 +89,10 @@ def on_selection(event):
             frame,
             text="Open table",
             command=lambda: start_contract(1),
-            # state=["disabled"],
         )
         label.grid(row=3, column=1, padx=10)
         new_window_button.grid(row=3, column=2, padx=10)
+        make_otchet_button.grid(row=4, column=2, padx=10, pady=10)
     else:
         Logger.log_info(file_name, "No method available for selection")
         Logger.log_info(
@@ -211,7 +217,7 @@ def start_contract(flag):
         wind.make_protokol(lambda: WindowModule.end(4))
         windows[4].append(wind)
         do_contract(flag, wind)
-    except ProductError.ErrorProduct as e:
+    except ContractError.ErrorContract as e:
         Logger.log_error(
             file_name, "An error occurred while opening the window", str(e)
         )
@@ -281,4 +287,5 @@ make_status()
 make_clients()
 make_products()
 make_contrakts()
+print()
 start()

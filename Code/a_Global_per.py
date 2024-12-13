@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter.ttk import Combobox
 import a_Log as Logger
 
-windows = [[], [], [], [], []]
+windows = [[], [], [], [], [], []]
 database = "Code\DateBase\Pc.db"
 client_statuses = []
 contract_statuses = []

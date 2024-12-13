@@ -60,6 +60,23 @@ class Produkt:
         )
         return int(self.ID), str(self.name), int(self.mora), int(self.number)
 
+    def get_all(self, flag):
+        if flag == 0:
+            return (
+                int(self.ID),
+                str(self.name),
+                int(self.mora),
+                int(self.number),
+                int(self.zakazano),
+            )
+        return (
+            int(self.ID),
+            str(self.name),
+            int(self.mora),
+            int(self.number),
+            int(self.zakazano) * int(self.mora),
+        )
+
     def get_name(self):
         """
         Retrieve the name of the client.
@@ -75,7 +92,8 @@ class Produkt:
         """
         Logger.log_info(file_name, "Fetching produkt name: " + f"Name: {self.name}")
         return str(self.name)
-
+    def get_zakazano(self):
+        return int(self.zakazano)
     def get_mora(self) -> int:
         """
         Retrieve the mora value associated with the client.
@@ -223,7 +241,7 @@ class Produkt:
                 )
                 cur.execute(
                     """UPDATE Produkts SET Zakaz = ? WHERE Id_produkt = ?""",
-                    (self.zakazano + zakazali, self.get_ID()),
+                    (int(zakazali), self.get_ID()),
                 )
             conn.commit()
         except Error.ErrorProduct as e:

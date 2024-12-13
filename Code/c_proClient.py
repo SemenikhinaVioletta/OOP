@@ -1,9 +1,9 @@
 import c_Class_Pro_Client as Pro
-from a_Global_Per import database, windows, create_combobox
 import c_Error as Error
 import a_Window as Win
 import sqlite3 as bd
 from a_Log import Logger
+from a_Global_Per import database, windows, create_combobox
 
 
 pro_client = []
@@ -104,7 +104,13 @@ def pro_client_Table(window_new_Client):
             email = str(email_entry.get())
             status = int(status_entry)
             Client.rename_client(
-                name, phone, Client.get_mora(), email, status, Client.get_contract_id(), pro_client
+                name,
+                phone,
+                Client.get_mora(),
+                email,
+                status,
+                Client.get_contract_id(),
+                pro_client,
             )
             frame.destroy()
             pro_client_Table(window_new_Client)

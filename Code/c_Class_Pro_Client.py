@@ -1,6 +1,5 @@
 import b_Class_New_Client as New
 import f_Class_Status_Client as Status
-import e_Contract as Contr
 import sqlite3 as db
 import c_Error as Error
 from a_Log import Logger
@@ -271,7 +270,7 @@ class Pro_Client(New.New_Client):
             self.get_mora(),
             self.get_phone(),
             self.get_email(),
-            self.get_status(),
+            self.status.get_status(),
         )
 
     def enter_client_to_db(self):
