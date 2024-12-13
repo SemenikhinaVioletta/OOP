@@ -7,9 +7,9 @@ import d_Error as ProductError
 from a_Log import Logger
 from a_Global_Per import windows
 from b_newClient import do_new_client
-from c_proClient import do_pro_client, pro_client
+from c_proClient import do_pro_client
 from c_proClient import make_array as make_clients
-from d_Produkt import do_product, produkts
+from d_Produkt import do_product
 from d_Produkt import make_array as make_products
 from e_Contract import do_contract
 from e_Contract import make_array as make_contrakts

@@ -27,7 +27,7 @@ def pro_client_Table(window_new_Client):
         None
     """
 
-    def take_this(name_entry, phone_entry, email_entry, mora_entry, status_entry):
+    def take_this(name_entry, phone_entry, email_entry, status_entry):
         """
         Creates a new professional client entry based on user-provided details and adds it to the database.
 
@@ -52,21 +52,16 @@ def pro_client_Table(window_new_Client):
             name_entry,
             phone_entry,
             email_entry,
-            mora_entry,
             pro_client,
             status_entry,
             0,
         ):
             name = str(name_entry.get())
-            mora = str(mora_entry.get())
             phone = int(phone_entry.get())
             email = str(email_entry.get())
             status = int(status_entry)
-            if len(mora) == 0:
-                mora = "0"
-            mora = int(mora)
             Client = Pro.Pro_Client(
-                pro_client[-1].get_ID() + 1, name, mora, "", phone, email, status, None
+                pro_client[-1].get_ID() + 1, name, 0, "", phone, email, status, None
             )
 
             Client.enter_client_to_db()
@@ -74,7 +69,7 @@ def pro_client_Table(window_new_Client):
             frame.destroy()
             pro_client_Table(window_new_Client)
 
-    def do_this(Client, name_entry, phone_entry, email_entry, mora_entry, status_entry):
+    def do_this(Client, name_entry, phone_entry, email_entry, status_entry):
         """
         Updates a professional client's information and adds it to the client table.
 
@@ -100,17 +95,17 @@ def pro_client_Table(window_new_Client):
             name_entry,
             phone_entry,
             email_entry,
-            mora_entry,
             pro_client,
             status_entry,
             1,
         ):
             name = str(name_entry.get())
-            mora = str(mora_entry.get())
             phone = int(phone_entry.get())
             email = str(email_entry.get())
             status = int(status_entry)
-            Client.rename_proClient(name, mora, phone, email, status, pro_client)
+            Client.rename_client(
+                name, phone, Client.get_mora(), email, status, Client.get_contract_id(), pro_client
+            )
             frame.destroy()
             pro_client_Table(window_new_Client)
 
@@ -238,13 +233,6 @@ def pro_client_Table(window_new_Client):
                 email_entry = Win.Entry(frame_for)
                 email_text.grid(row=3, column=1, pady=5)
                 email_entry.grid(row=3, column=2, pady=5, padx=5)
-                mora_text = Win.Label(
-                    frame_for,
-                    text='Enter mora for pro Client in format:\n"0"',
-                )
-                mora_entry = Win.Entry(frame_for)
-                mora_text.grid(row=4, column=1, pady=5)
-                mora_entry.grid(row=4, column=2, padx=5)
 
                 status_text = Win.Label(
                     frame_for,
@@ -261,7 +249,6 @@ def pro_client_Table(window_new_Client):
                             name_entry,
                             phone_entry,
                             email_entry,
-                            mora_entry,
                             status_entry.get(),
                         )
                     ),
@@ -328,17 +315,6 @@ def pro_client_Table(window_new_Client):
                         email_entry.insert(0, Client.get_email())
                         email_entry.grid(row=4, column=2, pady=5, padx=5)
 
-                        mora_text = Win.Label(
-                            frame_for,
-                            text='Enter mora for pro Client in format:\n"0"',
-                        )
-                        mora_entry = Win.Entry(
-                            frame_for,
-                        )
-                        mora_entry.insert(0, str(Client.get_mora()))
-                        mora_text.grid(row=4, column=1, pady=5)
-                        mora_entry.grid(row=4, column=2, padx=5)
-
                         status_text = Win.Label(
                             frame_for,
                             text="Enter status",
@@ -357,7 +333,6 @@ def pro_client_Table(window_new_Client):
                                     name_entry,
                                     phone_entry,
                                     email_entry,
-                                    mora_entry,
                                     status_entry.get(),
                                 )
                             ),

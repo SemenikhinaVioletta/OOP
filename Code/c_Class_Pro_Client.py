@@ -129,9 +129,26 @@ class Pro_Client(New.New_Client):
         Contracts = list(map(int, contract.split()))
         for i in Contracts:
             for id in contracts:
-                if str(id.get_ID()) == i:
+                if id.get_ID() == i:
                     self.contract.append(id)
                     break
+
+    def add_contract(self, contract):
+        """
+        Adds a contract to the client's contract list.
+
+        This method appends a contract object to the client's contract list.
+        The contract object is assumed to be an instance of the Contract class.
+
+        Parameters:
+        contract (e_Contract.Contract): An instance of the Contract class representing the contract to be added.
+
+        Returns:
+        None
+
+        The function modifies the 'contract' attribute of the client instance by appending the provided contract object.
+        """
+        self.contract.append(contract)
 
     def get_client_id(self):
         """
@@ -233,10 +250,9 @@ class Pro_Client(New.New_Client):
         Returns:
         str: A string containing the client's contract IDs separated by spaces.
         """
-        self.contract.sort()
         s = ""
         for i in self.contract:
-            s += str(i) + " "
+            s += str(i.get_ID()) + " "
         return s[:-1]
 
     def get(self):
@@ -330,17 +346,17 @@ class Pro_Client(New.New_Client):
                 """DELETE FROM Client WHERE Id_Client = ?""",
                 (self.get_client_id(),),
             )
-            sqlite_connection.commit()
             for contract in contracts:
                 if contract.client.get_ID() == self.get_client_id():
                     contract.client = None
                     cursor.execute(
                         """UPDATE Contracts SET ID_klient = ? WHERE ID_contract = ?""",
-                        (str(self.get_client_id()), str(contract.get_ID)),
+                        (0, str(contract.get_ID())),
                     )
             logger.log_info(
                 file_name, f"Client deleted from database: ID: {self.get_client_id()}"
             )
+            sqlite_connection.commit()
         except db.Error as error:
             logger.log_error(file_name, "Error while working with SQLite: ", error)
         finally:
@@ -354,6 +370,7 @@ class Pro_Client(New.New_Client):
         client_mora,
         client_email,
         client_status,
+        contrakts,
         clients,
     ):
         """
@@ -414,7 +431,7 @@ class Pro_Client(New.New_Client):
                 self.set_status(client_status)
                 cur.execute(
                     """UPDATE Client SET Status = ? WHERE Id_Client = ?""",
-                    (self.set_status, self.get_ID()),
+                    (self.get_status(), self.get_ID()),
                 )
             if self.get_email() != client_email:
                 for client in clients:
@@ -428,7 +445,17 @@ class Pro_Client(New.New_Client):
                     """UPDATE Client SET Mail = ? WHERE Id_Client = ?""",
                     (self.get_email(), self.get_ID()),
                 )
-            self.mora = client_mora
+            cur.execute(
+                """UPDATE Client SET Contract_id = ? WHERE Id_Client = ?""",
+                (contrakts, self.get_ID()),
+            )
+            self.mora += client_mora
+            conn = db.connect(database)
+            cur = conn.cursor()
+            cur.execute(
+                """UPDATE Client SET Mora = ? WHERE Id_Client = ?""",
+                (self.mora, self.get_ID()),
+            )
             conn.commit()
         except Error.ErrorProClient as e:
             Logger(file_name, "Error renaming from Method rename_client", str(e))

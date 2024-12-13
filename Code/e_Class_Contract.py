@@ -1,6 +1,8 @@
-import sqlite3 as bd
+import sqlite3 as db
 import c_Class_Pro_Client as pro
 import d_Class_Produkt as prod
+import datetime as t
+from datetime import date, datetime
 from a_Log import Logger
 from a_Global_Per import database, windows
 from d_Produkt import produkts
@@ -29,18 +31,19 @@ class Contract:
         None
         """
         self.client = pro.Pro_Client(0, "- - -", 0, "", 0, "", 1, None)
-        if ID_klient == "":
-            ID_klient = 0
-        else:
-            self.set_clients(ID_klient)
+        if ID_klient != 0:
+            self.set_client(ID_klient)
         self.ID = ID
         self.set_status(status)
-        self.data_start = data_start
-        self.data_end = data_end
+        start = str(data_start).split("-")
+        end = str(data_end).split("-")
+        self.data_start = date(int(start[0]), int(start[1]), int(start[2].split()[0]))
+        self.data_end = date(int(end[0]), int(end[1]), int(end[2].split()[0]))
         self.products = []
-        self.set_products(products)
+        if len(products) != 0:
+            self.set_products(products)
         self.mora = Mora
-        self.set_mora()
+        # self.set_mora()
 
     def set_products(self, products):
         """
@@ -56,10 +59,9 @@ class Contract:
         Returns:
         None
         """
-        p = products.split()
-        for id in p:
+        for id in products:
             for produkt in produkts:
-                if str(id) == str(produkt.get_ID()):
+                if int(id) == produkt.get_ID():
                     self.products.append(produkt)
                     break
 
@@ -106,6 +108,8 @@ class Contract:
         return self.status.get_ID()
 
     def get_client_id(self):
+        if self.client == 0:
+            return 0
         return self.client.get_ID()
 
     def get_client_name(self):
@@ -138,10 +142,10 @@ class Contract:
         Returns:
         str: The start date of the contract in 'YYYY-MM-DD' format.
         """
-        return self.data_start
+        return str(self.data_start)
 
     def get_data_end(self):
-        return self.data_end
+        return str(self.data_end)
 
     def get(self):
         return (
@@ -169,3 +173,62 @@ class Contract:
             logger.log_error(
                 file_name, "An error occurred during ID validation", str(e)
             )
+
+    def add_to_bd(self):
+        try:
+            conn = db.connect(database)
+            cursor = conn.cursor()
+            logger.log_info(file_name, "Connected to SQLite")
+            cursor.execute("SELECT * FROM Contracts")
+            cursor.execute(
+                """INSERT INTO Contracts (Status, Data_start, Data_End, Produkts, Mora, ID_klient) VALUES(?, ?, ?, ?, ?, ?)""",
+                (
+                    self.get_status(),
+                    self.get_data_start(),
+                    self.get_data_end(),
+                    self.get_produkts_to_bd(),
+                    self.get_mora(),
+                    self.get_client_id(),
+                ),
+            )
+            conn.commit()
+            logger.log_info(
+                file_name,
+                "Client added to database: " + f"Name: {str(self.get_ID())}",
+            )
+        except db.Error as error:
+            logger.log_error(
+                file_name, "Error while adding client to database: ", error
+            )
+        finally:
+            cursor.close()
+            conn.close()
+
+    def delete_contract_from_bd(self):
+        try:
+            sqlite_connection = db.connect(database)
+            cursor = sqlite_connection.cursor()
+            cursor.execute(
+                """DELETE FROM Contracts WHERE ID_contract = ?""",
+                (self.get_ID(),),
+            )
+            for client in pro_client:
+                for cont in client.contract:
+                    if cont.get_ID() == self.get_ID():
+                        client.contract.remove(cont)
+                        cursor.execute(
+                            """UPDATE Contracts SET ID_klient = ? WHERE ID_contract = ?""",
+                            (client.get_contract_id(), contract.get_ID()),
+                        )
+            logger.log_info(
+                file_name, f"Client deleted from database: ID: {self.get_client_id()}"
+            )
+            sqlite_connection.commit()
+        except db.Error as error:
+            logger.log_error(file_name, "Error while working with SQLite: ", error)
+        finally:
+            if sqlite_connection:
+                sqlite_connection.close()
+
+    def __del__(self):
+        pass

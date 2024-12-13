@@ -181,36 +181,6 @@ def chek_email(email_entry):
         return False
 
 
-def chek_mora(mora_entry):
-    """
-    Validates the mora of a client.
-
-    This function checks if the provided mora is not empty, contains only digits, and is greater than 0.
-    If the mora is not valid, it raises an ErrorProClient exception with an appropriate error message.
-    If the mora is valid, it logs a success message and returns True.
-
-    Parameters:
-    mora_entry (tkinter.Entry): The entry widget for the client's mora. The mora is obtained from the 'get' method of the tkinter.Entry object.
-
-    Returns:
-    bool: True if the mora is valid, False otherwise. Raises an ErrorProClient exception if the mora is not valid.
-    """
-    mora = str(mora_entry.get())
-    message = "Validation started."
-    try:
-        if len(mora) != 0:
-            for i in mora:
-                if not i.isdigit():
-                    message = "Mora must contain only digits and > 0"
-                    raise ErrorProClient(message)
-        Logger.log_info(file_name, "NO errors found during validation.")
-        return True
-
-    except ErrorProClient as e:
-        Logger.log_error(file_name, "An error occurred during validation.", str(e))
-        return False
-
-
 def chek_Contract(Contract_entry):
     """
     Validates the contract number of a client.
@@ -320,9 +290,7 @@ def chek_status(status):
         return False
 
 
-def add_pro_to_table(
-    name_entry, phone_entry, email_entry, mora_entry, Clients, status, flag
-):
+def add_pro_to_table(name_entry, phone_entry, email_entry, Clients, status, flag):
     """
     This function validates and checks if a new client's data is unique in the table.
 
@@ -342,7 +310,6 @@ def add_pro_to_table(
             chek_name(name_entry)
             and chek_phone(phone_entry)
             and chek_email(email_entry)
-            and chek_mora(mora_entry)
             and chek_status(status)
         ):
             phone = int(phone_entry.get())

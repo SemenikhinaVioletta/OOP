@@ -5,7 +5,6 @@ import b_Error as Error
 from b_Error import add_new_to_table, delete_from_table
 from a_Log import Logger
 from a_Global_Per import windows, database, create_combobox
-from c_Error import chek_mora
 import c_Class_Pro_Client as Pro
 
 file_name = "File newClient"
@@ -109,18 +108,13 @@ def new_Client_Tabel(window_new_Client):
                 raise Error.ErrorNewClient("There is already a client with this email")
             if info_phone:
                 raise Error.ErrorNewClient("There is already a client with this phone")
-            if chek_mora(mora_entry):
-                mora_entry = str(mora_entry.get())
-                if len(mora_entry) == 0:
-                    mora_entry = "0"
-                mora_entry = int(mora_entry)
-                pro = Pro.Pro_Client(0, "", mora_entry, "", 0, "", status_entry, Client)
-                pro.enter_client_to_db()
-                id = Win.Entry()
-                id.insert(0, str(Client.get_ID()))
-                id_for_delite(id)
-                frame.destroy()
-                new_Client_Tabel(window_new_Client)
+            pro = Pro.Pro_Client(0, "", 0, "", 0, "", status_entry, Client)
+            pro.enter_client_to_db()
+            id = Win.Entry()
+            id.insert(0, str(Client.get_ID()))
+            id_for_delite(id)
+            frame.destroy()
+            new_Client_Tabel(window_new_Client)
         except Error.ErrorNewClient as e:
             Logger.log_error(file_name, "Error with already", str(e))
         except bd.Error as error:

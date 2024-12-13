@@ -1,6 +1,7 @@
 import a_Log
 import datetime as t
-from datetime import date
+from datetime import date, datetime
+
 from a_Log import Logger
 from a_Global_Per import windows
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
@@ -58,6 +59,29 @@ def chek_ID(id, contracts):
         return False
 
 
+def chek_product(product, products):
+    try:
+        product = str(product)
+        if len(product) == 0:
+            message = "Product cannot be empty."
+            raise ErrorContract(message)
+
+        flag = True
+        for p in products:
+            if p.get_ID() == int(product) and p.get_number() > 0:
+                flag = False
+                break
+        if flag:
+            message = f"Product {product} not found."
+            raise ErrorContract(message)
+
+        message = f"Product {product} found go to contract..."
+        Logger.log_info(file_name, message)
+        return True
+    except ErrorContract as e:
+        Logger.log_error(file_name, "Error in enter product ID", str(e))
+        return False
+
 def chek_date(date_start, date_end):
     try:
         start = str(date_start).split("-")
@@ -87,10 +111,13 @@ def chek_date(date_start, date_end):
                 if not j.isdigit():
                     message = "Error in end format (mast be only digits)"
                     raise ErrorContract(message)
-        if date_start >= date_end:
+                
+        date1 = date(int(start[0]), int(start[1]), int(start[2]))
+        date2 = date(int(end[0]), int(end[1]), int(end[2]))
+        if date2 <= date1:
             message = "End date must be after start date"
             raise ErrorContract(message)
-        if date_start < Data:
+        if date_start > Data:
             message = "Start date must be today."
             raise ErrorContract(message)
         message = "Not error in date go to contract..."
@@ -100,17 +127,3 @@ def chek_date(date_start, date_end):
         Logger.log_error(file_name, "Error in enter Data", str(e))
         return False
 
-
-def chek_all(date_start, date_end, id_produkts, products, id_clients, clients):
-    try:
-        if chek_date(date_start, date_end) and chek_ID(id_clients, clients):
-            for i in range(len(id_produkts)):
-                if not chek_ID(id_produkts[i], products):
-                    message = f"Error in {str(i)} ID products ({str(id_produkts[i])})."
-                    raise ErrorContract(message)
-            message = "Not error in this"
-            Logger.log_info(file_name, message)
-            return True
-    except ErrorContract as e:
-        Logger.log_error(file_name, "Error in chek_all", str(e))
-        return False
