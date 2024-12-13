@@ -49,7 +49,6 @@ def contract_Table(window_contract):
                             contract.set_mora()
                             contract.add_to_bd()
                             make_array()
-                            contracts.append(contract)
                             i.add_contract(contracts[-1])
                             i.rename_client(
                                 i.get_name(),
