@@ -118,7 +118,7 @@ def contract_Table(window_contract):
                 command=lambda: save(str(box_client.get()), entr_data.get()),
             )
             button_save.grid(row=5, column=1, padx=10, pady=10)
-            button_back = Win.Button(frame_for, text="Back", command=lambda: Win.end(4))
+            button_back = Win.Button(frame_for, text="Back", command=lambda: wind.close_window(4))
             button_back.grid(row=5, column=2, padx=10, pady=10)
 
         except Error.ErrorContract as e:

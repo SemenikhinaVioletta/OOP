@@ -2,6 +2,8 @@ import a_Window as Win
 import sqlite3 as bd
 import b_Class_New_Client as New
 import b_Error as Error
+import c_Error as Error_pro
+from c_Error import chek_status
 from b_Error import add_new_to_table, delete_from_table
 from a_Log import Logger
 from a_Global_Per import windows, database, create_combobox
@@ -58,9 +60,9 @@ def new_Client_Tabel(window_new_Client):
             None
         """
         if (
-            Error.chek_name(name_entry)
-            and Error.chek_phone(phone_entry)
-            and Error.chek_mail(email_entry)
+            Error.chek_name(name_entry.get())
+            and Error.chek_phone(phone_entry.get())
+            and Error.chek_mail(email_entry.get())
         ):
             Client.rename_newClient(
                 str(name_entry.get()),
@@ -72,7 +74,7 @@ def new_Client_Tabel(window_new_Client):
             frame.destroy()
             new_Client_Tabel(window_new_Client)
 
-    def make_this(Client, mora_entry, status_entry):
+    def make_this(Client, status_entry):
         """
         Processes the promotion of a client to a pro client and updates the database.
 
@@ -91,30 +93,36 @@ def new_Client_Tabel(window_new_Client):
         Raises:
             Error.ErrorNewClient: If a client with the same email or phone number already exists.
         """
-        basa = bd.connect(database)
-        cur = basa.cursor()
+
         try:
-            cur.execute(
-                """SELECT EXISTS(SELECT 1 FROM Client WHERE Phone = ?)""",
-                (Client.get_phone(),),
-            )
-            info_phone = cur.fetchone()[0]
-            cur.execute(
-                """SELECT EXISTS(SELECT 1 FROM Client WHERE Mail = ?)""",
-                (Client.get_email(),),
-            )
-            info_email = cur.fetchone()[0]
-            if info_email:
-                raise Error.ErrorNewClient("There is already a client with this email")
-            if info_phone:
-                raise Error.ErrorNewClient("There is already a client with this phone")
-            pro = Pro.Pro_Client(0, "", 0, "", 0, "", status_entry, Client)
-            pro.enter_client_to_db()
-            id = Win.Entry()
-            id.insert(0, str(Client.get_ID()))
-            id_for_delite(id)
-            frame.destroy()
-            new_Client_Tabel(window_new_Client)
+            basa = bd.connect(database)
+            cur = basa.cursor()
+            if chek_status(status_entry):
+                cur.execute(
+                    """SELECT EXISTS(SELECT 1 FROM Client WHERE Phone = ?)""",
+                    (Client.get_phone(),),
+                )
+                info_phone = cur.fetchone()[0]
+                cur.execute(
+                    """SELECT EXISTS(SELECT 1 FROM Client WHERE Mail = ?)""",
+                    (Client.get_email(),),
+                )
+                info_email = cur.fetchone()[0]
+                if info_email:
+                    raise Error.ErrorNewClient(
+                        "There is already a client with this email"
+                    )
+                if info_phone:
+                    raise Error.ErrorNewClient(
+                        "There is already a client with this phone"
+                    )
+                pro = Pro.Pro_Client(0, "", 0, "", 0, "", status_entry, Client)
+                pro.enter_client_to_db()
+                id = Win.Entry()
+                id.insert(0, str(Client.get_ID()))
+                id_for_delite(id)
+                frame.destroy()
+                new_Client_Tabel(window_new_Client)
         except Error.ErrorNewClient as e:
             Logger.log_error(file_name, "Error with already", str(e))
         except bd.Error as error:
@@ -261,14 +269,6 @@ def new_Client_Tabel(window_new_Client):
                         )
                         email_text.grid(row=4, column=1, pady=5, columnspan=2)
 
-                        mora_entry = Win.Entry(frame_for)
-                        mora_text = Win.Label(
-                            frame_for,
-                            text='Enter mora for pro Client in format:\n"0"',
-                        )
-                        mora_text.grid(row=5, column=1, pady=5)
-                        mora_entry.grid(row=5, column=2, padx=5)
-
                         status_text = Win.Label(
                             frame_for,
                             text="Enter status",
@@ -278,9 +278,7 @@ def new_Client_Tabel(window_new_Client):
                         save_button = Win.Button(
                             frame_for,
                             text="Save",
-                            command=lambda: make_this(
-                                Client, mora_entry, status_entry.get()
-                            ),
+                            command=lambda: make_this(Client, status_entry.get()),
                         )
                         save_button.grid(row=7, column=1, pady=5)
                         break

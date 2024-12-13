@@ -44,7 +44,7 @@ class ErrorProClient(Exception):
         """
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent=windows[1][-1]
+                title="ERROR IN INPUT", message=self.message, parent=windows[2][-1]
             )
             return "Error Pro Client, message: {0}".format(self.message)
         else:

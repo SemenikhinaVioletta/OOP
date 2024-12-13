@@ -101,7 +101,7 @@ def produkt_Table(window_produkt):
         if Error.check_all(
             name_entry.get(), mora_entry.get(), number_entry.get(), produkts
         ):
-            produkt.rename_Produkts(
+            produkt.rename_produkt(
                 str(name_entry.get()),
                 int(mora_entry.get()),
                 int(number_entry.get()),
@@ -150,7 +150,7 @@ def produkt_Table(window_produkt):
                         )
                         phone_entry = Win.Entry(frame_for)
                         phone_text.grid(row=3, column=1, pady=5)
-                        phone_entry.insert(0, str(produkt.get_phone()))
+                        phone_entry.insert(0, str(produkt.get_mora()))
                         phone_entry.grid(row=3, column=2, pady=5, padx=5)
                         number_text = Win.Label(
                             frame_for,
@@ -354,7 +354,7 @@ def produkt_Table(window_produkt):
                         number_entry.grid(row=2, column=2, padx=5)
                         order_text = Win.Label(
                             frame_for,
-                            text="Enter new cost of produkt",
+                            text="Enter how mach you want order produkt",
                         )
                         order_entry = Win.Entry(frame_for)
                         order_text.grid(row=3, column=1, pady=5)

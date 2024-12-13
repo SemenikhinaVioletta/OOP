@@ -1,8 +1,11 @@
 import a_Window as Win
 import a_Log as Logger
 from c_proClient import pro_client as clients
+from c_proClient import make_array as make_pro
 from d_Produkt import produkts
+from d_Produkt import make_array as make_prod
 from e_Contract import contracts
+from e_Contract import make_array as make_contr
 from a_Global_Per import windows, client_statuses, contract_statuses
 from tkinter.messagebox import showerror, showwarning, showinfo, askyesno
 
@@ -34,6 +37,7 @@ def make_frame(wind):
 
 
 def make_Table_product(flag, frame):
+    make_prod()
     columns = ("ID", "Name", "Cost of one copy", "Copies in stock", "Prise_sold")
     table_produkt = Win.ttk.Treeview(frame, columns=columns, show="headings")
     table_produkt.grid(row=1, column=1, sticky="nsew", rowspan=10)
@@ -73,6 +77,7 @@ def make_Table_product(flag, frame):
 
 
 def make_Table_contract(flag, frame):
+    make_contr()
     columns = ("ID", "Status", "Client", "Data of end Contract", "Mora")
     table_contract = Win.ttk.Treeview(frame, columns=columns, show="headings")
     table_contract.grid(row=1, column=1, sticky="nsew", rowspan=10)
@@ -93,6 +98,7 @@ def make_Table_contract(flag, frame):
 
 
 def make_Table_client(flag, frame):
+    make_pro()
     columns = ("ID", "Name", "Mora", "Phone", "Mail", "Status", "Numbers contracts")
     table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
     table_new_Client.grid(row=1, column=1, sticky="nsew", rowspan=10)

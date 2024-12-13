@@ -48,8 +48,7 @@ class Pro_Client(New.New_Client):
         ID, name, phone, email, short_name, and calls the make_short method to create the shortened version of the client's
         full name.
         """
-        self.status = 0
-        self.set_status(status)
+        self.status = client_statuses[int(status) - 1]
         self.mora = mora
         self.contract = []
         self.set_contract(contract)

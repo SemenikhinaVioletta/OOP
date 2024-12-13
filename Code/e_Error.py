@@ -127,6 +127,10 @@ def chek_date(date_start, date_end):
     except ErrorContract as e:
         Logger.log_error(file_name, "Error in enter Data", str(e))
         return False
+    except ValueError as e:
+        e = ErrorContract(str(e))
+        Logger.log_error(file_name, "Error in enter Data", str(e))
+        return False
 
 
 def chek_status(client):
