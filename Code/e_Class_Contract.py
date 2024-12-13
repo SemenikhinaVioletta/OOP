@@ -40,7 +40,7 @@ class Contract:
         end = str(data_end).split("-")
         self.data_start = date(int(start[0]), int(start[1]), int(start[2].split()[0]))
         self.data_end = date(int(end[0]), int(end[1]), int(end[2].split()[0]))
-        if Data > self.data_end:
+        if Data > self.data_end and status != 2:
             self.set_status(3)
         else:
             self.set_status(status)
