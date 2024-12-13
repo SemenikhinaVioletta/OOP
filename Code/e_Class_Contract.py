@@ -7,10 +7,12 @@ from a_Log import Logger
 from a_Global_Per import database, windows
 from d_Produkt import produkts
 from c_proClient import pro_client
+from datetime import date, datetime
 from f_Class_Status_Client import contract_statuses
 
 file_name = "File Class_Contract"
 logger = Logger(file_name, [], "Application started")
+Data = date.today()
 
 
 class Contract:
@@ -34,11 +36,15 @@ class Contract:
         if ID_klient != 0:
             self.set_client(ID_klient)
         self.ID = ID
-        self.set_status(status)
         start = str(data_start).split("-")
         end = str(data_end).split("-")
         self.data_start = date(int(start[0]), int(start[1]), int(start[2].split()[0]))
         self.data_end = date(int(end[0]), int(end[1]), int(end[2].split()[0]))
+        if Data > self.data_end:
+            self.set_status(3)
+        else:
+            self.set_status(status)
+        self.update_status()
         self.products = []
         if len(products) != 0:
             self.set_products(products)
@@ -64,6 +70,19 @@ class Contract:
                 if int(id) == produkt.get_ID():
                     self.products.append(produkt)
                     break
+
+    def update_status(self):
+        conn = db.connect(database)
+        cursor = conn.cursor()
+        logger.log_info(file_name, "Connected to SQLite")
+        cursor.execute("SELECT * FROM Contracts")
+        cursor.execute(
+            """UPDATE Contracts SET Status = ? WHERE ID_contract= ?""",
+            (self.get_status(), self.get_ID()),
+        )
+        conn.commit()
+        cursor.close()
+        conn.close()
 
     def set_client(self, ID_klient):
         """
@@ -217,8 +236,8 @@ class Contract:
                     if cont.get_ID() == self.get_ID():
                         client.contract.remove(cont)
                         cursor.execute(
-                            """UPDATE Contracts SET ID_klient = ? WHERE ID_contract = ?""",
-                            (client.get_contract_id(), contract.get_ID()),
+                            """UPDATE Client SET Contract_id = ? WHERE Id_Client= ?""",
+                            (client.get_contract_id(), cont.get_ID()),
                         )
             logger.log_info(
                 file_name, f"Client deleted from database: ID: {self.get_client_id()}"

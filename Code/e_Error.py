@@ -82,6 +82,7 @@ def chek_product(product, products):
         Logger.log_error(file_name, "Error in enter product ID", str(e))
         return False
 
+
 def chek_date(date_start, date_end):
     try:
         start = str(date_start).split("-")
@@ -111,7 +112,7 @@ def chek_date(date_start, date_end):
                 if not j.isdigit():
                     message = "Error in end format (mast be only digits)"
                     raise ErrorContract(message)
-                
+
         date1 = date(int(start[0]), int(start[1]), int(start[2]))
         date2 = date(int(end[0]), int(end[1]), int(end[2]))
         if date2 <= date1:
@@ -127,3 +128,16 @@ def chek_date(date_start, date_end):
         Logger.log_error(file_name, "Error in enter Data", str(e))
         return False
 
+
+def chek_status(client):
+    try:
+        if len(client.contract) != 0:
+            if client.contract[-1] != 2:
+                message = "Not close other contract."
+                raise ErrorContract(message)
+        message = "Not error in date go to contract..."
+        Logger.log_info(file_name, message)
+        return True
+    except ErrorContract as e:
+        Logger.log_error(file_name, "Error in enter Data", str(e))
+        return False

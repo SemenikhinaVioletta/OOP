@@ -450,8 +450,6 @@ class Pro_Client(New.New_Client):
                 (contrakts, self.get_ID()),
             )
             self.mora += client_mora
-            conn = db.connect(database)
-            cur = conn.cursor()
             cur.execute(
                 """UPDATE Client SET Mora = ? WHERE Id_Client = ?""",
                 (self.mora, self.get_ID()),

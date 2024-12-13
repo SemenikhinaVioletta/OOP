@@ -22,7 +22,6 @@ def contract_Table(window_contract):
         product = int(product[0])
         if Error.chek_product(product, produkts):
             for i in produkts:
-                print(produkts_to_contract)
                 if i.get_ID() == product:
                     i.rename_produkt(
                         i.get_name(), i.get_mora(), i.get_number() - 1, produkts
@@ -37,31 +36,33 @@ def contract_Table(window_contract):
                 client = int(client[0])
                 for i in clients:
                     if i.get_ID() == client:
-                        contract = cont.Contract(
-                            len(contracts) + 1,
-                            1,
-                            Date,
-                            end_data,
-                            produkts_to_contract,
-                            0,
-                            i.get_ID(),
-                        )
-                        contract.set_mora()
-                        contract.add_to_bd()
-                        make_array()
-                        i.add_contract(contracts[-1])
-                        i.rename_client(
-                            i.get_name(),
-                            i.get_phone(),
-                            contract.get_mora(),
-                            i.get_email(),
-                            i.get_status(),
-                            i.get_contract_id(),
-                            clients,
-                        )
+                        if Error.chek_status(client):
+                            contract = cont.Contract(
+                                len(contracts) + 1,
+                                1,
+                                Date,
+                                end_data,
+                                produkts_to_contract,
+                                0,
+                                i.get_ID(),
+                            )
+                            contract.set_mora()
+                            contract.add_to_bd()
+                            make_array()
+                            contracts.append(contract)
+                            i.add_contract(contracts[-1])
+                            i.rename_client(
+                                i.get_name(),
+                                i.get_phone(),
+                                contract.get_mora(),
+                                i.get_email(),
+                                i.get_status(),
+                                i.get_contract_id(),
+                                clients,
+                            )
+                produkts_to_contract.clear()
                 frame.destroy()
                 contract_Table(window_contract)
-                produkts_to_contract.clear()
         except Error.ErrorContract as e:
             Logger.log_error(file_name, "Error in add contract", str(e))
 
@@ -112,8 +113,7 @@ def contract_Table(window_contract):
 
         except Error.ErrorContract as e:
             Logger.log_error(file_name, "Error with opend windows.", str(e))
-    
-    
+
     def id_for_delite(id):
         if Error.chek_ID(id.get(), contracts):
             id = int(id.get())
@@ -121,7 +121,7 @@ def contract_Table(window_contract):
                 if contract.get_ID() == id:
                     confirm = Error.askyesno(
                         "Confirm Delete",
-                        f"Are you sure you want to delete the client with ID: {id}?",
+                        f"Are you sure you want to delete the contract with ID: {id}?",
                         parent=windows[4][-1],
                     )
                     if confirm:
@@ -131,7 +131,6 @@ def contract_Table(window_contract):
                         contract_Table(window_contract)
                     break
 
-    
     def delete_element():
         try:
             if len(windows[4]) < 2:
@@ -160,12 +159,58 @@ def contract_Table(window_contract):
         except Error.ErrorContract as e:
             Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
+    def end_contract(text_for_delite):
+        id = int(text_for_delite.get())
+        if Error.chek_ID(id, contracts):
+            for contract in contracts:
+                if contract.get_ID() == id:
+                    confirm = Error.askyesno(
+                        "Confirm Delete",
+                        f"Are you sure you want to end the contract with ID: {id}?",
+                        parent=windows[4][-1],
+                    )
+                    if confirm:
+                        contract.set_status(2)
+                        contract.update_status()
+                        frame.destroy()
+                        contract_Table(window_contract)
+                    break
+
+    def end_new():
+        try:
+            if len(windows[4]) < 2:
+                wind = Win.Window("End Contract", "500x300")
+                wind.make_protokol(lambda: wind.close_window(4))
+                windows[4].append(wind)
+                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                frame_for.pack(expand=True)
+                Id_for_delite = Win.Label(
+                    frame_for, text="Enter ID of the contract you want to end:"
+                )
+                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
+                text_for_delite = Win.Entry(frame_for)
+                text_for_delite.grid(row=1, column=2, padx=5)
+                button_for_delite = Win.Button(
+                    frame_for,
+                    text="End contract",
+                    command=lambda: end_contract(text_for_delite),
+                )
+                button_for_delite.grid(row=2, column=2, padx=5)
+                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
+            else:
+                raise Error.ErrorContract(
+                    "Please close other windows for work with contract"
+                )
+        except Error.ErrorContract as e:
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     global frame
     frame = Win.Frame(master=window_contract, relief=Win.SUNKEN)
     frame.pack(expand=True)
     add_new_Client = Win.Button(frame, text="Add Contract", command=add_new)
     add_new_Client.grid(row=1, column=2, padx=10, pady=10)
+    add_new_Client = Win.Button(frame, text="End Contract", command=end_new)
+    add_new_Client.grid(row=2, column=2, padx=10, pady=10)
     Delete_element = Win.Button(frame, text="Delete", command=delete_element)
     Delete_element.grid(row=3, column=2, padx=10, pady=10)
     close_table = Win.Button(
