@@ -36,16 +36,18 @@ def contract_Table(window_contract):
 
     def save(client, end_data):
         try:
+            for i in clients:
+                if i.get_ID() == int(client.split()[0]):
+                    client = i
+                    break
             if (
                 Error.chek_date(Date, end_data)
-                and Error.chek_status(client)
+                and Error.chek_status(client, clients)
                 and len(produkts_to_contract) != 0
             ):
-                client = str(client).split()
-                client = int(client[0])
                 for i in clients:
-                    if i.get_ID() == client:
-                        if Error.chek_status(i):
+                    if i.get_ID() == client.get_ID():
+                        if Error.chek_status(i, clients):
                             contract = cont.Contract(
                                 len(contracts) + 1,
                                 1,

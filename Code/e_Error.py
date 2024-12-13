@@ -118,7 +118,7 @@ def chek_date(date_start, date_end):
         if date2 <= date1:
             message = "End date must be after start date"
             raise ErrorContract(message)
-        if date_start > Data:
+        if date1 > Data:
             message = "Start date must be today."
             raise ErrorContract(message)
         message = "Not error in date go to contract..."
@@ -133,7 +133,7 @@ def chek_date(date_start, date_end):
         return False
 
 
-def chek_status(client):
+def chek_status(client, clients):
     try:
         if len(client.contract) != 0:
             if client.contract[-1] != 2:

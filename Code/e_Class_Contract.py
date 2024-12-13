@@ -139,7 +139,10 @@ class Contract:
         str: The start date of the contract in 'YYYY-MM-DD' format.
         """
         return str(self.data_start)
-
+    def get_rial_data_start(self):
+        return self.data_start
+    def get_rial_data_end(self):
+        return self.data_end
     def get_data_end(self):
         return str(self.data_end)
 
