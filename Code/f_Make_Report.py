@@ -84,12 +84,15 @@ def make_Table_product(flag, frame):
 def make_Table_contract(flag, frame):
     make_contr()
     if flag != 5:
-        columns = ("ID", "Status", "Client", "Data of end Contract", "Mora")
+        columns = ("ID", "Status", "Client", "Data of Start Contract", "Data of end Contract", "Mora")
         table_contract = Win.ttk.Treeview(frame, columns=columns, show="headings")
         table_contract.grid(row=1, column=1, sticky="nsew", rowspan=10)
         table_contract.heading("ID", text="ID", anchor=Win.W)
         table_contract.heading("Status", text="Status", anchor=Win.W)
         table_contract.heading("Client", text="Client", anchor=Win.W)
+        table_contract.heading(
+            "Data of Start Contract", text="Data of Start Contract", anchor=Win.W
+        )
         table_contract.heading(
             "Data of end Contract", text="Data of end Contract", anchor=Win.W
         )
@@ -98,11 +101,11 @@ def make_Table_contract(flag, frame):
         if flag == 1 or flag == 2 or flag == 3:
             for contract in contracts:
                 if contract.get_status() == flag:
-                    table_contract.insert("", Win.END, values=contract.get())
+                    table_contract.insert("", Win.END, values=contract.get_all())
         if flag == 4:
             for contract in contracts:
                 if contract.get_rial_data_start() >= data_s and contract.get_rial_data_start() <= data_e:
-                    table_contract.insert("", Win.END, values=contract.get())
+                    table_contract.insert("", Win.END, values=contract.get_all())
         
         scrollbar = Win.ttk.Scrollbar(
             frame, orient=Win.VERTICAL, command=table_contract.yview

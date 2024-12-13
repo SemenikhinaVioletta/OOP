@@ -154,6 +154,15 @@ class Contract:
             self.get_data_end(),
             self.get_mora(),
         )
+    def get_all(self):
+        return (
+            int(self.ID),
+            self.status.get_status(),
+            self.get_client_name(),
+            self.get_data_start(),
+            self.get_data_end(),
+            self.get_mora(),
+        )
 
     def set_clients(self, ID):
         flag = True
