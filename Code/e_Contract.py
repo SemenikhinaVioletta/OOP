@@ -8,6 +8,7 @@ from a_Log import Logger
 from a_Global_Per import database, windows
 from c_proClient import pro_client as clients
 from d_Produkt import produkts
+from d_Produkt import make_array as make_prod
 
 file_name = "File Contract"
 Date = date.today()
@@ -19,6 +20,7 @@ def contract_Table(window_contract):
 
     def add_product_to_contract(product):
         try:
+            make_prod()
             product = str(product).split()
             product = int(product[0])
             if Error.chek_product(product, produkts):
@@ -31,10 +33,14 @@ def contract_Table(window_contract):
                         break
         except Error.ErrorContract as e:
             Logger.log_error(file_name, "Error in add product to contract", str(e))
-            
+
     def save(client, end_data):
         try:
-            if Error.chek_date(Date, end_data):
+            if (
+                Error.chek_date(Date, end_data)
+                and Error.chek_status(client)
+                and len(produkts_to_contract) != 0
+            ):
                 client = str(client).split()
                 client = int(client[0])
                 for i in clients:
@@ -62,6 +68,7 @@ def contract_Table(window_contract):
                                 i.get_contract_id(),
                                 clients,
                             )
+                            make_prod()
                             for id in produkts_to_contract:
                                 for product in produkts:
                                     if product.get_ID() == id:
@@ -69,7 +76,13 @@ def contract_Table(window_contract):
                                         product.zakazano += 1
                                         break
                             for product in produkts:
-                                product.rename_produkt(product.get_name(), product.get_mora(), product.get_number(), produkts, product.get_zakazano())
+                                product.rename_produkt(
+                                    product.get_name(),
+                                    product.get_mora(),
+                                    product.get_number(),
+                                    produkts,
+                                    product.get_zakazano(),
+                                )
                 produkts_to_contract.clear()
                 frame.destroy()
                 contract_Table(window_contract)
@@ -118,7 +131,9 @@ def contract_Table(window_contract):
                 command=lambda: save(str(box_client.get()), entr_data.get()),
             )
             button_save.grid(row=5, column=1, padx=10, pady=10)
-            button_back = Win.Button(frame_for, text="Back", command=lambda: wind.close_window(4))
+            button_back = Win.Button(
+                frame_for, text="Back", command=lambda: wind.close_window(4)
+            )
             button_back.grid(row=5, column=2, padx=10, pady=10)
 
         except Error.ErrorContract as e:

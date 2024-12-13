@@ -50,8 +50,8 @@ class Pro_Client(New.New_Client):
         """
         self.status = client_statuses[int(status) - 1]
         self.mora = mora
-        self.contract = []
-        self.set_contract(contract)
+        array = set_contract(contract)
+        self.contract = array
         if client is not None:
             self.ID = client.ID
             self.name = client.name
@@ -108,28 +108,6 @@ class Pro_Client(New.New_Client):
         """
         names = client_name.split()
         self.short_name = names[0] + " " + names[1][0] + ". " + names[2][0] + "."
-
-    def set_contract(self, contract):
-        """
-        Parses and sets the contract IDs for the client.
-
-        This function takes a string of contract IDs separated by spaces, converts them to integers,
-        and adds them to the client's contract list if they are not already present.
-
-        Parameters:
-        contract (str): A string containing contract IDs separated by spaces.
-
-        Returns:
-        None
-
-        The function modifies the 'contract' attribute of the client instance.
-        """
-        Contracts = list(map(int, contract.split()))
-        for i in Contracts:
-            for id in contracts:
-                if id.get_ID() == i:
-                    self.contract.append(id)
-                    break
 
     def add_contract(self, contract):
         """
@@ -489,3 +467,14 @@ class Pro_Client(New.New_Client):
             Logger(file_name, "Error while adding client to database", error)
         finally:
             conn.close()
+
+
+def set_contract(contract):
+    array = []
+    Contracts = list(map(int, contract.split()))
+    for i in Contracts:
+        for id in contracts:
+            if id.get_ID() == i:
+                array.append(id)
+                break
+    return array

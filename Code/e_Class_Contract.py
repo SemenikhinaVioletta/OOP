@@ -44,31 +44,9 @@ class Contract:
         else:
             self.set_status(status)
         self.update_status()
-        self.products = []
-        if len(products) != 0:
-            self.set_products(products)
+        array = set_products(products)
+        self.products = array
         self.mora = Mora
-        # self.set_mora()
-
-    def set_products(self, products):
-        """
-        Sets the products associated with the contract.
-
-        This method takes a space-separated string of product IDs, splits them, and
-        iterates through the list to find matching product IDs in the global 'produkts' list.
-        If a match is found, the corresponding product is added to the contract's products list.
-
-        Parameters:
-        products (str): A space-separated string of product IDs associated with the contract.
-
-        Returns:
-        None
-        """
-        for id in products:
-            for produkt in produkts:
-                if int(id) == produkt.get_ID():
-                    self.products.append(produkt)
-                    break
 
     def update_status(self):
         conn = db.connect(database)
@@ -250,3 +228,14 @@ class Contract:
 
     def __del__(self):
         pass
+
+
+
+def set_products(products):
+    array = []
+    for id in products:
+        for produkt in produkts:
+            if int(id) == produkt.get_ID():
+                array.append(produkt)
+                break
+    return array
