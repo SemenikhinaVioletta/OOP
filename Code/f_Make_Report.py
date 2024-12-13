@@ -72,6 +72,27 @@ def make_Table_product(flag, frame):
     )
 
 
+
+def make_Table_contract(flag, frame):
+    columns = ("ID", "Status", "Client", "Data of end Contract", "Mora")
+    table_contract = Win.ttk.Treeview(frame, columns=columns, show="headings")
+    table_contract.grid(row=1, column=1, sticky="nsew", rowspan=10)
+    table_contract.heading("ID", text="ID", anchor=Win.W)
+    table_contract.heading("Status", text="Status", anchor=Win.W)
+    table_contract.heading("Client", text="Client", anchor=Win.W)
+    table_contract.heading(
+        "Data of end Contract", text="Data of end Contract", anchor=Win.W
+    )
+    table_contract.heading("Mora", text="Mora", anchor=Win.W)
+    table_contract.column("#1", stretch=Win.NO, width=50)
+    for contract in contracts:
+        if contract.get_status() == flag:
+            table_contract.insert("", Win.END, values=contract.get())
+    scrollbar = Win.ttk.Scrollbar(
+        frame, orient=Win.VERTICAL, command=table_contract.yview
+    )
+
+
 def make_othet(selected_option):
     try:
         if len(windows[5]) != 0:
@@ -80,9 +101,7 @@ def make_othet(selected_option):
         new_window = Win.Window("Report", "1000x300")
         new_window.make_protokol(lambda: Win.end(5))
         windows[5].append(new_window)
-        frame = make_frame(new_window)
-        if selected_option == methods[2]:
-            make_Table_product(0, frame)
+        frame = make_frame(new_window)        
         make_front(frame, selected_option, new_window)
     except ErrorReport as e:
         Logger.Logger.log_error(file_name, "Error while opening window", str(e))
@@ -96,3 +115,11 @@ def make_front(frame, selected_option, wind):
         button_top_sales = Win.Button(frame, text="Sort of sale", command=lambda:make_Table_product(1, frame))
         button_top_prise.grid(row=1, column=2, padx=5, pady=5)
         button_top_sales.grid(row=2, column=2, padx=5, pady=5)
+    if selected_option == methods[1]:
+        button_start = Win.Button(frame, text="Current contracts", command=lambda:make_Table_contract(1, frame))
+        button_end = Win.Button(frame, text="Completed contracts", command=lambda:make_Table_contract(2, frame))
+        button_luse = Win.Button(frame, text="Expired contracts", command=lambda:make_Table_contract(3, frame))
+        button_start.grid(row=1, column=2, padx=5, pady=5)
+        button_end.grid(row=2, column=2, padx=5, pady=5)
+        button_luse.grid(row=3, column=2, padx=5, pady=5)
+        
