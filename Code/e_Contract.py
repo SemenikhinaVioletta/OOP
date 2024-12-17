@@ -41,25 +41,20 @@ def contract_Table(window_contract):
                 if i.get_ID() == int(client.split()[0]):
                     client = i
                     break
-            if (
-                Error.chek_date(Date, end_data)
-                and Error.chek_status(client, clients)
-                and len(produkts_to_contract) != 0
-            ):
+            if Error.chek_date(Date, end_data) and len(produkts_to_contract) != 0:
                 for i in clients:
                     if i.get_ID() == client.get_ID():
-                        if Error.chek_status(i, clients):
-                            contract = cont.Contract(
-                                len(contracts) + 1,
-                                1,
-                                Date,
-                                end_data,
-                                produkts_to_contract,
-                                0,
-                                i.get_ID(),
-                            )
-                            contract.set_mora()
-                            contract.add_to_bd()
+                        contract = cont.Contract(
+                            len(contracts) + 1,
+                            1,
+                            Date,
+                            end_data,
+                            produkts_to_contract,
+                            0,
+                            i.get_ID(),
+                        )
+                        contract.set_mora()
+                        contract.add_to_bd()
                 frame.destroy()
                 contract_Table(window_contract)
                 remake_cli_prod(contract)

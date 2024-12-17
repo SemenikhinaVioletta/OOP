@@ -133,15 +133,3 @@ def chek_date(date_start, date_end):
         return False
 
 
-def chek_status(client, clients):
-    try:
-        if len(client.contract) != 0:
-            if client.contract[-1] != 2:
-                message = "Not close other contract."
-                raise ErrorContract(message)
-        message = "Not error in date go to contract..."
-        Logger.log_info(file_name, message)
-        return True
-    except ErrorContract as e:
-        Logger.log_error(file_name, "Error in enter Data", str(e))
-        return False
