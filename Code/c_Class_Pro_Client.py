@@ -109,7 +109,7 @@ class Pro_Client(New.New_Client):
         names = client_name.split()
         self.short_name = names[0] + " " + names[1][0] + ". " + names[2][0] + "."
 
-    def add_contract(self, contract):
+    def add_contract(self, contrakt):
         """
         Adds a contract to the client's contract list.
 
@@ -124,7 +124,7 @@ class Pro_Client(New.New_Client):
 
         The function modifies the 'contract' attribute of the client instance by appending the provided contract object.
         """
-        self.contract.append(contract)
+        self.contract.append(contrakt)
 
     def get_client_id(self):
         """

@@ -22,10 +22,10 @@ class Produkt:
         Returns:
         None
         """
+        self.ID = int(ID)
         self.name = str(name)
         self.mora = int(mora)
         self.number = int(number)
-        self.ID = int(ID)
         self.zakazano = int(zakazali)
 
     def __del__(self):
@@ -92,8 +92,10 @@ class Produkt:
         """
         Logger.log_info(file_name, "Fetching produkt name: " + f"Name: {self.name}")
         return str(self.name)
+
     def get_zakazano(self):
         return int(self.zakazano)
+
     def get_mora(self) -> int:
         """
         Retrieve the mora value associated with the client.
@@ -192,7 +194,32 @@ class Produkt:
         finally:
             conn.close()
 
-    def rename_produkt(self, name, mora, number, produkts, zakazali):
+    def set_zakazano(self, zakazano):
+        try:
+            self.zakazano += zakazano
+            conn = bd.connect(database)
+            cur = conn.cursor()
+            cur.execute(
+                """UPDATE Produkts SET Zakaz = ? WHERE Id_produkt = ?""",
+                (self.zakazano, self.get_ID()),
+            )
+            conn.commit()
+            Logger.log_info(
+                file_name,
+                "Updated zakazali of produkt with ID: "
+                + f"{self.get_ID()}, to: {self.zakazano}",
+            )
+        except Error.ErrorProduct as e:
+            Logger(file_name, "Error renaming from Method rename_produkt", str(e))
+        except bd.Error as error:
+            Logger(file_name, "Error while working with SQLite", error)
+        finally:
+            conn.close()
+
+    def set_number(self, iterable):
+        self.number += iterable
+
+    def rename_produkt(self, name, mora, produkts):
         """
         Updates the name, mora, and number of the product in the database and in the instance attributes.
 
@@ -233,16 +260,14 @@ class Produkt:
                     """UPDATE Produkts SET Mora = ? WHERE Id_produkt = ?""",
                     (self.get_mora(), self.get_ID()),
                 )
-            if self.get_number() != number:
-                self.number = number
-                cur.execute(
-                    """UPDATE Produkts SET In_sclad = ? WHERE Id_produkt = ?""",
-                    (self.get_number(), self.get_ID()),
-                )
-                cur.execute(
-                    """UPDATE Produkts SET Zakaz = ? WHERE Id_produkt = ?""",
-                    (int(zakazali), self.get_ID()),
-                )
+            cur.execute(
+                """UPDATE Produkts SET In_sclad = ? WHERE Id_produkt = ?""",
+                (self.get_number(), self.get_ID()),
+            )
+            cur.execute(
+                """UPDATE Produkts SET Zakaz = ? WHERE Id_produkt = ?""",
+                (self.get_zakazano(), self.get_ID()),
+            )
             conn.commit()
         except Error.ErrorProduct as e:
             Logger(file_name, "Error renaming from Method rename_produkt", str(e))

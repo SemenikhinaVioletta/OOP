@@ -1,6 +1,5 @@
 import sqlite3 as db
 import c_Class_Pro_Client as pro
-import d_Class_Produkt as prod
 import datetime as t
 from datetime import date
 from a_Log import Logger
@@ -139,10 +138,13 @@ class Contract:
         str: The start date of the contract in 'YYYY-MM-DD' format.
         """
         return str(self.data_start)
+
     def get_rial_data_start(self):
         return self.data_start
+
     def get_rial_data_end(self):
         return self.data_end
+
     def get_data_end(self):
         return str(self.data_end)
 
@@ -154,6 +156,7 @@ class Contract:
             self.get_data_end(),
             self.get_mora(),
         )
+
     def get_all(self):
         return (
             int(self.ID),
@@ -240,7 +243,6 @@ class Contract:
 
     def __del__(self):
         pass
-
 
 
 def set_products(products):

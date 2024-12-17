@@ -44,7 +44,8 @@ def produkt_Table(window_produkt):
                 produkts[-1].get_ID() + 1,
                 str(name_entry.get()),
                 int(coast_entry.get()),
-                int(number_entry.get()), 0
+                int(number_entry.get()),
+                0,
             )
             produkt.enter_produkt_to_bd()
             produkts.append(produkt)
@@ -101,11 +102,9 @@ def produkt_Table(window_produkt):
         if Error.check_all(
             name_entry.get(), mora_entry.get(), number_entry.get(), produkts
         ):
+            produkt.set_number(number_entry.get())
             produkt.rename_produkt(
-                str(name_entry.get()),
-                int(mora_entry.get()),
-                int(number_entry.get()),
-                produkts, 0
+                str(name_entry.get()), int(mora_entry.get()), produkts
             )
             frame.destroy()
             produkt_Table(window_produkt)

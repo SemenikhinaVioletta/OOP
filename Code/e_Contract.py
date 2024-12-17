@@ -9,6 +9,7 @@ from a_Global_Per import database, windows
 from c_proClient import pro_client as clients
 from d_Produkt import produkts
 from d_Produkt import make_array as make_prod
+from c_proClient import make_array as make_pro
 
 file_name = "File Contract"
 Date = date.today()
@@ -59,35 +60,9 @@ def contract_Table(window_contract):
                             )
                             contract.set_mora()
                             contract.add_to_bd()
-                            make_array()
-                            i.add_contract(contracts[-1])
-                            i.rename_client(
-                                i.get_name(),
-                                i.get_phone(),
-                                contract.get_mora(),
-                                i.get_email(),
-                                i.get_status(),
-                                i.get_contract_id(),
-                                clients,
-                            )
-                            make_prod()
-                            for id in produkts_to_contract:
-                                for product in produkts:
-                                    if product.get_ID() == id:
-                                        product.number -= 1
-                                        product.zakazano += 1
-                                        break
-                            for product in produkts:
-                                product.rename_produkt(
-                                    product.get_name(),
-                                    product.get_mora(),
-                                    product.get_number(),
-                                    produkts,
-                                    product.get_zakazano(),
-                                )
-                produkts_to_contract.clear()
                 frame.destroy()
                 contract_Table(window_contract)
+                remake_cli_prod(contract)
         except Error.ErrorContract as e:
             Logger.log_error(file_name, "Error in add contract", str(e))
 
@@ -248,6 +223,35 @@ def contract_Table(window_contract):
     close_table.grid(row=4, column=2, padx=10, pady=10)
     make_array()
     make_Table()
+
+
+def remake_cli_prod(contract):
+    # Пробуем починить контракты в клиентах и перезаполнение продуктов на складе
+    make_pro()
+    make_prod()
+    make_array()
+    for i in produkts:
+        for prod in contract.get_produkts_to_bd().split():
+            if i.get_ID() == int(prod):
+                i.set_number(-1)
+                i.order(i.get_number())
+                i.set_zakazano(1)
+        i.rename_produkt(i.get_name(), i.get_mora(), produkts)
+    for cli in clients:
+        if cli.get_ID() == contract.get_client_id():
+            cli.add_contract(contracts[-1])
+            cli.rename_client(
+                cli.get_name(),
+                cli.get_phone(),
+                contract.get_mora(),
+                cli.get_email(),
+                cli.status,
+                cli.get_contract_id(),
+                clients,
+            )
+            break
+    make_pro()
+    make_prod()
 
 
 def make_array():
