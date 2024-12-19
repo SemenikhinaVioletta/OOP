@@ -9,16 +9,31 @@ file_name = "File Window"
 
 
 class Window(Tk):
+    """
+    A custom Tkinter window class with enhanced logging and event handling capabilities.
+
+    The Window class extends the Tkinter Tk class to provide additional functionality for creating,
+    managing, and interacting with graphical windows in a Python application.
+
+    Attributes:
+        name (str): The name of the window.
+
+    Methods:
+        __init__(name, geom): Creates a new window with specified name and geometry.
+        open(): Starts the Tkinter event loop for the window.
+        make_protokol(fun): Sets a protocol handler for window closing events.
+        close_window(flag): Closes the window and removes it from a specified window list.
+    """
 
     def __init__(self, name, geom):
         """
         Initialize a new instance of the Window class.
 
         This method creates a new window with the given name and geometry.
-        It also sets the title of the window and logs an informational event.
+        It also logs an informational event indicating that the window has been created.
 
         Parameters:
-        name (str): The name of the window.
+        name (str): The name to be displayed on the window title bar.
         geom (str): The geometry of the window, specified as a string in the format "widthxheight+x+y".
 
         Returns:
@@ -33,7 +48,7 @@ class Window(Tk):
         )
 
     # --------------------------------------------------------------------------------------------------------------------------------
-    # Дополнительные функции
+
     def open(self):
         """
         Open the window and start the Tkinter event loop.
@@ -52,21 +67,30 @@ class Window(Tk):
 
     def make_protokol(self, fun):
         """
-        The function `make_protokol` sets a protocol for the WM_DELETE_WINDOW event in Python.
+        Set a protocol handler for the "WM_DELETE_WINDOW" event.
 
-        @param fun The `fun` parameter in the `make_protokol` method is expected to be a function that will be called when the window manager event `WM_DELETE_WINDOW` is triggered. This function will be associated with handling the event when the user tries to close the window.
+        This method sets a protocol handler for the "WM_DELETE_WINDOW" event, which is triggered when the user attempts to close the window.
+        The provided function `fun` will be called when this event occurs.
+
+        Parameters:
+        fun (function): A function to be called when the "WM_DELETE_WINDOW" event is triggered.
+                        This function should handle the closing of the window or perform any necessary cleanup.
+
+        Returns:
+        None
         """
         self.protocol("WM_DELETE_WINDOW", fun)
 
     def close_window(self, flag):
         """
-        Close the current window and remove it from the list of open windows.
+        Closes the current window and removes it from the list of windows associated with the given flag.
 
-        This method logs an event indicating that the window is not adding a new client and is closing.
-        It then removes the current window from the provided list of open windows and destroys the window.
+        This method logs an event indicating that the window is being closed.
+        It then removes the current window instance from the list of windows associated with the given flag.
+        Finally, it destroys the current window.
 
         Parameters:
-        windows (list): A list of open windows. The current window will be removed from this list.
+        flag (int): A flag indicating which list of windows to remove the current window from.
 
         Returns:
         None
@@ -81,7 +105,6 @@ class Window(Tk):
 
     # --------------------------------------------------------------------------------------------------------------------------------
 
-    # Деструктор
     def __del__(self):
         """
         Destructor method for the Window class.
@@ -101,7 +124,8 @@ class Window(Tk):
 
 
 # --------------------------------------------------------------------------------------------------------------------------------
-# Конец приложения
+
+
 def end(flag):
     """
     Ends the main loop of the application and closes all windows based on the provided flag.
@@ -130,4 +154,3 @@ def end(flag):
             windows[flag][i].destroy()
         windows[flag].clear()
     Logger(file_name, "", "Method end - close program...")
-
