@@ -80,7 +80,7 @@ def pro_client_Table(window_new_Client):
 
     def delete_element():
         try:
-            if len(windows[2]) < 2:
+            if len(windows[1]) < 2:
                 wind = Win.Window("Delete pro Client", "500x300")
                 wind.make_protokol(lambda: wind.close_window(1))
                 windows[1].append(wind)
@@ -108,7 +108,7 @@ def pro_client_Table(window_new_Client):
 
     def add_new():
         try:
-            if len(windows[2]) < 2:
+            if len(windows[1]) < 2:
                 wind = Win.Window("Add pro Client", "600x300")
                 wind.make_protokol(lambda: wind.close_window(1))
                 windows[1].append(wind)
@@ -232,7 +232,7 @@ def pro_client_Table(window_new_Client):
 
     def rename():
         try:
-            if len(windows[2]) < 2:
+            if len(windows[1]) < 2:
                 wind = Win.Window("Rename pro Client", "700x400")
                 wind.make_protokol(lambda: wind.close_window(1))
                 windows[1].append(wind)

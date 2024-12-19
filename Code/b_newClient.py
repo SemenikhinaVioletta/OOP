@@ -27,74 +27,9 @@ def new_Client_Tabel(window_new_Client):
             frame.destroy()
             new_Client_Tabel(window_new_Client)
 
-    def do_this(Client, name_entry, phone_entry, email_entry):
-        if (
-            Error.chek_name(name_entry.get())
-            and Error.chek_phone(phone_entry.get())
-            and Error.chek_mail(email_entry.get())
-        ):
-            Client.rename_newClient(
-                str(name_entry.get()),
-                int(phone_entry.get()),
-                str(email_entry.get()),
-                Clients,
-            )
-            Clients.clear()
-            frame.destroy()
-            new_Client_Tabel(window_new_Client)
-
-    def get_text(id, frame_for, wind):
-        try:
-            if Error.delete_from_table(id, Clients):
-                flag = 0
-                id = int(id.get())
-                for Client in Clients:
-                    if Client.ID == id:
-                        flag = 1
-                        name_text = Win.Label(
-                            frame_for,
-                            text='Enter new name for client in format:\n"Secondname Name Surname"',
-                        )
-                        name_entry = Win.Entry(frame_for)
-                        name_text.grid(row=2, column=1)
-                        name_entry.insert(0, Client.get_name())
-                        name_entry.grid(row=2, column=2, padx=5)
-                        phone_text = Win.Label(
-                            frame_for,
-                            text='Enter new phone number for client in format:\n"88888888888"',
-                        )
-                        phone_entry = Win.Entry(frame_for)
-                        phone_text.grid(row=3, column=1, pady=5)
-                        phone_entry.insert(0, str(Client.get_phone()))
-                        phone_entry.grid(row=3, column=2, pady=5, padx=5)
-                        email_text = Win.Label(
-                            frame_for,
-                            text='Enter new email for client in format:\n"email@domain.com"',
-                        )
-                        email_entry = Win.Entry(frame_for)
-                        email_text.grid(row=4, column=1, pady=5)
-                        email_entry.insert(0, Client.get_email())
-                        email_entry.grid(row=4, column=2, pady=5, padx=5)
-                        save_button = Win.Button(
-                            frame_for,
-                            text="Save",
-                            command=(
-                                lambda: do_this(
-                                    Client, name_entry, phone_entry, email_entry
-                                )
-                            ),
-                        )
-                        save_button.grid(row=5, column=1, pady=5)
-                        break
-                if flag == 0:
-                    message = f"Client with ID = {id} not found!"
-                    raise Error.ErrorNewClient(message)
-        except Error.ErrorNewClient:
-            wind.close_window(2)
-
     def add_new():
         try:
-            if len(windows[1]) < 2:
+            if len(windows[2]) < 2:
                 wind = Win.Window("Add New Client", "600x300")
                 wind.make_protokol(lambda: wind.close_window(2))
                 windows[2].append(wind)
@@ -131,37 +66,6 @@ def new_Client_Tabel(window_new_Client):
                     frame_for, text="Back", command=lambda: wind.close_window(2)
                 )
                 delete_button.grid(row=4, column=2, pady=5, padx=5)
-            else:
-                raise Error.ErrorNewClient(
-                    "Please close other windows for work with new Client"
-                )
-        except Error.ErrorNewClient as e:
-            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
-
-    def rename():
-        try:
-            if len(windows[1]) < 2:
-                wind = Win.Window("Rename New Client", "600x300")
-                wind.make_protokol(lambda: wind.close_window(2))
-                windows[2].append(wind)
-                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-                frame_for.pack(expand=True)
-                ID_text = Win.Label(
-                    frame_for, text="Enter ID of the client you want to rename:"
-                )
-                ID_entry = Win.Entry(frame_for)
-                ID_find = Win.Button(
-                    frame_for,
-                    text="Find element",
-                    command=lambda: get_text(ID_entry, frame_for, wind),
-                )
-                ID_find.grid(row=1, column=3, padx=5)
-                ID_text.grid(row=1, column=1)
-                ID_entry.grid(row=1, column=2, padx=5)
-                delete_button = Win.Button(
-                    frame_for, text="Back", command=lambda: wind.close_window(2)
-                )
-                delete_button.grid(row=5, column=2, pady=5, padx=5)
             else:
                 raise Error.ErrorNewClient(
                     "Please close other windows for work with new Client"
@@ -209,6 +113,96 @@ def make_array():
 
 def make_Table(window_new_Client):
 
+    def do_this(Client, name_entry, phone_entry, email_entry, poup):
+        if (
+            Error.chek_name(name_entry.get())
+            and Error.chek_phone(phone_entry.get())
+            and Error.chek_mail(email_entry.get())
+        ):
+            Client.rename_newClient(
+                str(name_entry.get()),
+                int(phone_entry.get()),
+                str(email_entry.get()),
+                Clients,
+            )
+            Clients.clear()
+            frame.destroy()
+            windows[2][-1].close_window(2)
+            poup.destroy()
+            windows[2].remove(poup)
+            new_Client_Tabel(window_new_Client)
+
+    def get_text(id, poup):
+        try:
+            if len(windows[2]) < 3:
+                wind = Win.Window("Rename New Client", "600x300")
+                wind.make_protokol(lambda: wind.close_window(2))
+                windows[2].append(wind)
+                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                frame_for.pack(expand=True)
+                try:
+                    if Error.delete_from_table(id, Clients):
+                        flag = 0
+                        id = int(id)
+                        for Client in Clients:
+                            if Client.ID == id:
+                                flag = 1
+                                name_text = Win.Label(
+                                    frame_for,
+                                    text='Enter new name for client in format:\n"Secondname Name Surname"',
+                                )
+                                name_entry = Win.Entry(frame_for)
+                                name_text.grid(row=2, column=1)
+                                name_entry.insert(0, Client.get_name())
+                                name_entry.grid(row=2, column=2, padx=5)
+                                phone_text = Win.Label(
+                                    frame_for,
+                                    text='Enter new phone number for client in format:\n"88888888888"',
+                                )
+                                phone_entry = Win.Entry(frame_for)
+                                phone_text.grid(row=3, column=1, pady=5)
+                                phone_entry.insert(0, str(Client.get_phone()))
+                                phone_entry.grid(row=3, column=2, pady=5, padx=5)
+                                email_text = Win.Label(
+                                    frame_for,
+                                    text='Enter new email for client in format:\n"email@domain.com"',
+                                )
+                                email_entry = Win.Entry(frame_for)
+                                email_text.grid(row=4, column=1, pady=5)
+                                email_entry.insert(0, Client.get_email())
+                                email_entry.grid(row=4, column=2, pady=5, padx=5)
+                                save_button = Win.Button(
+                                    frame_for,
+                                    text="Save",
+                                    command=(
+                                        lambda: do_this(
+                                            Client,
+                                            name_entry,
+                                            phone_entry,
+                                            email_entry,
+                                            poup,
+                                        )
+                                    ),
+                                )
+                                delete_button = Win.Button(
+                                    frame_for,
+                                    text="Back",
+                                    command=lambda: wind.close_window(2),
+                                )
+                                delete_button.grid(row=5, column=2, pady=5, padx=5)
+                                save_button.grid(row=5, column=1, pady=5)
+                                break
+                        if flag == 0:
+                            message = f"Client with ID = {id} not found!"
+                            raise Error.ErrorNewClient(message)
+                except Error.ErrorNewClient as e:
+                    Logger.log_error(file_name, "Error with already", str(e))
+            else:
+                message = "Please close other windows for work with new Client"
+                raise Error.ErrorNewClient(message)
+        except Error.ErrorNewClient as e:
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
+
     def id_for_delite(id, poup):
         if delete_from_table(id, Clients):
             id = int(id)
@@ -224,9 +218,11 @@ def make_Table(window_new_Client):
                         Clients.remove(Client)
                         frame.destroy()
                         new_Client_Tabel(window_new_Client)
-                        poup.close_window(2)
+                        poup.destroy()
+                        windows[2].remove(poup)
+                        windows[2][-1].close_window()
                     else:
-                        poup.close_window(2)
+                        windows[2][-1].close_window()
                     break
 
     def make_this(Client, status_entry, poup):
@@ -274,57 +270,67 @@ def make_Table(window_new_Client):
 
     def id_for_pro(id, poup):
         try:
-            if len(windows[1]) < 2:
-                wind = Win.Window("Make Pro Client", "600x500")
-                wind.make_protokol(lambda: wind.close_window(2))
-                windows[2].append(wind)
-                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-                frame_for.pack(expand=True)
-                flag = 0
-                id = int(id)
-                for Client in Clients:
-                    if Client.ID == id:
-                        flag = 1
-                        name_text = Win.Label(
-                            frame_for,
-                            text="Name: " + Client.get_name(),
-                        )
-                        name_text.grid(row=2, column=1, pady=5, columnspan=2)
-                        phone_text = Win.Label(
-                            frame_for,
-                            text="Phone: " + str(Client.get_phone()),
-                        )
-                        phone_text.grid(row=3, column=1, pady=5, columnspan=2)
-                        email_text = Win.Label(
-                            frame_for,
-                            text="Email Address: " + Client.get_email(),
-                        )
-                        email_text.grid(row=4, column=1, pady=5, columnspan=2)
+            if len(windows[2]) < 3:
+                try:
+                    wind = Win.Window("Make Pro Client", "600x500")
+                    wind.make_protokol(lambda: wind.close_window(2))
+                    windows[2].append(wind)
+                    frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
+                    frame_for.pack(expand=True)
+                    flag = 0
+                    id = int(id)
+                    for Client in Clients:
+                        if Client.ID == id:
+                            flag = 1
+                            name_text = Win.Label(
+                                frame_for,
+                                text="Name: " + Client.get_name(),
+                            )
+                            name_text.grid(row=2, column=1, pady=5, columnspan=2)
+                            phone_text = Win.Label(
+                                frame_for,
+                                text="Phone: " + str(Client.get_phone()),
+                            )
+                            phone_text.grid(row=3, column=1, pady=5, columnspan=2)
+                            email_text = Win.Label(
+                                frame_for,
+                                text="Email Address: " + Client.get_email(),
+                            )
+                            email_text.grid(row=4, column=1, pady=5, columnspan=2)
 
-                        status_text = Win.Label(
-                            frame_for,
-                            text="Enter status",
-                        )
-                        delete_button = Win.Button(
-                            frame_for,
-                            text="Back",
-                            command=(poup.destroy, lambda: wind.close_window(2)),
-                        )
-                        delete_button.grid(row=7, column=2, pady=5, padx=5)
-                        status_entry = create_combobox("Nothing selected", 6, frame_for)
-                        status_text.grid(row=6, column=1, pady=5)
-                        save_button = Win.Button(
-                            frame_for,
-                            text="Save",
-                            command=lambda: make_this(Client, status_entry.get(), poup),
-                        )
-                        save_button.grid(row=7, column=1, pady=5)
-                        break
-                if flag == 0:
-                    message = f"Client with ID = {id} not found!"
-                    raise Error.ErrorNewClient(message)
+                            status_text = Win.Label(
+                                frame_for,
+                                text="Enter status",
+                            )
+                            delete_button = Win.Button(
+                                frame_for,
+                                text="Back",
+                                command=lambda: wind.close_window(2),
+                            )
+                            delete_button.grid(row=7, column=2, pady=5, padx=5)
+                            status_entry = create_combobox(
+                                "Nothing selected", 6, frame_for
+                            )
+                            status_text.grid(row=6, column=1, pady=5)
+                            save_button = Win.Button(
+                                frame_for,
+                                text="Save",
+                                command=lambda: make_this(
+                                    Client, status_entry.get(), poup
+                                ),
+                            )
+                            save_button.grid(row=7, column=1, pady=5)
+                            break
+                    if flag == 0:
+                        message = f"Client with ID = {id} not found!"
+                        raise Error.ErrorNewClient(message)
+                except Error.ErrorNewClient as e:
+                    Logger.log_error(file_name, "Error creating to pro", str(e))
+            else:
+                message = "Please close other windows for work with new Client"
+                raise Error.ErrorNewClient(message)
         except Error.ErrorNewClient as e:
-            Logger.log_error(file_name, "Error creating to pro", str(e))
+            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def on_select(event):
         cur_item = table_new_Client.item(table_new_Client.focus())
@@ -337,24 +343,47 @@ def make_Table(window_new_Client):
                 Logger.log_info(
                     file_name, f"You tap on new client with ID: {cell_value}"
                 )
-                popup = Win.Toplevel(windows[2][0])
-                windows[2].append(popup)
-                popup.title("Selecting actions")
-                popup.geometry("300x200")
-                # rename_Client = Win.Button(popup, text="Rename Client", command=rename)
-                # rename_Client.grid(row=1, column=1, padx=10, pady=10)
-                to_Pro = Win.Button(
-                    popup,
-                    text="Make to Pro",
-                    command=lambda: id_for_pro(cell_value, popup),
-                )
-                to_Pro.grid(row=1, column=2, padx=10, pady=10)
-                Delete_element = Win.Button(
-                    popup,
-                    text="Delete",
-                    command=lambda: id_for_delite(cell_value, popup),
-                )
-                Delete_element.grid(row=1, column=3, padx=10, pady=10)
+                try:
+                    if len(windows[2]) >= 2:
+                        message = "Please close other windows for work with new Client"
+                        raise Error.ErrorNewClient(message)
+
+                    def clo():
+                        if len(windows[2]) > 2:
+                            w = windows[2][2]
+                            windows[2].remove(windows[2][2])
+                            w.destroy()
+                        w = windows[2][1]
+                        windows[2].remove(windows[2][1])
+                        w.destroy()
+
+                    popup = Win.Toplevel(windows[2][0])
+                    windows[2].append(popup)
+                    popup.title("Selecting actions")
+                    popup.geometry("300x200")
+                    popup.protocol("WM_DELETE_WINDOW", clo)
+                    rename_Client = Win.Button(
+                        popup,
+                        text="Rename Client",
+                        command=lambda: get_text(cell_value, popup),
+                    )
+                    rename_Client.grid(row=1, column=1, padx=10, pady=10)
+                    to_Pro = Win.Button(
+                        popup,
+                        text="Make to Pro",
+                        command=lambda: id_for_pro(cell_value, popup),
+                    )
+                    to_Pro.grid(row=1, column=2, padx=10, pady=10)
+                    Delete_element = Win.Button(
+                        popup,
+                        text="Delete",
+                        command=lambda: id_for_delite(cell_value, popup),
+                    )
+                    Delete_element.grid(row=1, column=3, padx=10, pady=10)
+                except Error.ErrorNewClient as e:
+                    Error.Logger.log_error(
+                        file_name, "Error with opend windows.", str(e)
+                    )
 
     columns = ("ID", "Name", "Phone", "Mail")
     table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
