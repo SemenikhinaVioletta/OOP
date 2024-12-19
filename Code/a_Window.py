@@ -104,19 +104,21 @@ class Window(Tk):
 # Конец приложения
 def end(flag):
     """
-    This function closes all the windows in the application and logs the end event.
+    Ends the main loop of the application and closes all windows based on the provided flag.
+
+    This function logs an event indicating that the main loop is ending.
+    It then checks the value of the `flag` parameter to determine which windows to close.
+    If `flag` is 0, it iterates through all windows in the `windows` list and destroys each window.
+    If `flag` is not 0, it iterates through the windows in the `windows[flag]` list, destroys each window,
+    and clears the `windows[flag]` list.
+    Finally, it logs an event indicating that the program is closing.
 
     Parameters:
-    None
+    flag (int): A flag indicating which windows to close. If `flag` is 0, all windows are closed.
+                 If `flag` is not 0, only the windows in the `windows[flag]` list are closed.
 
     Returns:
     None
-
-    The function iterates through the list of windows, destroys each window using the `destroy` method,
-    and logs the end event using the `Logger` function. The `Logger` function is expected to be defined elsewhere
-    and takes three parameters: `file_name` (the name of the file where the log is being written),
-    `client_name` (the name of the client associated with the log), and `message` (the actual log message).
-    The `windows` list is expected to be a global variable containing a list of open windows.
     """
     Logger(file_name, "", "Method end - end main loop...")
     if flag == 0:
@@ -128,3 +130,4 @@ def end(flag):
             windows[flag][i].destroy()
         windows[flag].clear()
     Logger(file_name, "", "Method end - close program...")
+

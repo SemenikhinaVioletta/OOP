@@ -23,17 +23,6 @@ window = WindowModule.Window("PC for management", "600x400")
 
 
 def on_selection(event):
-    """
-    This function handles the user's selection from the Combobox component.
-    It logs the selected option, creates a Label and a Button based on the selection,
-    and configures the Button's command to open the corresponding window.
-
-    Parameters:
-    event (Event): The event object that triggered this function.
-
-    Returns:
-    None
-    """
     selected_option = combobox.get()
     Logger.log_info(
         file_name, f"Method on_selection - selected option: {selected_option}\n"
@@ -107,24 +96,11 @@ def on_selection(event):
 
 
 def start_new_client(flag: int) -> None:
-    """
-    This function opens a new client window based on the provided flag.
-    It checks if a new client window is already open and raises an exception if it is.
-    If the window is not open, it logs the opening event, creates a new window,
-    sets the window protocol, adds the window to the list of windows,
-    and calls the function to handle new client operations.
-
-    Parameters:
-    flag (int): A flag indicating the type of operation to be performed.
-
-    Returns:
-    None
-    """
     try:
         if len(windows[2]) != 0:
             raise NewClientError.ErrorNewClient("This window is already open.")
         Logger.log_info(file_name, f"Opening new client window with flag: {flag}")
-        new_window = WindowModule.Window("New Client", "1000x300")
+        new_window = WindowModule.Window("New Client", "700x300")
         new_window.make_protokol(lambda: WindowModule.end(2))
         windows[2].append(new_window)
 
@@ -138,29 +114,13 @@ def start_new_client(flag: int) -> None:
 
 
 def start_pro_client(flag):
-    """
-    This function starts a pro client window based on the provided flag.
-    It checks if a pro client window is already open and raises an exception if it is.
-    If the window is not open, it logs the opening event, creates a new window,
-    sets the window protocol, adds the window to the list of windows,
-    and calls the function to handle pro client operations.
-
-    Parameters:
-    flag (int): A flag indicating the type of operation to be performed.
-
-    Returns:
-    None
-
-    Raises:
-    ProClientError.ErrorProClient: If a pro client window is already open.
-    """
     try:
         if len(windows[1]) != 0:
             raise ProClientError.ErrorProClient("This window is already open.")
 
         Logger.log_info(file_name, f"Opening pro client window with flag: {flag}")
 
-        new_window = WindowModule.Window("Pro Client", "1500x300")
+        new_window = WindowModule.Window("Pro Client", "1200x300")
         new_window.make_protokol(lambda: WindowModule.end(1))
         windows[1].append(new_window)
 
@@ -174,27 +134,11 @@ def start_pro_client(flag):
 
 
 def start_products(flag: int) -> None:
-    """
-    This function starts a product window based on the provided flag.
-    It checks if a product window is already open and raises an exception if it is.
-    If the window is not open, it logs the opening event, creates a new window,
-    sets the window protocol, adds the window to the list of windows,
-    and calls the function to handle product operations.
-
-    Parameters:
-    flag (int): A flag indicating the type of operation to be performed.
-
-    Returns:
-    None
-
-    Raises:
-    ProductError.ErrorProduct: If a product window is already open.
-    """
     try:
         if len(windows[3]) != 0:
             raise ProductError.ErrorProduct("This window is already open.")
         Logger.log_info(file_name, f"Opening product window with flag: {flag}")
-        wind = WindowModule.Window("Product", "1000x300")
+        wind = WindowModule.Window("Product", "700x300")
         wind.make_protokol(lambda: WindowModule.end(3))
         windows[3].append(wind)
         do_product(flag, wind)
@@ -226,26 +170,11 @@ def start_contract(flag):
 
 
 def start():
-    """
-    This module is responsible for the initial display setup of the application.
-
-    It includes the necessary components and configurations to create the first user interface that users will interact with. The module aims to facilitate the presentation of information and user inputs in a clear and organized manner.
-    """
     Logger.log_info(file_name, "Starting application...")
     window.open()
 
 
 def set_frame(message):
-    """
-    This function sets up the main frame for the application's user interface.
-    It creates a frame, a label, a combobox, and a button, and configures their layout and behavior.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-    """
     global frame
     frame = WindowModule.Frame(master=window, relief=WindowModule.SUNKEN)
     frame.pack(expand=True)

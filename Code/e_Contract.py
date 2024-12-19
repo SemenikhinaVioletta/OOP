@@ -65,7 +65,7 @@ def contract_Table(window_contract):
         try:
             if len(windows[4]) == 2:
                 raise Error.ErrorContract(
-                    "Please close other windows for work with pro Client"
+                    "Please close other windows for work with pro Contract"
                 )
 
             wind = Win.Window("Add Contract", "600x300")
@@ -73,7 +73,7 @@ def contract_Table(window_contract):
             windows[4].append(wind)
             frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
             frame_for.pack(expand=True)
-            text_client = Win.Label(frame_for, text="Enter Clients:")
+            text_client = Win.Label(frame_for, text="Enter Contracts:")
             text_client.grid(row=1, column=1)
             box_client = make_combobox(0, clients, 1, frame_for)
             text_product = Win.Label(frame_for, text="Enter Products:")
@@ -204,24 +204,25 @@ def contract_Table(window_contract):
     global frame
     frame = Win.Frame(master=window_contract, relief=Win.SUNKEN)
     frame.pack(expand=True)
-    add_new_Client = Win.Button(frame, text="Add Contract", command=add_new)
-    add_new_Client.grid(row=1, column=2, padx=10, pady=10)
-    add_new_Client = Win.Button(frame, text="End Contract", command=end_new)
-    add_new_Client.grid(row=2, column=2, padx=10, pady=10)
-    Delete_element = Win.Button(frame, text="Delete", command=delete_element)
-    Delete_element.grid(row=3, column=2, padx=10, pady=10)
+    add_new_Contract = Win.Button(frame, text="Add Contract", command=add_new)
+    add_new_Contract.grid(row=11, column=1, padx=10, pady=10)
+    """
+        add_new_Contract = Win.Button(frame, text="End Contract", command=end_new)
+        add_new_Contract.grid(row=2, column=2, padx=10, pady=10)
+        Delete_element = Win.Button(frame, text="Delete", command=delete_element)
+        Delete_element.grid(row=3, column=2, padx=10, pady=10)
+    """
     close_table = Win.Button(
         frame,
         text="Close Table",
         command=(lambda: Win.end(4)),
     )
-    close_table.grid(row=4, column=2, padx=10, pady=10)
+    close_table.grid(row=11, column=3, padx=10, pady=10)
     make_array()
     make_Table()
 
 
 def remake_cli_prod(contract):
-    # Пробуем починить контракты в клиентах и перезаполнение продуктов на складе
     make_pro()
     make_prod()
     make_array()
@@ -293,12 +294,22 @@ def make_combobox(flag, array, row_index, parent_frame):
 
 
 def make_Table():
-    columns = ("ID", "Status", "Client", "Data of end Contract", "Mora")
+    def on_select(event):
+        cur_item = table_contract.item(table_contract.focus())
+        col = table_contract.identify_column(event.x)
+        if col == "#0":
+            cell_value = cur_item["text"]
+        else:
+            if len(cur_item["values"]) != 0:
+                cell_value = cur_item["values"][0]
+                Logger.log_info(file_name, f"You tap on contract with ID: {cell_value}")
+
+    columns = ("ID", "Status", "Contract", "Data of end Contract", "Mora")
     table_contract = Win.ttk.Treeview(frame, columns=columns, show="headings")
-    table_contract.grid(row=1, column=1, sticky="nsew", rowspan=10)
+    table_contract.grid(row=1, column=1, sticky="nsew", columnspan=3)
     table_contract.heading("ID", text="ID", anchor=Win.W)
     table_contract.heading("Status", text="Status", anchor=Win.W)
-    table_contract.heading("Client", text="Client", anchor=Win.W)
+    table_contract.heading("Contract", text="Contract", anchor=Win.W)
     table_contract.heading(
         "Data of end Contract", text="Data of end Contract", anchor=Win.W
     )
@@ -309,6 +320,7 @@ def make_Table():
     scrollbar = Win.ttk.Scrollbar(
         frame, orient=Win.VERTICAL, command=table_contract.yview
     )
+    table_contract.bind("<ButtonRelease-1>", on_select)
 
 
 def do_contract(flag, window_contract):
