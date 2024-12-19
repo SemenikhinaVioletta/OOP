@@ -218,11 +218,9 @@ def make_Table(window_new_Client):
                         Clients.remove(Client)
                         frame.destroy()
                         new_Client_Tabel(window_new_Client)
+                    else:
                         poup.destroy()
                         windows[2].remove(poup)
-                        windows[2][-1].close_window(2)
-                    else:
-                        windows[2][-1].close_window(2)
                     break
 
     def make_this(Client, status_entry, poup):
