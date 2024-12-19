@@ -239,7 +239,7 @@ def delete_from_table(id, Clients):
     ErrorNewClient: If the ID is not valid or if no client with the given ID is found in the Clients list.
     """
     try:
-        id = id.get()
+        id = str(id)
         message = "Validation started"
         if len(id) != 0:
             for j in id:

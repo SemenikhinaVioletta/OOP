@@ -92,34 +92,6 @@ def new_Client_Tabel(window_new_Client):
         except Error.ErrorNewClient:
             wind.close_window(2)
 
-    def delete_element():
-        try:
-            if len(windows[1]) < 2:
-                wind = Win.Window("Delete New Client", "500x300")
-                wind.make_protokol(lambda: wind.close_window(2))
-                windows[2].append(wind)
-                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-                frame_for.pack(expand=True)
-                Id_for_delite = Win.Label(
-                    frame_for, text="Enter ID of the client you want to delete:"
-                )
-                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-                text_for_delite = Win.Entry(frame_for)
-                text_for_delite.grid(row=1, column=2, padx=5)
-                button_for_delite = Win.Button(
-                    frame_for,
-                    text="Delete",
-                    command=lambda: id_for_delite(text_for_delite),
-                )
-                button_for_delite.grid(row=2, column=2, padx=5)
-                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-            else:
-                raise Error.ErrorNewClient(
-                    "Please close other windows for work with new Client"
-                )
-        except Error.ErrorNewClient as e:
-            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
-
     def add_new():
         try:
             if len(windows[1]) < 2:
@@ -237,9 +209,9 @@ def make_array():
 
 def make_Table(window_new_Client):
 
-    def id_for_delite(id):
+    def id_for_delite(id, poup):
         if delete_from_table(id, Clients):
-            id = int(id.get())
+            id = int(id)
             for Client in Clients:
                 if Client.get_ID() == id:
                     confirm = Error.askyesno(
@@ -252,13 +224,21 @@ def make_Table(window_new_Client):
                         Clients.remove(Client)
                         frame.destroy()
                         new_Client_Tabel(window_new_Client)
+                        poup.close_window(2)
+                    else:
+                        poup.close_window(2)
                     break
 
-    def make_this(Client, status_entry):
+    def make_this(Client, status_entry, poup):
         try:
             basa = bd.connect(database)
             cur = basa.cursor()
-            if chek_status(status_entry):
+            confirm = Error.askyesno(
+                "Confirm Delete",
+                f"Are you sure you want to delete the client with ID: {id}, Name: {Client.get_name()}?",
+                parent=windows[2][-1],
+            )
+            if confirm and chek_status(status_entry):
                 cur.execute(
                     """SELECT EXISTS(SELECT 1 FROM Client WHERE Phone = ?)""",
                     (Client.get_phone(),),
@@ -281,7 +261,7 @@ def make_Table(window_new_Client):
                 pro.enter_client_to_db()
                 id = Win.Entry()
                 id.insert(0, str(Client.get_ID()))
-                id_for_delite(id)
+                id_for_delite(id, poup)
                 frame.destroy()
                 new_Client_Tabel(window_new_Client)
         except Error.ErrorNewClient as e:
@@ -336,7 +316,7 @@ def make_Table(window_new_Client):
                         save_button = Win.Button(
                             frame_for,
                             text="Save",
-                            command=lambda: make_this(Client, status_entry.get()),
+                            command=lambda: make_this(Client, status_entry.get(), poup),
                         )
                         save_button.grid(row=7, column=1, pady=5)
                         break
@@ -358,16 +338,21 @@ def make_Table(window_new_Client):
                     file_name, f"You tap on new client with ID: {cell_value}"
                 )
                 popup = Win.Toplevel(windows[2][0])
+                windows[2].append(popup)
                 popup.title("Selecting actions")
                 popup.geometry("300x200")
-                rename_Client = Win.Button(popup, text="Rename Client", command=rename)
-                rename_Client.grid(row=1, column=1, padx=10, pady=10)
+                # rename_Client = Win.Button(popup, text="Rename Client", command=rename)
+                # rename_Client.grid(row=1, column=1, padx=10, pady=10)
                 to_Pro = Win.Button(
-                    popup, text="Make to Pro", command=id_for_pro(cell_value, popup)
+                    popup,
+                    text="Make to Pro",
+                    command=lambda: id_for_pro(cell_value, popup),
                 )
-                to_Pro.grid(row=3, column=2, padx=10, pady=10)
+                to_Pro.grid(row=1, column=2, padx=10, pady=10)
                 Delete_element = Win.Button(
-                    popup, text="Delete", command=delete_element
+                    popup,
+                    text="Delete",
+                    command=lambda: id_for_delite(cell_value, popup),
                 )
                 Delete_element.grid(row=1, column=3, padx=10, pady=10)
 
