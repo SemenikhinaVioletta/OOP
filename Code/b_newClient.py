@@ -224,7 +224,6 @@ def make_Table(window_new_Client):
                         Clients.remove(Client)
                         frame.destroy()
                         new_Client_Tabel(window_new_Client)
-                    else:
                         poup.destroy()
                         windows[2].remove(poup)
                     break

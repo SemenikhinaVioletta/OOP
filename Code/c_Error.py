@@ -44,7 +44,7 @@ class ErrorProClient(Exception):
         """
         if self.message:
             showerror(
-                title="ERROR IN INPUT", message=self.message, parent=windows[2][-1]
+                title="ERROR IN INPUT", message=self.message, parent=windows[1][-1]
             )
             return "Error Pro Client, message: {0}".format(self.message)
         else:
@@ -228,7 +228,7 @@ def chek_id(id, Clients):
     bool: True if the ID is valid, False otherwise. Raises an ErrorProClient exception if the ID is not valid.
     """
     try:
-        id = id.get()
+        id = str(id)
         message = "No errors found during ID validation."
 
         if len(id) != 0:
