@@ -257,9 +257,9 @@ class New_Client:
 
     def delete_Client_from_bd(self):
         """
-        Deletes the current Client from the database.
+        Deletes the current Client's information from the SQLite database.
 
-        This method establishes a connection to the SQLite database, retrieves the unique identifier of the current Client,
+        This method establishes a connection to the SQLite database, retrieves the current Client's unique identifier (ID),
         and then deletes the corresponding record from the 'Client_new' table.
         If any error occurs during the database operation, it logs the error using the Logger class.
         Finally, it ensures that the database connection is closed.
@@ -290,4 +290,5 @@ class New_Client:
         finally:
             if sqlite_connection:
                 sqlite_connection.close()
+
 

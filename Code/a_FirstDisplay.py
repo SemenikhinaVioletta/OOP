@@ -23,6 +23,17 @@ window = WindowModule.Window("PC for management", "600x400")
 
 
 def on_selection(event):
+    """
+    This function handles the selection event in the GUI application. It logs the selected option,
+    destroys the current frame, sets a new frame with the selected option, and creates buttons for
+    opening related tables or generating reports.
+
+    Parameters:
+    event (Event): The event object that triggered this function.
+
+    Returns:
+    None
+    """
     selected_option = combobox.get()
     Logger.log_info(
         file_name, f"Method on_selection - selected option: {selected_option}\n"
@@ -96,6 +107,18 @@ def on_selection(event):
 
 
 def start_new_client(flag: int) -> None:
+    """
+    Opens a new client window with the specified flag.
+
+    Parameters:
+    flag (int): A flag indicating the mode of operation for the new client window.
+
+    Returns:
+    None
+
+    Raises:
+    NewClientError.ErrorNewClient: If a new client window is already open.
+    """
     try:
         if len(windows[2]) != 0:
             raise NewClientError.ErrorNewClient("This window is already open.")
@@ -114,6 +137,25 @@ def start_new_client(flag: int) -> None:
 
 
 def start_pro_client(flag):
+    """
+    Opens a new pro client window with the specified flag.
+
+    Parameters:
+    flag (int): A flag indicating the mode of operation for the pro client window.
+
+    Returns:
+    None
+
+    Raises:
+    ProClientError.ErrorProClient: If a pro client window is already open.
+
+    The function attempts to open a new pro client window with the given flag.
+    If a pro client window is already open, it raises a ProClientError.
+    If the operation is successful, it logs the opening of the pro client window,
+    creates a new window with the specified dimensions, sets a protocol to close the window,
+    appends the new window to the windows list, and calls the do_pro_client function with the flag and the new window.
+    If an error occurs during the process, it logs the error and its message.
+    """
     try:
         if len(windows[1]) != 0:
             raise ProClientError.ErrorProClient("This window is already open.")
@@ -134,6 +176,25 @@ def start_pro_client(flag):
 
 
 def start_products(flag: int) -> None:
+    """
+    Opens a new product window with the specified flag.
+
+    Parameters:
+    flag (int): A flag indicating the mode of operation for the product window.
+
+    Returns:
+    None
+
+    Raises:
+    ProductError.ErrorProduct: If a product window is already open.
+
+    The function attempts to open a new product window with the given flag.
+    If a product window is already open, it raises a ProductError.
+    If the operation is successful, it logs the opening of the product window,
+    creates a new window with the specified dimensions, sets a protocol to close the window,
+    appends the new window to the windows list, and calls the do_product function with the flag and the new window.
+    If an error occurs during the process, it logs the error and its message.
+    """
     try:
         if len(windows[3]) != 0:
             raise ProductError.ErrorProduct("This window is already open.")
@@ -152,6 +213,25 @@ def start_products(flag: int) -> None:
 
 
 def start_contract(flag):
+    """
+    Opens a new contract window with the specified flag.
+
+    Parameters:
+    flag (int): A flag indicating the mode of operation for the contract window.
+
+    Returns:
+    None
+
+    Raises:
+    ContractError.ErrorContract: If a contract window is already open.
+
+    The function attempts to open a new contract window with the given flag.
+    If a contract window is already open, it raises a ContractError.
+    If the operation is successful, it logs the opening of the contract window,
+    creates a new window with the specified dimensions, sets a protocol to close the window,
+    appends the new window to the windows list, and calls the do_contract function with the flag and the new window.
+    If an error occurs during the process, it logs the error and its message.
+    """
     try:
         if len(windows[4]) != 0:
             raise ProductError.ErrorProduct("This window is already open.")
@@ -170,11 +250,36 @@ def start_contract(flag):
 
 
 def start():
+    """
+    This function starts the application by opening the main window.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    The function logs the start of the application using the Logger module,
+    and then calls the open method of the window object to display the main window.
+    """
     Logger.log_info(file_name, "Starting application...")
     window.open()
 
 
-def set_frame(message):
+def set_frame(message: str) -> None:
+    """
+    This function sets up the main frame for the application, allowing the user to select a table to work with.
+
+    Parameters:
+    message (str): The initial message to display in the combobox.
+
+    Returns:
+    None
+
+    The function creates a new frame within the main window, adds a label and a combobox for selecting a table,
+    sets the initial message in the combobox, binds the on_selection function to the combobox's selection event,
+    and adds a button to end all windows.
+    """
     global frame
     frame = WindowModule.Frame(master=window, relief=WindowModule.SUNKEN)
     frame.pack(expand=True)

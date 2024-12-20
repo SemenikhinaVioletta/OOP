@@ -18,8 +18,34 @@ produkts_to_contract = []
 
 
 def contract_Table(window_contract):
+    """
+    Creates and manages the contract table window with options to add new contracts and close the table.
+
+    This function sets up a frame with buttons for adding new contracts and closing the table, and initializes the contract data display by calling supporting functions.
+
+    Args:
+        window_contract (Window): The parent window for the contract table.
+
+    Returns:
+        None
+    """
 
     def add_product_to_contract(product):
+        """
+        Adds a selected product to the contract's product list with inventory validation.
+
+        This function checks product availability, ensures the requested quantity does not exceed current inventory, and appends the product ID to the contract's product list.
+
+        Args:
+            product (str): A string containing the product ID and details.
+
+        Raises:
+            ErrorContract: If the product is not available in sufficient quantity or fails validation.
+
+        Returns:
+            None
+        """
+
         try:
             make_prod()
             product = str(product).split()
@@ -36,6 +62,22 @@ def contract_Table(window_contract):
             Logger.log_error(file_name, "Error in add product to contract", str(e))
 
     def save(client, end_data):
+        """
+        Processes and saves a new contract with validation of client, dates, and associated products.
+
+        This function creates a new contract by validating input parameters, setting up contract details, calculating mora, saving to the database, and updating related client and product information.
+
+        Args:
+            client (str): A string containing the client ID and details.
+            end_data (str): The end date for the contract.
+
+        Raises:
+            ErrorContract: If date validation fails or no products are selected.
+
+        Returns:
+            None
+        """
+
         try:
             for i in clients:
                 if i.get_ID() == int(client.split()[0]):
@@ -62,6 +104,18 @@ def contract_Table(window_contract):
             Logger.log_error(file_name, "Error in add contract", str(e))
 
     def add_new():
+        """
+        Creates a new window for adding a contract with input fields for client, products, end date, and status.
+
+        This function manages the creation of a new contract entry window, setting up input fields and save/back buttons while preventing multiple simultaneous windows from being opened.
+
+        Raises:
+            ErrorContract: If more than one new contract window is already open.
+
+        Returns:
+            None
+        """
+
         try:
             if len(windows[4]) == 2:
                 raise Error.ErrorContract(
@@ -127,6 +181,21 @@ def contract_Table(window_contract):
 
 
 def remake_cli_prod(contract):
+    """
+    Updates the products and clients associated with a given contract.
+
+    This function recalculates the product quantities, updates the client's contract list,
+    and renames the client and product records based on the contract's details.
+
+    Parameters:
+    contract (Contract): The contract object for which the products and clients need to be updated.
+
+    Returns:
+    None
+
+    Side Effects:
+    Modifies the product and client records in the 'produkts' and 'clients' lists.
+    """
     make_pro()
     make_prod()
     make_array()
@@ -155,6 +224,21 @@ def remake_cli_prod(contract):
 
 
 def make_array():
+    """
+    Retrieves and populates the contracts list with Contract objects from the database.
+
+    This function connects to the SQLite database, executes a SELECT query to fetch all records from the Contracts table,
+    and iterates through the fetched rows to create Contract objects. Each Contract object is then appended to the contracts list.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+
+    Raises:
+    sqlite3.Error: If any error occurs during the database connection or query execution.
+    """
     contracts.clear()
     conn = bd.connect(database)
     cursor = conn.cursor()
@@ -199,7 +283,20 @@ def make_combobox(flag, array, row_index, parent_frame):
 
 def make_Table(window_contract):
 
-    def id_for_delite(id, poup):
+    def id_for_delite(id):
+        """
+        Handles the deletion process for a specific contract after user confirmation.
+
+        This function verifies the contract's existence, prompts the user for deletion confirmation, and removes the contract from the database and contract list if confirmed.
+
+        Args:
+            id (int): The unique identifier of the contract to be deleted.
+            poup (Window): The parent popup window triggering the contract deletion.
+
+        Returns:
+            None
+        """
+
         if Error.chek_ID(id, contracts):
             id = int(id)
             for contract in contracts:
@@ -217,6 +314,22 @@ def make_Table(window_contract):
                     break
 
     def end_contract(text_for_delite, poup):
+        """
+        Handles the process of ending a specific contract after user confirmation.
+
+        This function verifies the contract's existence, checks its current status, prompts the user for confirmation, and updates the contract's status and end date if confirmed.
+
+        Args:
+            text_for_delite (str): The unique identifier of the contract to be ended.
+            poup (Window): The parent popup window triggering the contract end action.
+
+        Raises:
+            ErrorContract: If the contract is already ended or an error occurs during the process.
+
+        Returns:
+            None
+        """
+
         try:
             id = int(text_for_delite)
             if Error.chek_ID(id, contracts):
@@ -243,6 +356,21 @@ def make_Table(window_contract):
             Logger.log_error(file_name, "Error with end", str(e))
 
     def on_select(event):
+        """
+        Handles the selection of a contract in the contract table and opens an action popup window.
+
+        This function captures the selected contract's ID, logs the selection, and creates a popup with options to end or delete the contract while preventing multiple simultaneous windows.
+
+        Args:
+            event (Event): The selection event triggered in the contract table.
+
+        Raises:
+            ErrorContract: If multiple windows are already open.
+
+        Returns:
+            None
+        """
+
         cur_item = table_contract.item(table_contract.focus())
         col = table_contract.identify_column(event.x)
         if col == "#0":
@@ -257,6 +385,15 @@ def make_Table(window_contract):
                         raise Error.ErrorContract(message)
 
                     def clo():
+                        """
+                        Closes multiple windows associated with the contract management interface.
+
+                        This function removes and destroys the last two or three windows in the windows list, effectively cleaning up the contract-related window stack.
+
+                        Returns:
+                            None
+                        """
+
                         if len(windows[4]) > 2:
                             w = windows[4][2]
                             windows[4].remove(windows[4][2])
@@ -281,7 +418,7 @@ def make_Table(window_contract):
                     Delete_element = Win.Button(
                         frame_popup,
                         text="Delete",
-                        command=lambda: id_for_delite(cell_value, popup),
+                        command=lambda: id_for_delite(cell_value),
                     )
                     Delete_element.grid(row=1, column=2, padx=10, pady=10)
                 except Error.ErrorContract as e:
@@ -309,6 +446,22 @@ def make_Table(window_contract):
 
 
 def do_contract(flag, window_contract):
+    """
+    Manages the contract table display or error logging based on a provided flag.
+
+    This function determines whether to display the contract table or log an error depending on the input flag value.
+
+    Args:
+        flag (int): A control flag indicating the desired action. A value of 1 triggers table display.
+        window_contract (Window): The parent window for the contract table.
+
+    Returns:
+        None
+
+    Raises:
+        Logger: Logs an error message if the flag is not 1.
+    """
+
     if flag == 1:
         contract_Table(window_contract)
     else:

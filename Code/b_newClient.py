@@ -13,8 +13,31 @@ file_name = "File newClient"
 
 
 def new_Client_Tabel(window_new_Client):
+    """
+    Creates and manages the client table window with options to add new clients and close the table.
 
+    This function sets up a frame with buttons for adding new clients and closing the table, and initializes the client data display by calling supporting functions.
+
+    Args:
+        window_new_Client (Window): The parent window for the client table.
+
+    Returns:
+        None
+    """
     def take_this(name_entry, phone_entry, email_entry):
+        """
+        Processes and adds a new client to the database with validation and UI update.
+
+        This function handles the creation of a new client by validating input entries, creating a client object, saving to the database, and refreshing the client table.
+
+        Args:
+            name_entry (Entry): Input field containing the client's name.
+            phone_entry (Entry): Input field containing the client's phone number.
+            email_entry (Entry): Input field containing the client's email address.
+
+        Returns:
+            None
+        """
         if add_new_to_table(name_entry, phone_entry, email_entry, Clients):
             Client = New.New_Client(
                 Clients[-1].get_ID() + 1,
@@ -28,6 +51,17 @@ def new_Client_Tabel(window_new_Client):
             new_Client_Tabel(window_new_Client)
 
     def add_new():
+        """
+        Creates a new window for adding a client with input fields for name, phone, and email.
+
+        This function manages the creation of a new client entry window, setting up input fields and save/back buttons while preventing multiple simultaneous windows from being opened.
+
+        Raises:
+            ErrorNewClient: If more than one new client window is already open.
+
+        Returns:
+            None
+        """
         try:
             if len(windows[2]) < 2:
                 wind = Win.Window("Add New Client", "600x300")
@@ -112,8 +146,34 @@ def make_array():
 
 
 def make_Table(window_new_Client):
+    """
+    Creates and configures the client table with interactive features for client management.
+
+    This function sets up a Treeview table displaying client information, enables row selection for performing actions like renaming, converting to pro, or deleting clients, and provides a scrollbar for navigation.
+
+    Args:
+        window_new_Client (Window): The parent window for the client table.
+
+    Returns:
+        None
+    """
 
     def do_this(Client, name_entry, phone_entry, email_entry, poup):
+        """
+        Validates and processes a client's information update with user confirmation.
+
+        This function checks the validity of new client details, prompts for user confirmation, and updates the client's information in the database if confirmed.
+
+        Args:
+            Client (Client): The client object to be updated.
+            name_entry (Entry): Input field containing the new client name.
+            phone_entry (Entry): Input field containing the new client phone number.
+            email_entry (Entry): Input field containing the new client email.
+            poup (Window): The popup window for client information update.
+
+        Returns:
+            None
+        """
         if (
             Error.chek_name(name_entry.get())
             and Error.chek_phone(phone_entry.get())
@@ -139,6 +199,21 @@ def make_Table(window_new_Client):
                 new_Client_Tabel(window_new_Client)
 
     def get_text(id, poup):
+        """
+        Initiates a client information update process by creating a window with pre-filled client details.
+
+        This function prepares a rename window for a specific client, allowing modification of name, phone, and email while preventing multiple simultaneous windows from being opened.
+
+        Args:
+            id (int): The unique identifier of the client to be updated.
+            poup (Window): The parent popup window triggering the client update.
+
+        Raises:
+            ErrorNewClient: If multiple windows are open or the client is not found.
+
+        Returns:
+            None
+        """
         try:
             if len(windows[2]) < 3:
                 wind = Win.Window("Rename New Client", "600x300")
@@ -210,6 +285,18 @@ def make_Table(window_new_Client):
             Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def id_for_delite(id, poup):
+        """
+        Handles the deletion process for a specific client after user confirmation.
+
+        This function verifies the client's existence, prompts the user for deletion confirmation, and removes the client from the database and client list if confirmed.
+
+        Args:
+            id (int): The unique identifier of the client to be deleted.
+            poup (Window): The parent popup window triggering the client deletion.
+
+        Returns:
+            None
+        """
         if delete_from_table(id, Clients):
             id = int(id)
             for Client in Clients:
@@ -229,6 +316,22 @@ def make_Table(window_new_Client):
                     break
 
     def make_this(Client, status_entry, poup):
+        """
+        Processes the conversion of a client to a professional status after user confirmation.
+
+        This function validates the client's status, checks for existing email and phone conflicts, creates a professional client record, and removes the original client entry.
+
+        Args:
+            Client (Client): The client object to be converted to professional status.
+            status_entry (str): The professional status to be assigned to the client.
+            poup (Window): The parent popup window triggering the client status change.
+
+        Raises:
+            ErrorNewClient: If a client with the same email or phone already exists.
+
+        Returns:
+            None
+        """
         try:
             basa = bd.connect(database)
             cur = basa.cursor()
@@ -272,6 +375,21 @@ def make_Table(window_new_Client):
             basa.close()
 
     def id_for_pro(id, poup):
+        """
+        Initiates the process of converting a client to a professional status by creating a dedicated window.
+
+        This function prepares a window displaying the client's current details and provides a dropdown to select a professional status, while preventing multiple simultaneous windows from being opened.
+
+        Args:
+            id (int): The unique identifier of the client to be converted to professional status.
+            poup (Window): The parent popup window triggering the client status conversion.
+
+        Raises:
+            ErrorNewClient: If multiple windows are open or the client is not found.
+
+        Returns:
+            None
+        """
         try:
             if len(windows[2]) < 3:
                 try:
@@ -336,6 +454,20 @@ def make_Table(window_new_Client):
             Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def on_select(event):
+        """
+        Handles the selection of a client in the client table and opens an action popup window.
+
+        This function captures the selected client's ID, logs the selection, and creates a popup with options to rename, convert to pro, or delete the client while preventing multiple simultaneous windows.
+
+        Args:
+            event (Event): The selection event triggered in the client table.
+
+        Raises:
+            ErrorNewClient: If multiple windows are already open.
+
+        Returns:
+            None
+        """
         cur_item = table_new_Client.item(table_new_Client.focus())
         col = table_new_Client.identify_column(event.x)
         if col == "#0":
@@ -352,6 +484,14 @@ def make_Table(window_new_Client):
                         raise Error.ErrorNewClient(message)
 
                     def clo():
+                        """
+                        Closes multiple windows associated with the client management interface.
+
+                        This function removes and destroys the last two or three windows in the windows list, effectively cleaning up the client-related window stack.
+
+                        Returns:
+                            None
+                        """
                         if len(windows[2]) > 2:
                             w = windows[2][2]
                             windows[2].remove(windows[2][2])
@@ -407,9 +547,21 @@ def make_Table(window_new_Client):
 
 
 def do_new_client(flag, window_new_Client):
+    """
+    This function is responsible for creating a new client in the application.
+
+    Parameters:
+    flag (int): A flag indicating whether a new client should be created. If flag is 1, a new client is created.
+                 If flag is not 1, an error message is logged.
+    window_new_Client (Tk): The main window of the application where the new client table will be displayed.
+
+    Returns:
+    None
+    """
     if flag == 1:
         new_Client_Tabel(window_new_Client)
     else:
         Logger(
             file_name, "Error in creating new client", "Invalid flag in do_new_Client"
         )
+

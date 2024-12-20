@@ -12,15 +12,15 @@ file_mame = "Global File"
 
 def create_combobox(current_status, row_index, parent_frame):
     """
-    This function creates a Combobox widget with a list of available client statuses.
+    This function creates a Combobox widget with a list of available statuses for a client.
 
     Parameters:
     current_status (str): The current status of the client.
     row_index (int): The row index where the Combobox will be placed in the parent frame.
-    parent_frame (Tkinter.Frame): The parent frame where the Combobox will be placed.
+    parent_frame (Tkinter.ttk.Frame): The parent frame where the Combobox will be placed.
 
     Returns:
-    Tkinter.Combobox: The created Combobox widget.
+    Tkinter.ttk.Combobox: The created Combobox widget.
     """
     message = f"Method create_combobox - creating Combobox with state...\n\n"
     available_methods = []

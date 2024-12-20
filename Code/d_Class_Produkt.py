@@ -9,6 +9,24 @@ logger = Logger(file_name, [], "Application started")
 
 
 class Produkt:
+    """
+    A comprehensive class representing a product with detailed management and database interaction capabilities.
+
+    The Produkt class provides methods for creating, updating, retrieving, and managing product information, including database operations and attribute manipulation.
+
+    Attributes:
+        ID (int): Unique identifier for the product.
+        name (str): Name of the product.
+        mora (int): Mora value associated with the product.
+        number (int): Quantity or stock of the product.
+        zakazano (int): Number of items ordered.
+
+    Methods:
+        Getter methods for retrieving individual product attributes
+        Database interaction methods for inserting, updating, and deleting products
+        Methods for modifying product details and quantities
+    """
+
     def __init__(self, ID, name, mora, number, zakazali):
         """
         Initialize a new instance of the Produkts class.
@@ -61,6 +79,21 @@ class Produkt:
         return int(self.ID), str(self.name), int(self.mora), int(self.number)
 
     def get_all(self, flag):
+        """
+        Retrieve all details of the product based on the provided flag.
+
+        This method returns a tuple containing the ID, name, mora, number, and zakazano value of the product.
+        If the flag is 0, it returns the zakazano value as is. If the flag is not 0, it calculates and returns
+        the product of the zakazano value and the mora value.
+
+        Parameters:
+        flag (int): A flag indicating the type of data to retrieve. If flag is 0, return the zakazano value as is.
+                     If flag is not 0, return the product of the zakazano value and the mora value.
+
+        Returns:
+        tuple: A tuple containing the ID, name, mora, number, and calculated zakazano value (if flag is not 0)
+               or the zakazano value (if flag is 0) of the product.
+        """
         if flag == 0:
             return (
                 int(self.ID),
@@ -94,6 +127,21 @@ class Produkt:
         return str(self.name)
 
     def get_zakazano(self):
+        """
+        Retrieve the zakazano value associated with the product.
+
+        This method retrieves the zakazano attribute of the product instance.
+        It logs the fetched zakazano value using the Logger class.
+
+        Parameters:
+        None
+
+        Returns:
+        int: The zakazano value of the product.
+        """
+        Logger.log_info(
+            file_name, "Fetching produkt zakazano: " + f"zakazano: {self.zakazano}"
+        )
         return int(self.zakazano)
 
     def get_mora(self) -> int:
@@ -195,6 +243,22 @@ class Produkt:
             conn.close()
 
     def set_zakazano(self, zakazano):
+        """
+        Updates the 'zakazano' attribute of the product instance by adding the provided value.
+
+        This method is used to increment the 'zakazano' attribute of the product instance by a given value.
+        It also updates the corresponding record in the SQLite database.
+
+        Parameters:
+        zakazano (int): The value to be added to the current 'zakazano' attribute of the product instance.
+
+        Returns:
+        None
+
+        Raises:
+        Error.ErrorProduct: If an error occurs while renaming the product.
+        bd.Error: If an error occurs while interacting with the SQLite database.
+        """
         try:
             self.zakazano += zakazano
             conn = bd.connect(database)
@@ -217,6 +281,24 @@ class Produkt:
             conn.close()
 
     def set_number(self, iterable):
+        """
+        Updates the 'number' attribute of the product instance by adding the provided iterable value.
+
+        This method is used to increment the 'number' attribute of the product instance by a given iterable value.
+        It is primarily used to reflect changes in the quantity or stock of the product.
+
+        Parameters:
+        iterable (int or float): The value to be added to the current 'number' attribute of the product instance.
+
+        Returns:
+        None
+
+        Example:
+        >>> produkt = Produkt(1, 'Product A', 10, 50, 0)
+        >>> produkt.set_number(20)
+        >>> produkt.get_number()
+        70
+        """
         self.number += iterable
 
     def rename_produkt(self, name, mora, produkts):

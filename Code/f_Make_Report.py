@@ -23,13 +23,50 @@ array_to_bd = []
 
 
 class ErrorReport(Exception):
+    """
+    A custom exception class for handling and displaying report-related errors.
+
+    The ErrorReport class provides a mechanism for creating, storing, and displaying error messages specific to report generation, with optional error message display using tkinter.
+
+    Attributes:
+        message (str): The error message associated with the exception.
+
+    Methods:
+        __init__: Initializes the error with an optional message.
+        __str__: Provides a string representation of the error, optionally displaying an error dialog.
+    """
+
     def __init__(self, *args):
+        """
+        Initialize a new instance of the class.
+
+        Parameters:
+        *args: Variable length argument list. The first argument is used to set the message attribute.
+
+        Returns:
+        None
+        """
         if args:
             self.message = args[0]
         else:
             self.message = None
 
     def __str__(self) -> str:
+        """
+        Returns a string representation of the ErrorReport object.
+
+        If the ErrorReport object contains a message, it displays an error message box using the tkinter library.
+        The error message box has a title of "ERROR IN INPUT" and is displayed in the parent window of the last opened window.
+
+        The function returns a string with the format "Error Report, message: {0}" if a message is present.
+        Otherwise, it returns "Error Report, raised".
+
+        Parameters:
+        self (ErrorReport): The ErrorReport object to be represented as a string.
+
+        Returns:
+        str: A string representation of the ErrorReport object.
+        """
         if self.message:
             showerror(
                 title="ERROR IN INPUT", message=self.message, parent=windows[5][-1]
@@ -40,12 +77,34 @@ class ErrorReport(Exception):
 
 
 def make_frame(wind):
+    """
+    Creates and returns a new frame widget within the given window.
+
+    Parameters:
+    wind (Tkinter.Tk): The main window of the application.
+
+    Returns:
+    Tkinter.Frame: A new frame widget within the given window.
+    """
     frame = Win.Frame(master=wind, relief=Win.SUNKEN)
     frame.pack(expand=True)
     return frame
 
 
 def make_Table_product(flag, frame):
+    """
+    Creates a table to display product data in a given frame, based on a specified flag.
+
+    Parameters:
+    flag (int): A flag indicating the type of report to be generated.
+    frame (Tkinter.Frame): The frame where the table will be displayed.
+
+    Returns:
+    None
+
+    The function modifies the given frame by adding a table to display product data.
+    Depending on the flag value, the table is sorted by either the number of copies sold or the sales amount.
+    """
     make_prod()
     columns = ("ID", "Name", "Cost of one copy", "Copies in stock", "Prise_sold")
     table_produkt = Win.ttk.Treeview(frame, columns=columns, show="headings")
@@ -96,6 +155,18 @@ def make_Table_product(flag, frame):
 
 
 def make_Table_contract(flag, frame):
+    """
+    Creates a table to display contract data in a given frame, based on a specified flag.
+
+    Parameters:
+    flag (int): Determines the sorting and filtering of the contract data.
+    frame (Tkinter.Frame): The frame where the table will be displayed.
+
+    Returns:
+    None
+
+    Modifies the given frame by adding a table to display contract data.
+    """
     make_contr()
     if flag != 5:
         columns = (
@@ -178,6 +249,18 @@ def make_Table_contract(flag, frame):
 
 
 def make_Table_client(flag, frame):
+    """
+    Creates a table to display client data in a given frame, based on a specified flag.
+
+    Parameters:
+    flag (int): Determines the sorting and filtering of the client data.
+    frame (Tkinter.Frame): The frame where the table will be displayed.
+
+    Returns:
+    None
+
+    Modifies the given frame by adding a table to display client data.
+    """
     make_pro()
     columns = ("ID", "Name", "Mora", "Phone", "Mail", "Status", "Numbers contracts")
     table_new_Client = Win.ttk.Treeview(frame, columns=columns, show="headings")
@@ -228,6 +311,24 @@ def make_Table_client(flag, frame):
 
 
 def make_othet(selected_option):
+    """
+    This function attempts to open a new report window based on the selected option.
+
+    Parameters:
+    selected_option (str): The selected option from the list of methods.
+
+    Returns:
+    None
+
+    Raises:
+    ErrorReport: If the report window is already open, an ErrorReport is raised.
+
+    The function first checks if the report window is already open. If it is, an ErrorReport is raised.
+    If the report window is not open, the function logs an information message and proceeds to open the window.
+    The window size is determined based on the selected option.
+    The function then adds a protocol to close the window and appends the new window to the list of windows.
+    Finally, the function calls the `make_front` function to create the front-end of the report window.
+    """
     try:
         if len(windows[5]) != 0:
             raise ErrorReport("This window is already open.")
@@ -245,6 +346,18 @@ def make_othet(selected_option):
 
 
 def enter_time(flag, frame_for):
+    """
+    This function creates a new window for entering start and end dates, and then calls the `do` function to generate a report.
+
+    Parameters:
+    flag (int): A flag indicating the type of report to be generated.
+    frame_for (Tkinter.Frame): The frame where the report will be displayed.
+
+    Returns:
+    None
+
+    The function creates a new window with a title of "Report" and a size of "500x100". It adds labels, entry fields, and a button to the window. When the button is clicked, the `do` function is called with the start and end dates, flag, and frame_for parameters. After the report is generated, the window is closed.
+    """
     new_window = Win.Window("Report", "500x100")
     new_window.make_protokol(lambda: new_window.close_window(5))
     windows[5].append(new_window)
@@ -273,6 +386,20 @@ def enter_time(flag, frame_for):
 
 
 def do(start, end, flag, frame_for):
+    """
+    This function processes the start and end dates, flag, and frame_for parameters to generate a report.
+
+    Parameters:
+    start (str): The start date in the format 'YYYY-MM-DD'.
+    end (str): The end date in the format 'YYYY-MM-DD'.
+    flag (int): A flag indicating the type of report to be generated.
+    frame_for (Tkinter.Frame): The frame where the report will be displayed.
+
+    Returns:
+    None
+
+    The function first checks if the start and end dates are valid using the `chek_date` function. If the dates are valid, it converts the start and end dates into `date` objects. Depending on the flag value, it calls the appropriate function to generate the report, such as `make_Table_contract`.
+    """
     if chek_date(start, end):
         start = str(start).split("-")
         end = str(end).split("-")
@@ -285,6 +412,19 @@ def do(start, end, flag, frame_for):
 
 
 def make_front(frame, selected_option, wind):
+    """
+    This function handles the front-end of the report window. It destroys the current frame, creates a new one, and adds buttons and other elements based on the selected option.
+
+    Parameters:
+    frame (Tkinter.Frame): The current frame to be destroyed.
+    selected_option (str): The selected option from the list of methods.
+    wind (Tkinter.Tk): The main window of the application.
+
+    Returns:
+    None
+
+    The function destroys the current frame, creates a new one, and adds buttons and other elements based on the selected option. It also adds buttons for sorting and filtering the report data based on the selected option.
+    """
     frame.destroy()
     frame = make_frame(wind)
     but = Win.Button(frame, text="Make PDF", command=lambda: Make_Pdf(array_to_bd))
@@ -343,6 +483,20 @@ def make_front(frame, selected_option, wind):
 
 
 def Make_Pdf(array):
+    """
+    This function generates a PDF report based on the provided array of data.
+
+    Parameters:
+    array (list): A 2D list containing the data to be included in the report.
+
+    Returns:
+    None
+
+    Raises:
+    ErrorReport: If the array contains less than or equal to 1 element, an ErrorReport is raised.
+
+    The function generates a PDF report using the FPDF library. It first checks if the array contains less than or equal to 1 element. If so, it raises an ErrorReport. Then, it initializes a new FPDF object and adds a new page. It sets the font and position for the report content. It iterates through the array, formatting and adding each element to the PDF report. Finally, it saves the PDF report as "Otchet.pdf".
+    """
     try:
         if len(array) <= 1:
             message = "No elements to otchet"

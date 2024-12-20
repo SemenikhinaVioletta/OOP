@@ -330,10 +330,14 @@ class Pro_Client(New.New_Client):
 
     def delete_client_from_db(self):
         """
-        Deletes the client from the database based on the client's ID.
+        Deletes the client from the SQLite database.
+
+        This function connects to the SQLite database, executes a DELETE query to remove the client's information,
+        and commits the changes. It also updates the corresponding contracts to disassociate the client.
+        If an error occurs during the process, it logs the error.
 
         Parameters:
-        None
+        self (Pro_Client): The instance of the class. This parameter represents the current instance of the Pro_Client class.
 
         Returns:
         None
@@ -341,9 +345,6 @@ class Pro_Client(New.New_Client):
         Raises:
         db.Error: If there is an error while connecting to the database or executing SQL queries.
 
-        The function connects to the SQLite database, executes a DELETE query to remove the client with the current ID,
-        commits the changes, and logs the successful deletion. If an error occurs during the process, it logs the error.
-        Finally, it ensures the database connection is closed.
         """
         try:
             sqlite_connection = db.connect(database)
@@ -470,6 +471,21 @@ class Pro_Client(New.New_Client):
 
 
 def set_contract(contract):
+    """
+    Parses and maps contract IDs from a string to a list of Contract objects.
+
+    This function takes a string of contract IDs separated by spaces, converts each ID to an integer,
+    and then iterates through the list of all contracts to find the corresponding Contract objects.
+    The found Contract objects are then appended to a new list, which is returned by the function.
+
+    Parameters:
+    contract (str): A string containing contract IDs separated by spaces.
+                     Example: "123 456 789"
+
+    Returns:
+    list: A list of Contract objects corresponding to the provided contract IDs.
+
+    """
     array = []
     Contracts = list(map(int, contract.split()))
     for i in Contracts:

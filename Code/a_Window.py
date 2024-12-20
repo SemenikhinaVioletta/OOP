@@ -29,11 +29,11 @@ class Window(Tk):
         """
         Initialize a new instance of the Window class.
 
-        This method creates a new window with the given name and geometry.
-        It also logs an informational event indicating that the window has been created.
+        Creates a new window with the specified name and geometry.
+        Logs an informational event indicating the creation of the window.
 
         Parameters:
-        name (str): The name to be displayed on the window title bar.
+        name (str): The name of the window.
         geom (str): The geometry of the window, specified as a string in the format "widthxheight+x+y".
 
         Returns:
@@ -46,6 +46,7 @@ class Window(Tk):
         Logger.log_info(
             file_name, "Class Window - Method __init__ - make window: " + name
         )
+
 
     # --------------------------------------------------------------------------------------------------------------------------------
 

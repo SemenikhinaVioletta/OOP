@@ -13,8 +13,30 @@ file_name = "File proClient"
 
 
 def pro_client_Table(window_new_Client):
+    """
+    Manages the creation and display of the professional client table in the given window.
+
+    Parameters:
+    window_new_Client (Window): The window object where the professional client table will be displayed.
+
+    Returns:
+    None
+    """
 
     def take_this(name_entry, phone_entry, email_entry, status_entry):
+        """
+        Processes and adds a new professional client to the database with validation and UI update.
+
+        Args:
+        name_entry (Entry): Input field containing the client's name.
+        phone_entry (Entry): Input field containing the client's phone number.
+        email_entry (Entry): Input field containing the client's email address.
+        status_entry (str): Input field containing the client's professional status.
+
+        Returns:
+        None
+        """
+
         if Error.add_pro_to_table(
             name_entry,
             phone_entry,
@@ -37,6 +59,18 @@ def pro_client_Table(window_new_Client):
             pro_client_Table(window_new_Client)
 
     def add_new():
+        """
+        Creates a new window for adding a professional client with input fields for name, phone, email, and status.
+
+        This function manages the creation of a new professional client entry window, setting up input fields and save/back buttons while preventing multiple simultaneous windows from being opened.
+
+        Raises:
+        ErrorProClient: If more than one new professional client window is already open.
+
+        Returns:
+        None
+        """
+
         try:
             if len(windows[1]) < 2:
                 wind = Win.Window("Add pro Client", "600x300")
@@ -113,6 +147,19 @@ def pro_client_Table(window_new_Client):
 
 
 def make_array():
+    """
+    Retrieves and populates the pro_client list with Pro_Client objects from the database.
+
+    This function connects to the SQLite database, executes a SELECT query to fetch all records from the 'Client' table,
+    and iterates through the fetched rows to create Pro_Client objects. Each Pro_Client object is then appended to the
+    pro_client list.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
     pro_client.clear()
     conn = bd.connect(database)
     cursor = conn.cursor()
@@ -134,8 +181,36 @@ def make_array():
 
 
 def make_Table(window_new_Client):
+    """
+    Creates and configures the professional client table with interactive features for client management.
+
+    This function sets up a Treeview table displaying professional client information, enables row selection for performing actions like renaming or deleting clients, and provides a scrollbar for navigation.
+
+    Args:
+        window_new_Client (Window): The parent window for the professional client table.
+
+    Returns:
+        None
+    """
 
     def do_this(Client, name_entry, phone_entry, email_entry, status_entry, poup):
+        """
+        Validates and processes a professional client's information update with user confirmation.
+
+        This function checks the validity of new client details, prompts for user confirmation, and updates the professional client's information in the database if confirmed.
+
+        Args:
+            Client (ProClient): The professional client object to be updated.
+            name_entry (Entry): Input field containing the new client name.
+            phone_entry (Entry): Input field containing the new client phone number.
+            email_entry (Entry): Input field containing the new client email.
+            status_entry (str): The new professional status for the client.
+            poup (Window): The popup window for client information update.
+
+        Returns:
+            None
+        """
+
         if Error.add_pro_to_table(
             name_entry,
             phone_entry,
@@ -170,6 +245,22 @@ def make_Table(window_new_Client):
                 pro_client_Table(window_new_Client)
 
     def get_text(id, poup):
+        """
+        Initiates a professional client information update process by creating a window with pre-filled client details.
+
+        This function prepares a rename window for a specific professional client, allowing modification of name, phone, email, and status while preventing multiple simultaneous windows from being opened.
+
+        Args:
+            id (int): The unique identifier of the professional client to be updated.
+            poup (Window): The parent popup window triggering the client update.
+
+        Raises:
+            ErrorProClient: If multiple windows are open or the client is not found.
+
+        Returns:
+            None
+        """
+
         try:
             if len(windows[1]) < 3:
                 wind = Win.Window("Rename pro Client", "700x400")
@@ -253,6 +344,19 @@ def make_Table(window_new_Client):
             Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def id_for_delite(id, poup):
+        """
+        Handles the deletion process for a specific professional client after user confirmation.
+
+        This function verifies the client's existence, prompts the user for deletion confirmation, and removes the professional client from the database and client list if confirmed.
+
+        Args:
+            id (int): The unique identifier of the professional client to be deleted.
+            poup (Window): The parent popup window triggering the client deletion.
+
+        Returns:
+            None
+        """
+
         if Error.chek_id(id, pro_client):
             id = int(id)
             for Client in pro_client:
@@ -272,6 +376,21 @@ def make_Table(window_new_Client):
                     break
 
     def on_select(event):
+        """
+        Handles the selection of a professional client in the client table and opens an action popup window.
+
+        This function captures the selected professional client's ID, logs the selection, and creates a popup with options to rename or delete the client while preventing multiple simultaneous windows.
+
+        Args:
+            event (Event): The selection event triggered in the professional client table.
+
+        Raises:
+            ErrorProClient: If multiple windows are already open.
+
+        Returns:
+            None
+        """
+
         cur_item = table_pro_Client.item(table_pro_Client.focus())
         col = table_pro_Client.identify_column(event.x)
         if col == "#0":
@@ -339,6 +458,18 @@ def make_Table(window_new_Client):
 
 
 def do_pro_client(flag, window_pro_client):
+    """
+    This function manages the creation and display of the pro client table.
+
+    Parameters:
+    flag (int): A flag indicating the action to be performed.
+                 If flag is 1, the pro client table is created and displayed.
+                 If flag is not 1, an error message is logged.
+    window_pro_client (Window): The window object where the pro client table will be displayed.
+
+    Returns:
+    None
+    """
     make_array()
     if flag == 1:
         pro_client_Table(window_pro_client)

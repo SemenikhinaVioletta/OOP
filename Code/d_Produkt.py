@@ -11,8 +11,29 @@ logger = Logger(file_name, [], "Application started")
 
 
 def produkt_Table(window_produkt):
+    """
+    This function manages the display of a product table in a given window.
+    It provides options to add new products, update existing products, and delete products.
 
+    Parameters:
+    window_produkt (Window): The window object where the product table will be displayed.
+
+    Returns:
+    None
+    """
     def take_this(name_entry, coast_entry, number_entry):
+        """
+        Processes and adds a new product to the database with validation and UI update.
+
+        Args:
+        name_entry (Entry): Input field containing the product's name.
+        coast_entry (Entry): Input field containing the product's cost.
+        number_entry (Entry): Input field containing the product's quantity.
+
+        Returns:
+        None
+        """
+
         if Error.check_all(
             name_entry.get(), coast_entry.get(), number_entry.get(), produkts
         ):
@@ -29,6 +50,16 @@ def produkt_Table(window_produkt):
             produkt_Table(window_produkt)
 
     def add_produkt():
+        """
+        Creates a new window for adding a product with input fields for name, cost, and quantity.
+
+        Raises:
+        ErrorProduct: If more than one new product window is already open.
+
+        Returns:
+        None
+        """
+
         try:
             if len(windows[3]) < 2:
                 wind = Win.Window("Add Produkt", "600x300")
@@ -89,6 +120,19 @@ def produkt_Table(window_produkt):
 
 
 def make_array():
+    """
+    Retrieves product data from the database and populates the product list.
+
+    This function connects to the database, executes a SQL query to select all records from the 'Produkts' table,
+    fetches the query results, and creates a 'Produkt' object for each record. The 'Produkt' objects are then appended
+    to the 'produkts' list.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
     produkts.clear()
     conn = bd.connect(database)
     cursor = conn.cursor()
@@ -103,8 +147,32 @@ def make_array():
 
 
 def make_Table(window_produkt):
+    """
+    Creates and configures the product table with interactive features for product management.
+
+    This function sets up a Treeview table displaying product information, enables row selection for performing actions like renaming, ordering, or deleting products, and provides a scrollbar for navigation.
+
+    Args:
+        window_produkt (Window): The parent window for the product table.
+
+    Returns:
+        None
+    """
 
     def id_for_delite(id, poup):
+        """
+        Handles the deletion process for a specific product after user confirmation.
+
+        This function verifies the product's existence, prompts the user for deletion confirmation, and removes the product from the database and product list if confirmed.
+
+        Args:
+            id (int): The unique identifier of the product to be deleted.
+            poup (Window): The parent popup window triggering the product deletion.
+
+        Returns:
+            None
+        """
+
         if Error.check_Id(id, produkts):
             id = int(id)
             for produkt in produkts:
@@ -124,6 +192,23 @@ def make_Table(window_produkt):
                     break
 
     def make_this(produkt, get_order, poup):
+        """
+        Processes a product order by validating the order quantity and updating the product's stock.
+
+        This function checks the order quantity, calculates the new stock level, updates the product's order status in the database, and refreshes the product table.
+
+        Args:
+            produkt (Produkt): The product object being ordered.
+            get_order (Entry): Input field containing the order quantity.
+            poup (Window): The parent popup window triggering the product order.
+
+        Raises:
+            ErrorProduct: If the order quantity is invalid.
+
+        Returns:
+            None
+        """
+
         try:
             if Error.check_order(get_order.get()):
                 get_number = produkt.get_number() + int(get_order.get())
@@ -137,6 +222,22 @@ def make_Table(window_produkt):
             pass
 
     def get_number(ID_entry, poup):
+        """
+        Initiates a product ordering process by creating a window with current product stock and order input.
+
+        This function prepares an order window for a specific product, displaying current storage quantity and allowing the user to specify the order amount while preventing multiple simultaneous windows from being opened.
+
+        Args:
+            ID_entry (int): The unique identifier of the product to be ordered.
+            poup (Window): The parent popup window triggering the product order.
+
+        Raises:
+            ErrorProduct: If multiple windows are open or the product is not found.
+
+        Returns:
+            None
+        """
+
         try:
             if len(windows[3]) < 3:
                 wind = Win.Window("Jrder produkt", "600x300")
@@ -196,6 +297,22 @@ def make_Table(window_produkt):
             Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def do_this(produkt, name_entry, mora_entry, number_entry, poup):
+        """
+        Validates and processes a product's information update with user confirmation.
+
+        This function checks the validity of new product details, prompts for user confirmation, and updates the product's information in the database if confirmed.
+
+        Args:
+            produkt (Produkt): The product object to be updated.
+            name_entry (Entry): Input field containing the new product name.
+            mora_entry (Entry): Input field containing the new product cost.
+            number_entry (Entry): Input field containing the new product quantity.
+            poup (Window): The popup window for product information update.
+
+        Returns:
+            None
+        """
+
         if Error.check_all(
             name_entry.get(), mora_entry.get(), number_entry.get(), produkts
         ):
@@ -216,6 +333,22 @@ def make_Table(window_produkt):
                 produkt_Table(window_produkt)
 
     def get_text(id, poup):
+        """
+        Initiates a product information update process by creating a window with pre-filled product details.
+
+        This function prepares a rename window for a specific product, allowing modification of name, cost, and quantity while preventing multiple simultaneous windows from being opened.
+
+        Args:
+            id (int): The unique identifier of the product to be updated.
+            poup (Window): The parent popup window triggering the product update.
+
+        Raises:
+            ErrorProduct: If multiple windows are open or the product is not found.
+
+        Returns:
+            None
+        """
+
         try:
             if len(windows[3]) < 3:
                 wind = Win.Window("Rename New produkt", "600x300")
@@ -289,6 +422,21 @@ def make_Table(window_produkt):
             Logger.log_error(file_name, "Error with opend windows.", str(e))
 
     def on_select(event):
+        """
+        Handles the selection of a product in the product table and opens an action popup window.
+
+        This function captures the selected product's ID, logs the selection, and creates a popup with options to rename, order, or delete the product while preventing multiple simultaneous windows.
+
+        Args:
+            event (Event): The selection event triggered in the product table.
+
+        Raises:
+            ErrorProduct: If multiple windows are already open.
+
+        Returns:
+            None
+        """
+
         cur_item = table_produkt.item(table_produkt.focus())
         col = table_produkt.identify_column(event.x)
         if col == "#0":
@@ -304,6 +452,15 @@ def make_Table(window_produkt):
                         raise Error.ErrorProduct(message)
 
                     def clo():
+                        """
+                        Closes multiple windows associated with the product management interface.
+
+                        This function removes and destroys the last two or three windows in the windows list, effectively cleaning up the product-related window stack.
+
+                        Returns:
+                            None
+                        """
+
                         if len(windows[3]) > 2:
                             w = windows[3][2]
                             windows[3].remove(windows[3][2])
@@ -359,6 +516,19 @@ def make_Table(window_produkt):
 
 
 def do_product(flag, window_produkt):
+    """
+    This function is responsible for managing the product table.
+    It checks the flag value and calls the appropriate function.
+
+    Parameters:
+    flag (int): A flag indicating the action to be performed.
+                 If flag is 1, the product table is displayed.
+                 If flag is not 1, an error message is logged.
+    window_produkt (Window): The window object where the product table will be displayed.
+
+    Returns:
+    None
+    """
     if flag == 1:
         produkt_Table(window_produkt)
     else:
