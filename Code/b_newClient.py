@@ -119,18 +119,24 @@ def make_Table(window_new_Client):
             and Error.chek_phone(phone_entry.get())
             and Error.chek_mail(email_entry.get())
         ):
-            Client.rename_newClient(
-                str(name_entry.get()),
-                int(phone_entry.get()),
-                str(email_entry.get()),
-                Clients,
+            confirm = Error.askyesno(
+                "Confirm Rename",
+                f"Are you sure you want to reneme the client: Name: {Client.get_name()}, Mail: {str(Client.get_email())}, Phone: {str(Client.get_phone())}\n to Name: {str(name_entry.get())}, Mail: {str(email_entry.get())}, Phone: {str(phone_entry.get())}?",
+                parent=windows[2][-1],
             )
-            Clients.clear()
-            frame.destroy()
-            windows[2][-1].close_window(2)
-            poup.destroy()
-            windows[2].remove(poup)
-            new_Client_Tabel(window_new_Client)
+            if confirm:
+                Client.rename_newClient(
+                    str(name_entry.get()),
+                    int(phone_entry.get()),
+                    str(email_entry.get()),
+                    Clients,
+                )
+                Clients.clear()
+                frame.destroy()
+                windows[2][-1].close_window(2)
+                poup.destroy()
+                windows[2].remove(poup)
+                new_Client_Tabel(window_new_Client)
 
     def get_text(id, poup):
         try:
@@ -229,7 +235,7 @@ def make_Table(window_new_Client):
             cur = basa.cursor()
             confirm = Error.askyesno(
                 "Confirm Delete",
-                f"Are you sure you want to delete the client with ID: {id}, Name: {Client.get_name()}?",
+                f"Are you sure you want to make pro the client with ID: {id}, Name: {Client.get_name()}?",
                 parent=windows[2][-1],
             )
             if confirm and chek_status(status_entry):
@@ -360,20 +366,22 @@ def make_Table(window_new_Client):
                     popup.title("Selecting actions")
                     popup.geometry("300x200")
                     popup.protocol("WM_DELETE_WINDOW", clo)
+                    frame_popup = Win.Frame(master=popup, relief=Win.SUNKEN)
+                    frame_popup.pack(expand=True)
                     rename_Client = Win.Button(
-                        popup,
+                        frame_popup,
                         text="Rename Client",
                         command=lambda: get_text(cell_value, popup),
                     )
                     rename_Client.grid(row=1, column=1, padx=10, pady=10)
                     to_Pro = Win.Button(
-                        popup,
+                        frame_popup,
                         text="Make to Pro",
                         command=lambda: id_for_pro(cell_value, popup),
                     )
                     to_Pro.grid(row=1, column=2, padx=10, pady=10)
                     Delete_element = Win.Button(
-                        popup,
+                        frame_popup,
                         text="Delete",
                         command=lambda: id_for_delite(cell_value, popup),
                     )
