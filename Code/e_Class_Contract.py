@@ -56,6 +56,10 @@ class Contract:
             """UPDATE Contracts SET Status = ? WHERE ID_contract= ?""",
             (self.get_status(), self.get_ID()),
         )
+        cursor.execute(
+            """UPDATE Contracts SET Data_End = ? WHERE ID_contract= ?""",
+            (self.get_data_end(), self.get_ID()),
+        )
         conn.commit()
         cursor.close()
         conn.close()
@@ -77,6 +81,9 @@ class Contract:
             if ID_klient == id.get_ID():
                 self.client = id
                 break
+
+    def set_data_end(self, today):
+        self.data_end = today
 
     def set_status(self, status):
         for stat in contract_statuses:

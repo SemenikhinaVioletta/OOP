@@ -111,107 +111,11 @@ def contract_Table(window_contract):
         except Error.ErrorContract as e:
             Logger.log_error(file_name, "Error with opend windows.", str(e))
 
-    def id_for_delite(id):
-        if Error.chek_ID(id.get(), contracts):
-            id = int(id.get())
-            for contract in contracts:
-                if contract.get_ID() == id:
-                    confirm = Error.askyesno(
-                        "Confirm Delete",
-                        f"Are you sure you want to delete the contract with ID: {id}?",
-                        parent=windows[4][-1],
-                    )
-                    if confirm:
-                        contract.delete_contract_from_bd()
-                        contracts.remove(contract)
-                        frame.destroy()
-                        contract_Table(window_contract)
-                    break
-
-    def delete_element():
-        try:
-            if len(windows[4]) < 2:
-                wind = Win.Window("Delete Contract", "500x300")
-                wind.make_protokol(lambda: wind.close_window(4))
-                windows[4].append(wind)
-                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-                frame_for.pack(expand=True)
-                Id_for_delite = Win.Label(
-                    frame_for, text="Enter ID of the contract you want to delete:"
-                )
-                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-                text_for_delite = Win.Entry(frame_for)
-                text_for_delite.grid(row=1, column=2, padx=5)
-                button_for_delite = Win.Button(
-                    frame_for,
-                    text="Delete",
-                    command=lambda: id_for_delite(text_for_delite),
-                )
-                button_for_delite.grid(row=2, column=2, padx=5)
-                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-            else:
-                raise Error.ErrorContract(
-                    "Please close other windows for work with contract"
-                )
-        except Error.ErrorContract as e:
-            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
-
-    def end_contract(text_for_delite):
-        id = int(text_for_delite.get())
-        if Error.chek_ID(id, contracts):
-            for contract in contracts:
-                if contract.get_ID() == id:
-                    confirm = Error.askyesno(
-                        "Confirm Delete",
-                        f"Are you sure you want to end the contract with ID: {id}?",
-                        parent=windows[4][-1],
-                    )
-                    if confirm:
-                        contract.set_status(2)
-                        contract.update_status()
-                        frame.destroy()
-                        contract_Table(window_contract)
-                    break
-
-    def end_new():
-        try:
-            if len(windows[4]) < 2:
-                wind = Win.Window("End Contract", "500x300")
-                wind.make_protokol(lambda: wind.close_window(4))
-                windows[4].append(wind)
-                frame_for = Win.Frame(master=wind, relief=Win.SUNKEN)
-                frame_for.pack(expand=True)
-                Id_for_delite = Win.Label(
-                    frame_for, text="Enter ID of the contract you want to end:"
-                )
-                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-                text_for_delite = Win.Entry(frame_for)
-                text_for_delite.grid(row=1, column=2, padx=5)
-                button_for_delite = Win.Button(
-                    frame_for,
-                    text="End contract",
-                    command=lambda: end_contract(text_for_delite),
-                )
-                button_for_delite.grid(row=2, column=2, padx=5)
-                Id_for_delite.grid(row=1, column=1, padx=5, pady=5)
-            else:
-                raise Error.ErrorContract(
-                    "Please close other windows for work with contract"
-                )
-        except Error.ErrorContract as e:
-            Error.Logger.log_error(file_name, "Error with opend windows.", str(e))
-
     global frame
     frame = Win.Frame(master=window_contract, relief=Win.SUNKEN)
     frame.pack(expand=True)
     add_new_Contract = Win.Button(frame, text="Add Contract", command=add_new)
     add_new_Contract.grid(row=11, column=1, padx=10, pady=10)
-    """
-        add_new_Contract = Win.Button(frame, text="End Contract", command=end_new)
-        add_new_Contract.grid(row=2, column=2, padx=10, pady=10)
-        Delete_element = Win.Button(frame, text="Delete", command=delete_element)
-        Delete_element.grid(row=3, column=2, padx=10, pady=10)
-    """
     close_table = Win.Button(
         frame,
         text="Close Table",
@@ -219,7 +123,7 @@ def contract_Table(window_contract):
     )
     close_table.grid(row=11, column=3, padx=10, pady=10)
     make_array()
-    make_Table()
+    make_Table(window_contract)
 
 
 def remake_cli_prod(contract):
@@ -293,7 +197,51 @@ def make_combobox(flag, array, row_index, parent_frame):
     return combobox
 
 
-def make_Table():
+def make_Table(window_contract):
+
+    def id_for_delite(id, poup):
+        if Error.chek_ID(id, contracts):
+            id = int(id)
+            for contract in contracts:
+                if contract.get_ID() == id:
+                    confirm = Error.askyesno(
+                        "Confirm Delete",
+                        f"Are you sure you want to delete the contract with ID: {id}?",
+                        parent=windows[4][-1],
+                    )
+                    if confirm:
+                        contract.delete_contract_from_bd()
+                        contracts.remove(contract)
+                        frame.destroy()
+                        contract_Table(window_contract)
+                    break
+
+    def end_contract(text_for_delite, poup):
+        try:
+            id = int(text_for_delite)
+            if Error.chek_ID(id, contracts):
+                for contract in contracts:
+                    if contract.get_status() == 2:
+                        messeage = "This already end"
+                        raise Error.ErrorContract(messeage)
+                    if contract.get_ID() == id:
+                        confirm = Error.askyesno(
+                            "Confirm Delete",
+                            f"Are you sure you want to end the contract with ID: {id}?",
+                            parent=windows[4][-1],
+                        )
+                        if confirm:
+                            contract.set_status(2)
+                            contract.set_data_end(Date)
+                            contract.update_status()
+                            frame.destroy()
+                            contract_Table(window_contract)
+                            poup.destroy()
+                            windows[4].remove(poup)
+                        break
+        except Error.ErrorContract as e:
+            Logger.log_error(file_name, "Error with end", str(e))
+
     def on_select(event):
         cur_item = table_contract.item(table_contract.focus())
         col = table_contract.identify_column(event.x)
@@ -303,6 +251,43 @@ def make_Table():
             if len(cur_item["values"]) != 0:
                 cell_value = cur_item["values"][0]
                 Logger.log_info(file_name, f"You tap on contract with ID: {cell_value}")
+                try:
+                    if len(windows[4]) >= 2:
+                        message = "Please close other windows for work with new Client"
+                        raise Error.ErrorContract(message)
+
+                    def clo():
+                        if len(windows[4]) > 2:
+                            w = windows[4][2]
+                            windows[4].remove(windows[4][2])
+                            w.destroy()
+                        w = windows[4][1]
+                        windows[4].remove(windows[4][1])
+                        w.destroy()
+
+                    popup = Win.Toplevel(windows[4][0])
+                    windows[4].append(popup)
+                    popup.title("Selecting actions")
+                    popup.geometry("300x200")
+                    popup.protocol("WM_DELETE_WINDOW", clo)
+                    frame_popup = Win.Frame(master=popup, relief=Win.SUNKEN)
+                    frame_popup.pack(expand=True)
+                    add_new_Contract = Win.Button(
+                        frame_popup,
+                        text="End Contract",
+                        command=lambda: end_contract(cell_value, popup),
+                    )
+                    add_new_Contract.grid(row=1, column=1, padx=10, pady=10)
+                    Delete_element = Win.Button(
+                        frame_popup,
+                        text="Delete",
+                        command=lambda: id_for_delite(cell_value, popup),
+                    )
+                    Delete_element.grid(row=1, column=2, padx=10, pady=10)
+                except Error.ErrorContract as e:
+                    Error.Logger.log_error(
+                        file_name, "Error with opend windows.", str(e)
+                    )
 
     columns = ("ID", "Status", "Contract", "Data of end Contract", "Mora")
     table_contract = Win.ttk.Treeview(frame, columns=columns, show="headings")
